@@ -30,5 +30,10 @@
       ],
     }
   ],
-  "i18n-ally.sourceLanguage": "zh-cn"
+  "i18n-ally.sourceLanguage": "zh-cn",
+  "workbench.colorCustomizations": {
+    "activityBar.background": "#500338",
+    "titleBar.activeBackground": "#6F044E",
+    "titleBar.activeForeground": "#FFF8FD"
+  }
 }

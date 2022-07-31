@@ -1,17 +1,10 @@
 ![](./public/og.png)
 
-# 一起猜汉字(17chz)
+# 汉兜 Handle
 
-[ handle - 汉字 Wordle ](https://handle.antfu.me)改进版
+A Chinese Hanzi variation of [Wordle](https://www.powerlanguage.co.uk/wordle/). 汉字 Wordle.
 
-- 支持语音输入
-- 支持多人游戏
-- 增加信息:偏旁部首
-- 添加主题:五言律诗
-- 添加主题:七言绝句
-- 改进严格模式:要求必须输入成语
-- 修改次数限制:志愿活动换取游戏机会(一天一次)
-
+[handle.antfu.me](https://handle.antfu.me)
 
 请勿剧透！PLEASE DO NOT SPOIL
 
