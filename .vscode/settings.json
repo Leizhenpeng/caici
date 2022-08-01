@@ -35,5 +35,8 @@
     "activityBar.background": "#500338",
     "titleBar.activeBackground": "#6F044E",
     "titleBar.activeForeground": "#FFF8FD"
-  }
+  },
+  "i18n-ally.extract.ignored": [
+    "Chee Aun"
+  ]
 }
