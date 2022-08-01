@@ -1,6 +1,16 @@
 import { breakpointsTailwind } from '@vueuse/core'
 import type { MatchType, ParsedChar } from './logic'
-import { START_DATE, TRIES_LIMIT, WORD_LENGTH, parseWord as _parseWord, testAnswer as _testAnswer, checkPass, getHint, isDstObserved, numberToHanzi } from './logic'
+import {
+  START_DATE,
+  TRIES_LIMIT,
+  WORD_LENGTH,
+  parseWord as _parseWord,
+  testAnswer as _testAnswer,
+  checkPass,
+  getHint,
+  isDstObserved,
+  numberToHanzi,
+} from './logic'
 import { useNumberTone as _useNumberTone, inputMode, meta, spMode, tries } from './storage'
 import { getAnswerOfDay } from './answers'
 
@@ -25,8 +35,10 @@ export const useMask = ref(false)
 export const useNumberTone = computed(() => {
   if (inputMode.value === 'sp')
     return true
+
   if (inputMode.value === 'zy')
     return false
+
   return _useNumberTone.value
 })
 
@@ -42,9 +54,9 @@ export const dayNoHanzi = computed(() => `${numberToHanzi(dayNo.value)}日`)
 export const answer = computed(() =>
   params.get('word')
     ? {
-      word: params.get('word')!,
-      hint: getHint(params.get('word')!),
-    }
+        word: params.get('word')!,
+        hint: getHint(params.get('word')!),
+      }
     : getAnswerOfDay(dayNo.value),
 )
 
@@ -85,8 +97,10 @@ export function getSymbolState(symbol?: string | number, key?: '_1' | '_2' | 'to
       else {
         if (w._1 === symbol)
           results.push(r._1)
+
         if (w._2 === symbol)
           results.push(r._2)
+
         if (w._3 === symbol)
           results.push(r._3)
       }
@@ -94,9 +108,12 @@ export function getSymbolState(symbol?: string | number, key?: '_1' | '_2' | 'to
   }
   if (results.includes('exact'))
     return 'exact'
+
   if (results.includes('misplaced'))
     return 'misplaced'
+
   if (results.includes('none'))
     return 'none'
+
   return null
 }
