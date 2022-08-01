@@ -69,7 +69,7 @@ watchEffect(() => {
 <template>
   <div>
     <div flex="~ col" pt4 items-center>
-      <WordBlocks v-for="w,i of tries" :key="i" :word="w" :revealed="true" @click="focus()" />
+      <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" @click="focus()" />
 
       <template v-if="meta.answer">
         <div my4>
@@ -132,12 +132,12 @@ watchEffect(() => {
             <div i-mdi-emoticon-devil-outline /> {{ t('view-answer') }}
           </button>
 
-          <div flex="~ center" mt4 :class="isFinished ? 'op0! pointer-events-none' : ''">
-            <button v-if="!useNoHint" mx2 icon-btn text-base pb2 gap-1 flex="~ center" @click="hint()">
-              <div i-carbon-idea /> {{ t('hint') }}
-            </button>
+          <div flex="~ between" mt4 w-full flex-row-reverse :class="isFinished ? 'op0! pointer-events-none' : ''">
             <button mx2 icon-btn text-base pb2 gap-1 flex="~ center" @click="sheet()">
               <div i-carbon-grid /> {{ t('cheatsheet') }}
+            </button>
+            <button v-if="!useNoHint" mx2 icon-btn text-base pb2 gap-1 flex="~ center" @click="hint()">
+              <div i-carbon-idea /> {{ t('hint') }}
             </button>
           </div>
         </div>

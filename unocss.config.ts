@@ -20,6 +20,7 @@ export default defineConfig({
       'tab-button-active': 'op100 bg-gray-500:10',
     },
     [/^(flex|grid)-center/g, () => 'justify-center items-center'],
+    [/^(flex|grid)-between/g, () => 'justify-between items-center'],
     [/^(flex|grid)-x-center/g, () => 'justify-center'],
     [/^(flex|grid)-y-center/g, () => 'items-center'],
   ],
