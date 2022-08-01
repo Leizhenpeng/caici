@@ -1,0 +1,75 @@
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html.dark {
+  background: #121212;
+}
+
+:root {
+  --c-primary: #0d828e;
+  --c-primary-deep: #08606a;
+  --c-ok: #1d9c9c;
+  --c-mis: #de7525;
+}
+.dark {
+  --c-ok: #0d8e8e;
+}
+
+p {
+  text-align: left;
+}
+
+.colorblind {
+  --c-ok:#5ba554;
+  --c-mis: #ff46ff;
+  --c-primary:#5ba554;
+}
+
+ul {
+  list-style: disc;
+}
+
+/* Transition */
+.fade-in-enter-active {
+  transition: all 1s ease;
+}
+.fade-out-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-out-leave-to,
+.fade-in-enter-from {
+  transform: translateY(10px);
+  opacity: 0;
+}
+
+/* Animation */
+.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px);
+  }
+  20% {
+    transform: translate(-2px);
+  }
+  40% {
+    transform: translate(2px);
+  }
+  60% {
+    transform: translate(-2px);
+  }
+  80% {
+    transform: translate(2px);
+  }
+  100% {
+    transform: translate(-1px);
+  }
+}
