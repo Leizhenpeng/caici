@@ -10,6 +10,14 @@ html.dark {
   background: #121212;
 }
 
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
 :root {
   --c-primary: #0d828e;
   --c-primary-deep: #08606a;
