@@ -73,9 +73,9 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
 
     <div h-1px w-10 border="b base" m4 />
 
-    <Settings :lite="true" />
+    <!-- <Settings :lite="true" /> -->
 
-    <div h-1px w-10 border="b base" m4 />
+    <!-- <div h-1px w-10 border="b base" m4 /> -->
 
     <FeedbackLinks />
 
@@ -88,7 +88,7 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
       {{ t('other-variants') }}
     </button>
     <div>
-      <span op40>inspired by </span><a href="https://www.powerlanguage.co.uk/wordle/" target="_blank" op50 hover:op80>Handle</a>
+      <span op40>inspired by </span><a href="https://handle.antfu.me/" target="_blank" op50 hover:op80>Handle</a>
       <span op40>, made by </span>
       <a op50 hover:op80 href="https://github.com/Leizhenpeng" target="_blank">River</a>
     </div>

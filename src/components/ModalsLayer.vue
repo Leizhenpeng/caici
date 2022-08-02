@@ -19,28 +19,28 @@ const lg = breakpoints.lg
   <Modal v-model="showCheatSheet" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
     <CheatSheet />
   </Modal>
-  <Modal v-model="showSettings" direction="bottom">
+  <Modal v-model="showSettings" :direction="lg ? 'top' : 'bottom'">
     <Settings my6 />
   </Modal>
-  <Modal v-model="showHint" direction="bottom">
+  <Modal v-model="showHint" :direction="lg ? 'top' : 'bottom'">
     <Hint />
   </Modal>
-  <Modal v-model="showFailed" direction="bottom">
+  <Modal v-model="showFailed" :direction="lg ? 'top' : 'bottom'">
     <FailedPage />
   </Modal>
-  <Modal v-model="showDashboard" direction="bottom">
+  <Modal v-model="showDashboard" :direction="lg ? 'top' : 'bottom'">
     <Dashboard />
   </Modal>
-  <Modal v-model="showShareDialog" direction="bottom">
+  <Modal v-model="showShareDialog" :direction="lg ? 'top' : 'bottom'">
     <ShareDialog />
   </Modal>
   <Modal v-model="showHelp" direction="top">
     <WelcomePage />
   </Modal>
-  <Modal v-model="showVariants" direction="bottom">
+  <Modal v-model="showVariants" :direction="lg ? 'top' : 'bottom'">
     <VariantLinks />
   </Modal>
-  <Modal v-model="showPrivacyNotes" direction="bottom">
+  <Modal v-model="showPrivacyNotes" :direction="lg ? 'top' : 'bottom'">
     <PrivacyNotes />
   </Modal>
 </template>

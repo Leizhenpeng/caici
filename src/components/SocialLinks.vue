@@ -21,7 +21,7 @@ import { t } from '~/i18n'
       target="_blank"
     >
       <div i-ri-twitter-line />
-      {{ t('twitter-community') }}
+      {{ t('bilibili-post') }}
     </a>
   </div>
 </template>
