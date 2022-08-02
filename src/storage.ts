@@ -14,7 +14,7 @@ export const colorblind = useStorage('handle-colorblind', false)
 export const useNoHint = useStorage('handle-hard-mode', false)
 export const useNumberTone = useStorage('handle-number-tone', false)
 export const useCheckAssist = useStorage('handle-check-assist', false)
-export const useStrictMode = useStorage('handle-strict', false)
+export const useStrictMode = useStorage('handle-strict', true)
 export const acceptCollecting = useStorage('handle-accept-collecting', true)
 
 export const meta = computed<TriesMeta>({
