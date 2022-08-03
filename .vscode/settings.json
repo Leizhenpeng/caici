@@ -38,5 +38,6 @@
   },
   "i18n-ally.extract.ignored": [
     "Chee Aun"
-  ]
+  ],
+  "testing.automaticallyOpenPeekView": "never"
 }

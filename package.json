@@ -52,6 +52,6 @@
     "unplugin-vue-components": "^0.21.1",
     "vite": "^2.9.13",
     "vite-node": "^0.17.1",
-    "vitest": "^0.17.1"
+    "vitest": "^0.18.1"
   }
 }

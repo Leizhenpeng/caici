@@ -13,3 +13,4 @@ it('testAnswer', () => {
   expect(testAnswer(parseWord('安'), parseWord('安'))).toMatchSnapshot()
   expect(testAnswer(parseWord('帆'), parseWord('安'))).toMatchSnapshot()
 })
+
