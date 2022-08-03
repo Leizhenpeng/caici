@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { filterNonChineseChars } from '@hankit/tools'
-import { answer, dayNo, isDev, isFailed, isFinished, showCheatSheet, showFailed, showHelp, showHint } from '~/state'
+import { answer, dayNo, dayNoHanzi, isDev, isFailed, isFinished, showCheatSheet, showFailed, showHelp, showHint } from '~/state'
 import { markStart, meta, tries, useNoHint, useStrictMode } from '~/storage'
 import { t } from '~/i18n'
 import { TRIES_LIMIT, WORD_LENGTH, checkValidIdiom } from '~/logic'
@@ -68,6 +68,9 @@ watchEffect(() => {
 
 <template>
   <div>
+    <p text-center w-full font-serif>
+      <b>{{ dayNoHanzi }}·{{ t('play-title-chengyu') }}</b>
+    </p>
     <div flex="~ col" pt4 items-center>
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" @click="focus()" />
 

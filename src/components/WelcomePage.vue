@@ -43,9 +43,11 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
     </p>
     <div flex="~ center col">
       <p>{{ t('intro-1') }} <b text-ok>{{ t('intro-2') }}</b>。</p>
-      <p>{{ t('intro-3') }}</p>
-      <p mt3>
-        {{ t('intro-10') }} <b>{{ t('intro-11') }}</b> {{ t('intro-12') }}
+      <p mt2>
+        {{ t('intro-3') }} {{ t('intro-10') }} <b>{{ t('intro-11') }}</b> {{ t('intro-12') }}
+      </p>
+      <p mt6 w-full text-left>
+        {{ t('intro-21') }}
       </p>
     </div>
     <WordBlocks my1 :word="t('example-1')" :revealed="true" answer=" 门  " />
