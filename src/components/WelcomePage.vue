@@ -44,7 +44,10 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
 
     <p>{{ t('intro-1') }} <b text-ok>{{ t('intro-2') }}</b>。</p>
     <p>{{ t('intro-3') }}</p>
-    <div h-1px w-10 border="b base" m4 />
+    <p>
+      {{ t('intro-10') }} <b>{{ t('intro-11') }}</b> {{ t('intro-12') }}
+    </p>
+    <div h-1px w-10 border="b base" m1 />
 
     <WordBlocks my2 :word="t('example-1')" :revealed="true" answer=" 门  " />
     <p>{{ t('intro-4') }} <b text-ok>{{ t('intro-5') }}</b> {{ t('intro-6') }}</p>
@@ -54,7 +57,6 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
 
     <WordBlocks my2 :word="t('example-3')" :revealed="true" answer="桥它拖 " />
     <p max-w-130>
-      {{ t('intro-10') }} <b>{{ t('intro-11') }}</b> {{ t('intro-12') }}
       {{ t('intro-13') }} <b op50>{{ t('intro-14') }}</b> {{ t('intro-15') }} <b op50>{{ t('intro-14') }}</b> {{ t('intro-16') }}
       {{ t('intro-17') }} <b text-mis>{{ final }}</b> {{ t('intro-19') }}
     </p>
@@ -73,9 +75,9 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
 
     <div h-1px w-10 border="b base" m4 />
 
-    <!-- <Settings :lite="true" /> -->
+    <Settings :lite="true" />
 
-    <!-- <div h-1px w-10 border="b base" m4 /> -->
+    <div h-1px w-10 border="b base" m4 />
 
     <FeedbackLinks />
 
