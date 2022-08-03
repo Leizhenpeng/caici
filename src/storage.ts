@@ -1,7 +1,7 @@
 import type { SpMode } from '@hankit/tools'
 import { preferZhuyin, t } from './i18n'
 import { dayNo } from './state'
-import type { InputMode, TriesMeta } from './logic'
+import type { InputMode, Topic, TriesMeta } from './logic'
 
 export const legacyTries = useStorage<Record<number, string[]>>('handle-tries', {})
 
@@ -16,6 +16,7 @@ export const useNumberTone = useStorage('handle-number-tone', false)
 export const useCheckAssist = useStorage('handle-check-assist', false)
 export const useStrictMode = useStorage('handle-strict', true)
 export const acceptCollecting = useStorage('handle-accept-collecting', true)
+export const topicNow = useStorage<Topic>('handle-topic-now', 'chengyu4')
 
 export const meta = computed<TriesMeta>({
   get() {

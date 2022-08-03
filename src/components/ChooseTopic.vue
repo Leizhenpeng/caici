@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { colorblind, inputMode, meta, spMode, useCheckAssist, useNoHint, useNumberTone as useNumberToneRaw, useStrictMode } from '~/storage'
-import { useNumberTone } from '~/state'
-import { locale, t } from '~/i18n'
+import { t } from '~/i18n'
+import { topicNow } from '~/storage'
 
 defineProps<{
   lite?: boolean
@@ -15,15 +14,15 @@ defineProps<{
     </div>
     <div flex="~ center wrap">
       <div square-btn m2>
-        <button :class="locale === 'hans' ? 'text-primary' : 'op80' " @click="locale = 'hans'">
+        <button :class="topicNow === 'chengyu4' ? 'text-primary' : 'op80' " @click="topicNow = 'chengyu4'">
           {{ t('play-title-chengyu') }}
         </button>
         <div w-1px h-4 border="r base" />
-        <button :class="locale === 'hant' ? 'text-primary' : 'op80' " @click="locale = 'hant'">
+        <button :class="topicNow === 'shici5' ? 'text-primary' : 'op80' " @click="topicNow = 'shici5'">
           {{ t('play-title-wuyan') }}
         </button>
         <div w-1px h-4 border="r base" />
-        <button :class="locale === 'hant' ? 'text-primary' : 'op80' " @click="locale = 'hant'">
+        <button :class="topicNow === 'shici7' ? 'text-primary' : 'op80' " @click="topicNow = 'shici7'">
           {{ t('play-title-qiyan') }}
         </button>
       </div>

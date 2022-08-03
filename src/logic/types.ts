@@ -2,6 +2,7 @@ export type MatchType = 'exact' | 'misplaced' | 'none' | 'deleted'
 
 export type InputMode = 'py' | 'zy' | 'sp'
 
+export type Topic = 'chengyu4' | 'shici5' | 'shici7'
 export interface ParsedChar {
   char: string
   _1: string
