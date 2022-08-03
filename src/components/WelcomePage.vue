@@ -46,7 +46,7 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
       <p mt2>
         {{ t('intro-3') }} {{ t('intro-10') }} <b>{{ t('intro-11') }}</b> {{ t('intro-12') }}
       </p>
-      <p mt6 w-full text-left>
+      <p mt6 w-full text-center>
         {{ t('intro-21') }}
       </p>
     </div>
@@ -84,7 +84,7 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
 
     <div h-1px w-10 border="b base" m4 />
 
-    <div op50 hover:op80 @click="privacyButton()">
+    <div cursor-pointer op50 hover:op80 @click="privacyButton()">
       {{ t('privacy-notes') }}
     </div>
     <button text-primary op80 hover:op100 @click="variantButton()">
