@@ -74,7 +74,7 @@ const spConstants = computed(() => getShuangpinConstants(spMode.value))
     <!-- Pinyin -->
     <div
       v-else
-      grid="~ cols-[1fr_3fr] gap-x-10 gap-y-4"
+      grid="~ cols-[1fr_2fr] gap-x-10 gap-y-4"
       font-mono font-light
     >
       <div text-center>
