@@ -15,15 +15,15 @@ defineProps<{
     <div flex="~ center wrap">
       <div square-btn m2>
         <button :class="topicNow === 'chengyu4' ? 'text-primary' : 'op80' " @click="topicNow = 'chengyu4'">
-          {{ t('play-title-chengyu') }}
+          {{ t('topic-chengyu') }}
         </button>
         <div w-1px h-4 border="r base" />
         <button :class="topicNow === 'shici5' ? 'text-primary' : 'op80' " @click="topicNow = 'shici5'">
-          {{ t('play-title-wuyan') }}
+          {{ t('topic-wuyan') }}
         </button>
         <div w-1px h-4 border="r base" />
         <button :class="topicNow === 'shici7' ? 'text-primary' : 'op80' " @click="topicNow = 'shici7'">
-          {{ t('play-title-qiyan') }}
+          {{ t('topic-qiyan') }}
         </button>
       </div>
     </div>

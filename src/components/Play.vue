@@ -50,10 +50,10 @@ function sheet() {
   showCheatSheet.value = !showCheatSheet.value
 }
 
-watchEffect(() => {
-  if (!showHelp.value)
-    focus()
-})
+// watchEffect(() => {
+//   if (!showHelp.value)
+//     focus()
+// })
 
 watchEffect(() => {
   if (isFailed.value && !meta.value.failed) {
