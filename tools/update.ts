@@ -24,21 +24,26 @@ async function getPinyinWeb(word: string) {
 function validPinyin(word: string, pinyin: string) {
   if (!pinyin.match(/^[a-z0-9 ]+$/))
     return console.log(c.red(`[${word}] invalid char`), c.yellow(pinyin))
+
   if (!pinyin.match(/[0-9]/))
     return console.log(c.red(`[${word}] invalid tone`), c.magenta(pinyin))
+
   const parts = pinyin.split(/\s+/g)
   if (parts.length !== 4)
     return console.log(c.red(`[${word}] invalid length`), c.blue(pinyin))
-  parts.forEach(async(i, idx) => {
+
+  parts.forEach(async (i, idx) => {
     const match = i.match(/^([a-z]+)([0-4])?$/)
     if (!match)
       return console.error(c.red(`[${word}] invalid pinyin [${idx}]:`), c.blue(i), '->', c.green(await getPinyinWeb(word[idx])))
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [full, body, tone] = match
     if (!toZhuyin(body))
       console.error(c.red(`[${word}] invalid pinyin [${idx}]:`), c.blue(i), '->', c.green(await getPinyinWeb(word[idx])))
-  //   if (!tone)
-  //     console.error(c.red(`[${word}] no tone [${idx}]:`), c.blue(i), '->', c.green(await getPinyinWeb(word[idx])))
+
+    //   if (!tone)
+    //     console.error(c.red(`[${word}] no tone [${idx}]:`), c.blue(i), '->', c.green(await getPinyinWeb(word[idx])))
   })
 }
 
@@ -52,6 +57,7 @@ async function run() {
   for (const word of Object.keys(polyphones)) {
     if (!polyphones[word])
       polyphones[word] = await getPinyinZDict(word)
+
     const pinyingComputed = await getPinyinWeb(word)
     if (!polyphones[word] || pinyingComputed === polyphones[word]) {
       console.log(`\n[${word}] removed from polyphones`)

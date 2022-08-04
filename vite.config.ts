@@ -45,6 +45,8 @@ export default defineConfig({
             return 'locale'
           if (id.includes('idioms.txt'))
             return 'idioms'
+          if (id.includes('hintTip.txt'))
+            return 'hintTip'
           if (id.includes('polyphones.json'))
             return 'polyphones'
           if (id.includes('node_modules') && !id.endsWith('.css'))
