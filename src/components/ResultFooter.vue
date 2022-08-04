@@ -12,8 +12,12 @@ const hintText = computed(() => {
     return t('hint-level-none')
   else if (meta.value.hintLevel === 1)
     return t('hint-level-1')
-  else
+  else if (meta.value.hintLevel === 2)
     return t('hint-level-2')
+  else if (meta.value.hintLevel === 3)
+    return t('hint-level-3')
+  else
+    return t('hint-level-none')
 })
 </script>
 

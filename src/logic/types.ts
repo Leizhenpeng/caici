@@ -3,6 +3,13 @@ export type MatchType = 'exact' | 'misplaced' | 'none' | 'deleted'
 export type InputMode = 'py' | 'zy' | 'sp'
 
 export type Topic = 'chengyu4' | 'shici5' | 'shici7'
+
+export enum EHintLevel {
+  none = 0,
+  ziyin = 1,
+  pianpang = 2,
+  zixing = 3,
+}
 export interface ParsedChar {
   char: string
   _1: string
@@ -30,7 +37,7 @@ export interface TriesMeta {
   passed?: boolean
   tries?: string[]
   hint?: boolean
-  hintLevel?: number
+  hintLevel?: EHintLevel
   strict?: boolean
   sent?: boolean
 }
