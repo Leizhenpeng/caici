@@ -3,7 +3,6 @@ import type { MatchType, ParsedChar } from './logic'
 import {
   START_DATE,
   TRIES_LIMIT,
-  WORD_LENGTH,
   parseWord as _parseWord,
   testAnswer as _testAnswer,
   checkPass,
@@ -11,7 +10,7 @@ import {
   isDstObserved,
   numberToHanzi,
 } from './logic'
-import { useNumberTone as _useNumberTone, inputMode, meta, spMode, tries } from './storage'
+import { useNumberTone as _useNumberTone, inputMode, meta, spMode, tries, wordLengthNow } from './storage'
 import { getAnswerOfDay } from './answers'
 
 export const isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
@@ -87,7 +86,7 @@ export const parsedTries = computed(() => tries.value.map((i) => {
 export function getSymbolState(symbol?: string | number, key?: '_1' | '_2' | 'tone') {
   const results: MatchType[] = []
   for (const t of parsedTries.value) {
-    for (let i = 0; i < WORD_LENGTH; i++) {
+    for (let i = 0; i < wordLengthNow.value; i++) {
       const w = t.word[i]
       const r = t.result[i]
       if (key) {
@@ -117,3 +116,15 @@ export function getSymbolState(symbol?: string | number, key?: '_1' | '_2' | 'to
 
   return null
 }
+
+// 是否是移动端+五言诗
+export const ifMinFont5 = computed(() => {
+  const lg = breakpoints.lg
+  return wordLengthNow.value === 5 && (isMobile || !lg)
+})
+
+// 是否是移动端+五言诗
+export const ifMinFont7 = computed(() => {
+  const lg = breakpoints.lg
+  return wordLengthNow.value === 7 && (isMobile || !lg)
+})

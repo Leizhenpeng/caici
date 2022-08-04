@@ -95,3 +95,14 @@ export function formatDuration(duration: number) {
     return m + t('minutes') + s + t('seconds')
   return s + t('seconds')
 }
+
+export const wordLengthNow = computed(() => {
+  const topic = topicNow.value
+  if (topic === 'chengyu4')
+    return 4
+  if (topic === 'shici5')
+    return 5
+  if (topic === 'shici7')
+    return 7
+  return 4
+})

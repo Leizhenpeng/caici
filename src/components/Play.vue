@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { filterNonChineseChars } from '@hankit/tools'
-import { answer, dayNo, dayNoHanzi, isDev, isFailed, isFinished, showCheatSheet, showFailed, showHelp, showHint } from '~/state'
-import { markStart, meta, topicNow, tries, useNoHint, useStrictMode } from '~/storage'
+import { answer, dayNo, dayNoHanzi, isDev, isFailed, isFinished, showCheatSheet, showFailed, showHint } from '~/state'
+import { markStart, meta, topicNow, tries, useNoHint, useStrictMode, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
-import { TRIES_LIMIT, WORD_LENGTH, checkValidIdiom } from '~/logic'
+import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 const el = ref<HTMLInputElement>()
 const input = ref('')
 const inputValue = ref('')
@@ -13,7 +13,7 @@ const shake = autoResetRef(false, 500)
 const isFinishedDelay = debouncedRef(isFinished, 800)
 
 function enter() {
-  if (input.value.length !== WORD_LENGTH)
+  if (input.value.length !== wordLengthNow.value)
     return
   if (!checkValidIdiom(input.value, useStrictMode.value)) {
     showToast.value = true
@@ -34,7 +34,7 @@ function reset() {
 }
 function handleInput(e: Event) {
   const el = (e.target! as HTMLInputElement)
-  input.value = filterNonChineseChars(el.value).slice(0, WORD_LENGTH)
+  input.value = filterNonChineseChars(el.value).slice(0, wordLengthNow.value)
   markStart()
 }
 function focus() {
@@ -82,7 +82,7 @@ const nowTopicTitle = computed(
     <p text-center w-full font-serif>
       <b>{{ dayNoHanzi }}·{{ nowTopicTitle }}</b>
     </p>
-    <div flex="~ col" pt4 items-center>
+    <div flex="~ col between" pt4 items-center>
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" @click="focus()" />
 
       <template v-if="meta.answer">
@@ -134,7 +134,7 @@ const nowTopicTitle = computed(
           <button
             mt3
             btn p="x6 y2"
-            :disabled="input.length !== WORD_LENGTH"
+            :disabled="input.length !== wordLengthNow"
             @click="enter"
           >
             {{ t('ok-spaced') }}

@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { parseWord, parsedAnswer, testAnswer, answer as todayAnswer } from '~/state'
-import { WORD_LENGTH } from '~/logic'
-
+import { ifMinFont5, ifMinFont7, parseWord, parsedAnswer, testAnswer, answer as todayAnswer } from '~/state'
+import { wordLengthNow } from '~/storage'
 const props = withDefaults(
   defineProps<{
     word: string
@@ -38,9 +37,14 @@ watchEffect(() => {
 <template>
   <div flex>
     <div
-      v-for="c, i in parseWord(word.padEnd(WORD_LENGTH, ' '), answer || todayAnswer.word)" :key="i"
+      v-for="c, i in parseWord(word.padEnd(wordLengthNow, ' '), answer || todayAnswer.word)" :key="i"
       w-20 h-20 m1
-      class="tile" :class="[flip ? 'revealed' : '']"
+      class="tile"
+      :class="[
+        flip ? 'revealed' : '',
+        ifMinFont5 ? '!w-16 !h-16' : '',
+        ifMinFont7 ? '!w-11 !h-11' : '',
+      ]"
     >
       <template v-if="animate">
         <CharBlock
