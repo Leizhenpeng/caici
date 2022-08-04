@@ -60,5 +60,29 @@ function close() {
         {{ t('hint-sure') }}
       </button>
     </div>
+    <div absolute top-4 right-4 flex="~ gap-3">
+      <button icon-btn @click="close()">
+        <div i-carbon-close />
+      </button>
+    </div>
+    <p text-xl font-serif mb4>
+      <b>{{ t('hint') }}</b>
+    </p>
+    <div>{{ t('hint-note') }} <b>{{ meta.hintLevel === 2 ? t('hanzi') : t('ziyin') }}</b></div>
+    <CharBlock :char="meta.hintLevel === 2 ? parsed : masked" />
+    <button
+      v-if="meta.hintLevel === 1"
+      class="btn bg-mis"
+      @click="meta.hintLevel = 2"
+    >
+      {{ t('more-hint') }}
+    </button>
+    <button
+      v-if="meta.hintLevel === 2"
+      class="btn bg-ok"
+      @click="close"
+    >
+      {{ t('hint-sure') }}
+    </button>
   </div>
 </template>
