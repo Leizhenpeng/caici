@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LINK_BILIBILI, LINK_WEIBO } from '../logic/constants'
 import { t } from '~/i18n'
 </script>
 
@@ -9,7 +10,7 @@ import { t } from '~/i18n'
   <div flex>
     <a
       square-btn mx2 flex-gap-1
-      href="https://weibo.com/7485197193/Li2WLFosw"
+      :href="LINK_WEIBO"
       target="_blank"
     >
       <div i-ri-weibo-fill />
@@ -18,7 +19,7 @@ import { t } from '~/i18n'
     <!-- TODO: change content link after publish -->
     <a
       square-btn mx2 flex-gap-1
-      href="https://t.bilibili.com/686126432908214293"
+      :href="LINK_BILIBILI"
       target="_blank"
     >
       <div i-ri-bilibili-fill />

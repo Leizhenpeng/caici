@@ -34,7 +34,7 @@ function reset() {
 }
 function handleInput(e: Event) {
   const el = (e.target! as HTMLInputElement)
-  input.value = filterNonChineseChars(el.value).slice(0, 4)
+  input.value = filterNonChineseChars(el.value).slice(0, WORD_LENGTH)
   markStart()
 }
 function focus() {

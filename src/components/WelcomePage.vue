@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LINK_GITHUB } from '../logic/constants'
 import { isDark, showHelp, showPrivacyNotes, showVariants, useMask } from '~/state'
 import { initialized, inputMode } from '~/storage'
 import { t } from '~/i18n'
@@ -95,7 +96,7 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
       <span op40>, made by </span>
       <a op50 hover:op80 href="https://github.com/Leizhenpeng" target="_blank">River</a>
     </div>
-    <a href="https://github.com/Leizhenpeng/caici" target="_blank" flex="~ center gap-1" op50 hover:op80>
+    <a :href="LINK_GITHUB" target="_blank" flex="~ center gap-1" op50 hover:op80>
       <div i-carbon-logo-github />
       Source Code
     </a>

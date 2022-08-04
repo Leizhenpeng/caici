@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { LINK_BILIBILI, LINK_WEIBO } from '../logic/constants'
 import { t } from '~/i18n'
 </script>
 
@@ -7,20 +8,12 @@ import { t } from '~/i18n'
     {{ t('join-community') }}
   </div>
   <div flex>
-    <a
-      square-btn mx2 flex-gap-1
-      href="https://weibo.com/p/100808efe67c0dab5ab1f22adcfd6635b05936"
-      target="_blank"
-    >
+    <a square-btn mx2 flex-gap-1 :href="LINK_WEIBO" target="_blank">
       <div i-ri-weibo-line />
       {{ t('weibo-topic') }}
     </a>
-    <a
-      square-btn mx2 flex-gap-1
-      href="https://twitter.com/i/communities/1498733552443473920"
-      target="_blank"
-    >
-      <div i-ri-twitter-line />
+    <a square-btn mx2 flex-gap-1 :href="LINK_BILIBILI" target="_blank">
+      <div i-ri-bilibili-line />
       {{ t('bilibili-post') }}
     </a>
   </div>
