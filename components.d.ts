@@ -12,7 +12,6 @@ declare module '@vue/runtime-core' {
     CheatSheet: typeof import('./src/components/CheatSheet.vue')['default']
     ChooseTopic: typeof import('./src/components/ChooseTopic.vue')['default']
     Confetti: typeof import('./src/components/Confetti.vue')['default']
-    copy: typeof import('./src/components/Settings copy.vue')['default']
     Countdown: typeof import('./src/components/Countdown.vue')['default']
     Dashboard: typeof import('./src/components/Dashboard.vue')['default']
     DashboardItem: typeof import('./src/components/DashboardItem.vue')['default']
