@@ -15,5 +15,6 @@ it('getPinyin', () => {
 
 it('seedShuffle', () => {
   expect(seedShuffle([1, 2, 3, 4, 5], '2')).toEqual(seedShuffle([1, 2, 3, 4, 5], '2'))
+  expect(seedShuffle([1, 3, 2, 4, 5], '2')).not.to.equal(seedShuffle([1, 2, 3, 4, 5], '2'))
   expect(seedShuffle([1, 2, 3, 4, 5], '2222')).not.to.equal(seedShuffle([1, 2, 3, 4, 5], '2'))
 })

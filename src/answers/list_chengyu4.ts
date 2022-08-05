@@ -291,7 +291,7 @@ export const _2022_AUG = prepare(31, seedShuffle([
   ['颠倒是非', '是'],
   ['鱼目混珠', '目'],
   ['八仙过海', '过'],
-], '2022-08'))
+], '2022-08-11'))
 
 export const _2022_SEP = prepare(30, seedShuffle([
   ['纷纷扰扰', '扰'],
