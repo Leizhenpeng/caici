@@ -10,7 +10,16 @@ import {
   isDstObserved,
   numberToHanzi,
 } from './logic'
-import { useNumberTone as _useNumberTone, inputMode, currentMeta, spMode, topicNow, tries, wordLengthNow } from './storage'
+import {
+  useNumberTone as _useNumberTone,
+  currentMeta,
+  inputMode,
+  spMode,
+  topicNow,
+  tries,
+  useStrictMode,
+  wordLengthNow,
+} from './storage'
 import { getAnswerOfDay } from './answers'
 import { t } from './i18n'
 
@@ -168,5 +177,22 @@ export const nowTopicExample = computed(
       return '日照香炉生紫烟'
     else
       return '鹏程万里'
+  },
+)
+
+watch(
+  topicNow,
+  (topic) => {
+    if (topic === 'chengyu4')
+      return
+    if (topic === 'shici5')
+      useStrictMode.value = false
+    if (topic === 'shici7')
+      useStrictMode.value = false
+    else
+      useStrictMode.value = false
+  },
+  {
+    immediate: true,
   },
 )

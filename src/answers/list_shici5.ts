@@ -91,7 +91,7 @@ export const _2022_AUG = prepare(31, [
     ['兰泽多芳草', '草'],
     ['久在樊笼里', '笼'],
     ['乾坤日夜浮', '日'],
-  ], '2022-08'),
+  ], '2022-08-12'),
 ])
 
 export const answers_shici5: string[][] = [
