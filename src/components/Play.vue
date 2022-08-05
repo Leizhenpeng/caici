@@ -1,6 +1,18 @@
 <script setup lang="ts">
 import { filterNonChineseChars } from '@hankit/tools'
-import { answer, dayNo, dayNoHanzi, isDev, isFailed, isFinished, nowTopicTitleShort, showCheatSheet, showFailed, showHint } from '~/state'
+import {
+  answer, breakpoints,
+  dayNo,
+  dayNoHanzi,
+  isDev,
+  isFailed,
+  isFinished,
+  nowTopicTitleShort,
+  showCheatSheet,
+  showFailed,
+  showHelp,
+  showHint,
+} from '~/state'
 import { markStart, meta, tries, useNoHint, useStrictMode, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
@@ -50,10 +62,10 @@ function sheet() {
   showCheatSheet.value = !showCheatSheet.value
 }
 
-// watchEffect(() => {
-//   if (!showHelp.value)
-//     focus()
-// })
+watchEffect(() => {
+  if (!showHelp.value && breakpoints.lg)
+    focus()
+})
 
 watchEffect(() => {
   if (isFailed.value && !meta.value.failed) {
