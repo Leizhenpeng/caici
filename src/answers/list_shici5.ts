@@ -107,7 +107,7 @@ export const answers_shici5: string[][] = [
 ]
 
 // eslint-disable-next-line no-console
-// console.log('import.meta.hot', import.meta)
+// console.log('import.currentMeta.hot', import.currentMeta)
 // duplicated check
 if (import.meta.hot) {
   // const { checkValidIdiom } = await import('../logic')

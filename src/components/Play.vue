@@ -13,7 +13,7 @@ import {
   showHelp,
   showHint,
 } from '~/state'
-import { markStart, meta, tries, useNoHint, useStrictMode, wordLengthNow } from '~/storage'
+import { markStart, currentMeta, tries, useNoHint, useStrictMode, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 const el = ref<HTMLInputElement>()
@@ -32,15 +32,15 @@ function enter() {
     shake.value = true
     return false
   }
-  if (meta.value.strict == null)
-    meta.value.strict = useStrictMode.value
+  if (currentMeta.value.strict == null)
+    currentMeta.value.strict = useStrictMode.value
   tries.value.push(input.value)
   input.value = ''
   inputValue.value = ''
 }
 function reset() {
   tries.value = []
-  meta.value = {}
+  currentMeta.value = {}
   input.value = ''
   inputValue.value = ''
 }
@@ -53,9 +53,9 @@ function focus() {
   el.value?.focus()
 }
 function hint() {
-  // meta.value.hint = true
-  if (!meta.value.hintLevel)
-    meta.value.hintLevel = 0
+  // currentMeta.value.hint = true
+  if (!currentMeta.value.hintLevel)
+    currentMeta.value.hintLevel = 0
   showHint.value = true
 }
 function sheet() {
@@ -68,8 +68,8 @@ watchEffect(() => {
 })
 
 watchEffect(() => {
-  if (isFailed.value && !meta.value.failed) {
-    meta.value.failed = true
+  if (isFailed.value && !currentMeta.value.failed) {
+    currentMeta.value.failed = true
     setTimeout(() => {
       showFailed.value = true
     }, 1200)
@@ -85,7 +85,7 @@ watchEffect(() => {
     <div flex="~ col between" pt4 items-center>
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" @click="focus()" />
 
-      <template v-if="meta.answer">
+      <template v-if="currentMeta.answer">
         <div my4>
           <div font-serif p2>
             {{ t('correct-answer') }}

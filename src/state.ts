@@ -10,7 +10,7 @@ import {
   isDstObserved,
   numberToHanzi,
 } from './logic'
-import { useNumberTone as _useNumberTone, inputMode, meta, spMode, topicNow, tries, wordLengthNow } from './storage'
+import { useNumberTone as _useNumberTone, inputMode, currentMeta, spMode, topicNow, tries, wordLengthNow } from './storage'
 import { getAnswerOfDay } from './answers'
 import { t } from './i18n'
 
@@ -63,9 +63,9 @@ export const answer = computed(() =>
 export const hint = computed(() => answer.value.hint)
 export const parsedAnswer = computed(() => parseWord(answer.value.word))
 
-export const isPassed = computed(() => meta.value.passed || (tries.value.length && checkPass(testAnswer(parseWord(tries.value[tries.value.length - 1])))))
+export const isPassed = computed(() => currentMeta.value.passed || (tries.value.length && checkPass(testAnswer(parseWord(tries.value[tries.value.length - 1])))))
 export const isFailed = computed(() => !isPassed.value && tries.value.length >= TRIES_LIMIT)
-export const isFinished = computed(() => isPassed.value || meta.value.answer)
+export const isFinished = computed(() => isPassed.value || currentMeta.value.answer)
 
 export function parseWord(word: string, _ans = answer.value.word, mode = inputMode.value, spM = spMode.value) {
   return _parseWord(word, _ans, mode, spM)

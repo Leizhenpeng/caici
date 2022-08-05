@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { t } from '~/i18n'
 import { answer, dayNoHanzi, isMobile, parseWord, testAnswer } from '~/state'
-import { meta, tries } from '~/storage'
+import { currentMeta, tries } from '~/storage'
 
 const lines = computed(() => {
   const table = tries.value.map((word) => {
@@ -29,8 +29,8 @@ const lines = computed(() => {
     [
       t('name'),
       dayNoHanzi.value,
-      meta.value.strict ? t('strict-mode').slice(0, 2) : '',
-      !meta.value.hint ? t('hint-level-none') : '',
+      currentMeta.value.strict ? t('strict-mode').slice(0, 2) : '',
+      !currentMeta.value.hint ? t('hint-level-none') : '',
     ].filter(Boolean).join(' · '),
     '',
     ...table,

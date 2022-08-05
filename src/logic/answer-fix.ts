@@ -1,9 +1,9 @@
 import { TRIES_LIMIT } from './constants'
-import { history } from '~/storage'
+import { historyMeta } from '~/storage'
 import { getAnswerOfDay } from '~/answers'
 
 export function tryFixAnswer(day: number) {
-  const meta = history.value[day]
+  const meta = historyMeta.value[day]
   const answer = getAnswerOfDay(day)
   if (!meta)
     return

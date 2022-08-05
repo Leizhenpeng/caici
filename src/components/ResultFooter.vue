@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatDuration, meta } from '~/storage'
+import { formatDuration, currentMeta } from '~/storage'
 import { t } from '~/i18n'
 import { dayNoHanzi } from '~/state'
 
@@ -8,13 +8,13 @@ defineProps<{
 }>()
 
 const hintText = computed(() => {
-  if (!meta.value.hintLevel)
+  if (!currentMeta.value.hintLevel)
     return t('hint-level-none')
-  else if (meta.value.hintLevel === 1)
+  else if (currentMeta.value.hintLevel === 1)
     return t('hint-level-1')
-  else if (meta.value.hintLevel === 2)
+  else if (currentMeta.value.hintLevel === 2)
     return t('hint-level-2')
-  else if (meta.value.hintLevel === 3)
+  else if (currentMeta.value.hintLevel === 3)
     return t('hint-level-3')
   else
     return t('hint-level-none')
@@ -27,9 +27,9 @@ const hintText = computed(() => {
       {{ dayNoHanzi }} ·
     </template>
     {{ hintText }} ·
-    <template v-if="meta.strict">
+    <template v-if="currentMeta.strict">
       {{ t('strict-mode') }} ·
     </template>
-    {{ formatDuration(meta.duration || 0) }}
+    {{ formatDuration(currentMeta.duration || 0) }}
   </div>
 </template>

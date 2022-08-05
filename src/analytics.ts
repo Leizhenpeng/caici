@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 import axios from 'axios'
 import { dayNo } from './state'
-import { acceptCollecting, history, inputMode } from './storage'
+import { acceptCollecting, historyMeta, inputMode } from './storage'
 import { DEPLOY_HOST, NETLIFY_FUNCTION_HOST } from './logic/constants'
 import type { TriesMeta } from './logic'
 
@@ -36,7 +36,7 @@ export async function sendAnalytics(day = dayNo.value) {
   if (!acceptCollecting.value || !isDeploy)
     return
 
-  const meta = history.value[day]
+  const meta = historyMeta.value[day]
 
   uploadPayloads([preparePayload(day, meta)])
 }
@@ -58,8 +58,8 @@ async function uploadPayloads(payloads: ReturnType<typeof preparePayload>[]) {
   // mark as sent
   if (!error) {
     items.forEach((i) => {
-      if (history.value[i.day])
-        history.value[i.day].sent = true
+      if (historyMeta.value[i.day])
+        historyMeta.value[i.day].sent = true
     })
   }
 
@@ -71,7 +71,7 @@ export async function sendHistoryAnalytics() {
   if (!acceptCollecting.value || !isDeploy)
     return
 
-  const payloads = Object.entries(history.value)
+  const payloads = Object.entries(historyMeta.value)
     .map(([day, meta]) => preparePayload(Number(day), meta))
 
   await uploadPayloads(payloads)

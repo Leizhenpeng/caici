@@ -1,4 +1,4 @@
-import { initialized, markEnd, markStart, meta, pauseTimer } from './storage'
+import { initialized, markEnd, markStart, currentMeta, pauseTimer } from './storage'
 import { answer, dayNo, daySince, isDev, isFinished, isPassed, showCheatSheet, showHelp } from './state'
 import { t } from './i18n'
 // import { sendAnalytics } from './analytics'
@@ -13,7 +13,7 @@ if (!initialized.value)
 
 watchEffect(() => {
   if (isPassed.value)
-    meta.value.passed = true
+    currentMeta.value.passed = true
 })
 
 watch(daySince, (n, o) => {
@@ -22,7 +22,7 @@ watch(daySince, (n, o) => {
     dayNo.value = n
 })
 
-watch([isFinished, meta], () => {
+watch([isFinished, currentMeta], () => {
   if (isFinished.value)
     markEnd()
     // sendAnalytics()
@@ -44,7 +44,7 @@ watchEffect(() => {
       location.reload()
 
     // restart timer
-    if (meta.value.duration)
+    if (currentMeta.value.duration)
       markStart()
   }
   else if (visible.value === 'hidden') {

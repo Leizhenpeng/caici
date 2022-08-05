@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { showFailed } from '~/state'
-import { meta } from '~/storage'
+import { currentMeta } from '~/storage'
 import { t } from '~/i18n'
 
 function revealAnswer() {
   showFailed.value = false
-  meta.value.answer = true
-  meta.value.failed = true
+  currentMeta.value.answer = true
+  currentMeta.value.failed = true
 }
 </script>
 

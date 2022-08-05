@@ -1,8 +1,8 @@
-<script setup lang="ts">
+historyMeta<script setup lang="ts">
 import DashboardItem from './DashboardItem.vue'
 import { t } from '~/i18n'
 import { showDashboard } from '~/state'
-import { averageDurations, gamesCount, history, historyTriesCount, noHintPassedCount, passedCount, passedTries } from '~/storage'
+import { averageDurations, gamesCount, historyMeta, historyTriesCount, noHintPassedCount, passedCount, passedTries } from '~/storage'
 import { checkValidIdiom } from '~/logic'
 
 const triesMap = computed(() => {
@@ -38,7 +38,7 @@ function close() {
   showDashboard.value = false
 }
 
-const allWords = computed(() => Array.from(new Set(Object.values(history.value).flatMap(i => i.tries).filter(Boolean) as string[])))
+const allWords = computed(() => Array.from(new Set(Object.values(historyMeta.value).flatMap(i => i.tries).filter(Boolean) as string[])))
 const validWords = computed(() => allWords.value.filter(i => checkValidIdiom(i, true)))
 </script>
 

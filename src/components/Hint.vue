@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { nanoid } from 'nanoid'
 import { answer, hint, parseWord, showHint } from '~/state'
-import { meta } from '~/storage'
+import { currentMeta } from '~/storage'
 import { t } from '~/i18n'
 import { getRandomHint } from '~/logic/hints'
 
@@ -34,7 +34,7 @@ watch(showHint, (newVal) => {
     <p text-xl font-serif mb4>
       <b>{{ t('hint') }}</b>
     </p>
-    <div v-if="meta.hintLevel === 0" flex="~ col gap-6 center" w-full>
+    <div v-if="currentMeta.hintLevel === 0" flex="~ col gap-6 center" w-full>
       <!-- <div>{{ t('hint-tip') }}</div> -->
       <div :key="hintTipKey">
         {{ getRandomHint() }}
@@ -44,18 +44,18 @@ watch(showHint, (newVal) => {
         <button class="btn bg-mis" @click="close">
           {{ t('check-back') }}
         </button>
-        <button class="btn   bg-gray-600 op-80" @click="meta.hintLevel = 1">
+        <button class="btn   bg-gray-600 op-80" @click="currentMeta.hintLevel = 1">
           {{ t('check-hint') }}
         </button>
       </div>
     </div>
     <div v-else flex="~ col center gap-4">
-      <div>{{ t('hint-note') }} <b>{{ meta.hintLevel === 2 ? t('hanzi') : t('ziyin') }}</b></div>
-      <CharBlock :char="meta.hintLevel === 2 ? parsed : masked" />
-      <button v-if="meta.hintLevel === 1" class="btn bg-mis" @click="meta.hintLevel = 2">
+      <div>{{ t('hint-note') }} <b>{{ currentMeta.hintLevel === 2 ? t('hanzi') : t('ziyin') }}</b></div>
+      <CharBlock :char="currentMeta.hintLevel === 2 ? parsed : masked" />
+      <button v-if="currentMeta.hintLevel === 1" class="btn bg-mis" @click="currentMeta.hintLevel = 2">
         {{ t('more-hint') }}
       </button>
-      <button v-if="meta.hintLevel === 2" class="btn bg-ok" @click="close">
+      <button v-if="currentMeta.hintLevel === 2" class="btn bg-ok" @click="close">
         {{ t('hint-sure') }}
       </button>
     </div>

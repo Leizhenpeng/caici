@@ -4,12 +4,19 @@ export type InputMode = 'py' | 'zy' | 'sp'
 
 export type Topic = 'chengyu4' | 'shici5' | 'shici7'
 
+export enum ETriesMode {
+  Normal = 0, // 默认模式
+  Heart = 1, // 爱心模式
+  Custom = 2, // 自定义模式
+}
+
 export enum EHintLevel {
   none = 0,
   ziyin = 1,
   pianpang = 2,
   zixing = 3,
 }
+
 export interface ParsedChar {
   char: string
   _1: string
@@ -29,6 +36,7 @@ export interface MatchResult {
 }
 
 export interface TriesMeta {
+  id?: string// 题目唯一 id
   answer?: boolean
   start?: number
   end?: number
@@ -40,4 +48,7 @@ export interface TriesMeta {
   hintLevel?: EHintLevel
   strict?: boolean
   sent?: boolean
+  topic?: Topic // 话题
+  dayNo?: number // 第几天
+  mode?: ETriesMode // 模式
 }
