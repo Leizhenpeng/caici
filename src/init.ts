@@ -2,7 +2,7 @@ import { initialized, markEnd, markStart, meta, pauseTimer } from './storage'
 import { answer, dayNo, daySince, isDev, isFinished, isPassed, showCheatSheet, showHelp } from './state'
 import { t } from './i18n'
 // import { sendAnalytics } from './analytics'
-import { answers } from './answers/list_chengyu4'
+import { answers_chengyu4 } from './answers/list_chengyu4'
 import { START_DATE } from './logic/constants'
 import { tryFixAnswer } from './logic/answer-fix'
 
@@ -68,9 +68,9 @@ if (isDev || import.meta.hot) {
 
 if (import.meta.hot) {
   // eslint-disable-next-line no-console
-  console.log(`${answers.length} days prepared`)
+  console.log(`${answers_chengyu4.length} days prepared`)
   // eslint-disable-next-line no-console
-  console.log(`${answers.length - dayNo.value} days left`)
-  if ((answers.length - daySince.value) < 10)
+  console.log(`${answers_chengyu4.length - dayNo.value} days left`)
+  if ((answers_chengyu4.length - daySince.value) < 10)
     throw new Error('Not enough days left!')
 }

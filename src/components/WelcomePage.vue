@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { LINK_GITHUB } from '../logic/constants'
-import { isDark, nowTopic, nowTopicExample, showHelp, showPrivacyNotes, showVariants, useMask } from '~/state'
+import { isDark, nowTopic, nowTopicExample, nowTopicTitleShort, showHelp, showPrivacyNotes, showVariants, useMask } from '~/state'
 import { initialized, inputMode, topicNow } from '~/storage'
 import { t } from '~/i18n'
 
@@ -132,7 +132,7 @@ const nowTopicExampleS4 = computed(
     <div h-1px w-10 border="b base" m4 />
 
     <p text-xl font-serif mb4>
-      <b>{{ t('rule') }}</b>
+      <b>{{ t('rule') }}·{{ nowTopicTitleShort }}</b>
     </p>
     <div flex="~ center col">
       <p>{{ t('intro-1') }} <b text-ok>{{ nowTopic }}</b>。</p>

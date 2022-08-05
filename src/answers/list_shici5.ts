@@ -60,7 +60,7 @@ export const _2022_JUNE = prepare(30, [...Array.from({ length: 30 }, () => [])])
 export const _2022_JULY = prepare(31, [...Array.from({ length: 31 }, () => [])])
 
 export const _2022_AUG = prepare(31, [
-  ...Array.from({ length: 4 }, () => []),
+  ...Array.from({ length: 2 }, () => []),
   ...seedShuffle([
     ['夕阳无限好', '夕'],
     ['晚来天欲雪', '雪'],
@@ -107,10 +107,10 @@ export const answers_shici5: string[][] = [
 ]
 
 // eslint-disable-next-line no-console
-console.log('import.meta.hot', import.meta)
+// console.log('import.meta.hot', import.meta)
 // duplicated check
 if (import.meta.hot) {
-  const { checkValidIdiom } = await import('../logic')
+  // const { checkValidIdiom } = await import('../logic')
   const map = new Map<string, number>()
   answers_shici5.forEach((a, i) => {
     if (!a[0])
@@ -121,7 +121,7 @@ if (import.meta.hot) {
       throw new Error(`Word ${a[0]} is duplicated at ${map.get(a[0])}`)
     if (a[1] && !a[0].includes(a[1]))
       throw new Error(`Hint ${a[1]} is not included in ${a[0]}`)
-    if (!checkValidIdiom(a[0], true))
-      throw new Error(`${a[0]} is not a valid idiom`)
+    // if (!checkValidIdiom(a[0], true))
+    //   throw new Error(`${a[0]} is not a valid idiom`)
   })
 }

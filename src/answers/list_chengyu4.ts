@@ -360,7 +360,7 @@ export const _2022_OCT = prepare(31, seedShuffle([
   ['死而后已', '已'],
 ], '2022-10'))
 
-export const answers: string[][] = [
+export const answers_chengyu4: string[][] = [
   ..._PRE,
   ..._2022_JAN,
   ..._2022_FEB,
@@ -374,12 +374,12 @@ export const answers: string[][] = [
 ]
 
 // eslint-disable-next-line no-console
-console.log('import.meta.hot', import.meta)
+// console.log('import.meta.hot', import.meta)
 // duplicated check
 if (import.meta.hot) {
   const { checkValidIdiom } = await import('../logic')
   const map = new Map<string, number>()
-  answers.forEach((a, i) => {
+  answers_chengyu4.forEach((a, i) => {
     if (!a[0])
       return
     if (!map.has(a[0]))
