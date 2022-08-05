@@ -10,8 +10,9 @@ import {
   isDstObserved,
   numberToHanzi,
 } from './logic'
-import { useNumberTone as _useNumberTone, inputMode, meta, spMode, tries, wordLengthNow } from './storage'
+import { useNumberTone as _useNumberTone, inputMode, meta, spMode, topicNow, tries, wordLengthNow } from './storage'
 import { getAnswerOfDay } from './answers'
+import { t } from './i18n'
 
 export const isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 export const isMobile = isIOS || /iPad|iPhone|iPod|Android|Phone|webOS/i.test(navigator.userAgent)
@@ -128,3 +129,44 @@ export const ifMinFont7 = computed(() => {
   const lg = breakpoints.lg
   return wordLengthNow.value === 7 && (isMobile || !lg)
 })
+
+// 获取当前话题
+export const nowTopic = computed(
+  () => {
+    if (topicNow.value === 'chengyu4')
+      return t('topic-chengyu')
+    if (topicNow.value === 'shici5')
+      return t('topic-wuyan')
+    if (topicNow.value === 'shici7')
+      return t('topic-qiyan')
+    else
+      return t('topic-chengyu')
+  },
+)
+// 获取当前话题简称
+export const nowTopicTitleShort = computed(
+  () => {
+    if (topicNow.value === 'chengyu4')
+      return t('play-title-chengyu')
+    if (topicNow.value === 'shici5')
+      return t('play-title-wuyan')
+    if (topicNow.value === 'shici7')
+      return t('play-title-qiyan')
+    else
+      return t('play-title-chengyu')
+  },
+)
+
+// 获取当前话题例子
+export const nowTopicExample = computed(
+  () => {
+    if (topicNow.value === 'chengyu4')
+      return '鹏程万里'
+    if (topicNow.value === 'shici5')
+      return '把酒问青天'
+    if (topicNow.value === 'shici7')
+      return '日照香炉生紫烟'
+    else
+      return '鹏程万里'
+  },
+)

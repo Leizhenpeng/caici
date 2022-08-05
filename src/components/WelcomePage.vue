@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LINK_GITHUB } from '../logic/constants'
-import { isDark, showHelp, showPrivacyNotes, showVariants, useMask } from '~/state'
-import { initialized, inputMode } from '~/storage'
+import { isDark, nowTopic, nowTopicExample, showHelp, showPrivacyNotes, showVariants, useMask } from '~/state'
+import { initialized, inputMode, topicNow } from '~/storage'
 import { t } from '~/i18n'
 
 function start() {
@@ -18,7 +18,99 @@ function privacyButton() {
   showPrivacyNotes.value = true
 }
 
-const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.value]))
+// const final = computed(() => ({
+//   py: 'uo',
+//   zy: 'ㄨㄛ',
+//   sp: 'o',
+// }[inputMode.value]))
+
+// 获取当前话题例子
+const nowTopicExampleS1 = computed(
+  () => {
+    if (topicNow.value === 'chengyu4')
+      return t('example.chengyu4.s1')
+    if (topicNow.value === 'shici5')
+      return t('example.shici5.s1')
+    if (topicNow.value === 'shici7')
+      return t('example.shici7.s1')
+    else
+      return t('example.chengyu4.s1')
+  },
+)
+
+const nowTopicExampleS1_font = computed(
+  () => {
+    if (topicNow.value === 'chengyu4')
+      return t('intro-5')
+    if (topicNow.value === 'shici5')
+      return t('example.shici5.s1.word')
+    if (topicNow.value === 'shici7')
+      return t('example.shici7.s1.word')
+    else
+      return t('example.chengyu4.s1')
+  },
+)
+
+const nowTopicExampleS2 = computed(
+  () => {
+    if (topicNow.value === 'chengyu4')
+      return t('example.chengyu4.s2')
+    if (topicNow.value === 'shici5')
+      return t('example.shici5.s2')
+    if (topicNow.value === 'shici7')
+      return t('example.shici7.s2')
+    else
+      return t('example.chengyu4.s1')
+  },
+)
+const nowTopicExampleS2_font = computed(
+  () => {
+    if (topicNow.value === 'chengyu4')
+      return t('intro-8')
+    if (topicNow.value === 'shici5')
+      return t('example.shici5.s2.word')
+    if (topicNow.value === 'shici7')
+      return t('example.shici7.s2.word')
+    else
+      return t('example.chengyu4.s1')
+  },
+)
+const nowTopicExampleS3 = computed(
+  () => {
+    if (topicNow.value === 'chengyu4')
+      return t('example.chengyu4.s3')
+    if (topicNow.value === 'shici5')
+      return t('example.shici5.s3')
+    if (topicNow.value === 'shici7')
+      return t('example.shici7.s3')
+    else
+      return t('example.chengyu4.s1')
+  },
+)
+const nowTopicExampleS3_font = computed(
+  () => {
+    if (topicNow.value === 'chengyu4')
+      return t('intro-14')
+    if (topicNow.value === 'shici5')
+      return t('example.shici5.s3.word')
+    if (topicNow.value === 'shici7')
+      return t('example.shici7.s3.word')
+    else
+      return t('example.chengyu4.s1')
+  },
+)
+const nowTopicExampleS4 = computed(
+  () => {
+    if (topicNow.value === 'chengyu4')
+      return t('example.chengyu4.s4')
+    if (topicNow.value === 'shici5')
+      return t('example.shici5.s4')
+    if (topicNow.value === 'shici7')
+      return t('example.shici7.s4')
+    else
+      return t('example.chengyu4.s1')
+  },
+)
 </script>
 
 <template>
@@ -43,27 +135,30 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
       <b>{{ t('rule') }}</b>
     </p>
     <div flex="~ center col">
-      <p>{{ t('intro-1') }} <b text-ok>{{ t('intro-2') }}</b>。</p>
+      <p>{{ t('intro-1') }} <b text-ok>{{ nowTopic }}</b>。</p>
       <p mt2>
-        {{ t('intro-3') }} {{ t('intro-10') }} <b>{{ t('intro-11') }}</b> {{ t('intro-12') }}
+        {{ t('intro-3') }}
+      </p>
+      <p mt2>
+        {{ t('intro-10') }} <b>{{ t('intro-11') }}</b> {{ t('intro-12') }}
       </p>
       <p mt6 w-full text-center>
         {{ t('intro-21') }}
       </p>
     </div>
-    <WordBlocks my1 :word="t('example-1')" :revealed="true" answer=" 门  " />
-    <p>{{ t('intro-4') }} <b text-ok>{{ t('intro-5') }}</b> {{ t('intro-6') }}</p>
+    <WordBlocks my1 :word="nowTopicExampleS1" :revealed="true" :answer="nowTopicExample" />
+    <p>{{ t('intro-4') }} <b text-ok>{{ nowTopicExampleS1_font }}</b> {{ t('intro-6') }}</p>
 
-    <WordBlocks my2 :word="t('example-2')" :revealed="true" answer="一一一水" />
-    <p>{{ t('intro-7') }} <b text-mis>{{ t('intro-8') }}</b> {{ t('intro-9') }}</p>
+    <WordBlocks my2 :word="nowTopicExampleS2" :revealed="true" :answer="nowTopicExample" />
+    <p>{{ t('intro-4') }} <b text-mis>{{ nowTopicExampleS2_font }}</b> {{ t('intro-9') }}</p>
 
-    <WordBlocks my2 :word="t('example-3')" :revealed="true" answer="桥它拖 " />
+    <WordBlocks my2 :word="nowTopicExampleS3" :revealed="true" :answer="nowTopicExample" />
     <p max-w-130>
-      {{ t('intro-13') }} <b op50>{{ t('intro-14') }}</b> {{ t('intro-15') }} <b op50>{{ t('intro-14') }}</b> {{ t('intro-16') }}
-      {{ t('intro-17') }} <b text-mis>{{ final }}</b> {{ t('intro-19') }}
+      {{ t('intro-4') }} <b op50>{{ nowTopicExampleS3_font }}</b> {{ t('intro-15') }}
+      {{ t('intro-19') }}
     </p>
 
-    <WordBlocks my2 :word="t('example-4')" :revealed="true" answer="武运昌隆" />
+    <WordBlocks my2 :word="nowTopicExampleS4" :revealed="true" :answer="nowTopicExample" />
     <p>{{ t('intro-20') }}</p>
 
     <div h-1px w-10 border="b base" m4 />

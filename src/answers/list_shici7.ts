@@ -5,7 +5,7 @@
  *
  * 剧透警告
  *
- * 该文件包含了游戏的[五言诗]答案列表。不建议继续阅读。
+ * 该文件包含了游戏的[七言诗词]答案列表。不建议继续阅读。
  *
  *
  *
@@ -60,35 +60,13 @@ export const _2022_JUNE = prepare(30, [...Array.from({ length: 30 }, () => [])])
 export const _2022_JULY = prepare(31, [...Array.from({ length: 31 }, () => [])])
 
 export const _2022_AUG = prepare(31, [
-  ...Array.from({ length: 5 }, () => []),
+  ...Array.from({ length: 4 }, () => []),
   ...seedShuffle([
-    ['夕阳无限好', '夕'],
-    ['晚来天欲雪', '雪'],
-    ['大漠沙如雪', '雪'],
-    ['欲穷千里目', '目'],
-    ['青山独归远', '山'],
-    ['低头思故乡', '乡'],
-    ['孤云独去闲', '云'],
-    ['手可摘星辰', '星'],
-    ['不敢高声语', '声'],
-    ['白毛浮绿水', '绿'],
-    ['随风潜入夜', '风'],
-    ['迢迢牵牛星', '星'],
-    ['国破山河在', '国'],
-    ['处处闻啼鸟', '鸟'],
-    ['野火烧不尽', '火'],
-    ['夜静春山空', '山'],
-    ['春风花草香', '花'],
-    ['飞雪迎春到', '春'],
-    ['把酒问青天', '酒'],
-    ['恰同学少年', '少'],
-    ['月黑雁飞高', '雁'],
-    ['采菊东篱下', '菊'],
-
+    ['春江花朝秋月夜', '夜'],
   ], '2022-08'),
 ])
 
-export const answers: string[][] = [
+export const answers_shici7: string[][] = [
   ..._PRE,
   ..._2022_JAN,
   ..._2022_FEB,
@@ -106,7 +84,7 @@ console.log('import.meta.hot', import.meta)
 if (import.meta.hot) {
   const { checkValidIdiom } = await import('../logic')
   const map = new Map<string, number>()
-  answers.forEach((a, i) => {
+  answers_shici7.forEach((a, i) => {
     if (!a[0])
       return
     if (!map.has(a[0]))

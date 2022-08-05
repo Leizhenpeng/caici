@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { filterNonChineseChars } from '@hankit/tools'
-import { answer, dayNo, dayNoHanzi, isDev, isFailed, isFinished, showCheatSheet, showFailed, showHint } from '~/state'
-import { markStart, meta, topicNow, tries, useNoHint, useStrictMode, wordLengthNow } from '~/storage'
+import { answer, dayNo, dayNoHanzi, isDev, isFailed, isFinished, nowTopicTitleShort, showCheatSheet, showFailed, showHint } from '~/state'
+import { markStart, meta, tries, useNoHint, useStrictMode, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 const el = ref<HTMLInputElement>()
@@ -63,24 +63,12 @@ watchEffect(() => {
     }, 1200)
   }
 })
-const nowTopicTitle = computed(
-  () => {
-    if (topicNow.value === 'chengyu4')
-      return t('play-title-chengyu')
-    if (topicNow.value === 'shici5')
-      return t('play-title-wuyan')
-    if (topicNow.value === 'shici7')
-      return t('play-title-qiyan')
-    else
-      return t('play-title-chengyu')
-  },
-)
 </script>
 
 <template>
   <div>
     <p text-center w-full font-serif>
-      <b>{{ dayNoHanzi }}·{{ nowTopicTitle }}</b>
+      <b>{{ dayNoHanzi }}·{{ nowTopicTitleShort }}</b>
     </p>
     <div flex="~ col between" pt4 items-center>
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" @click="focus()" />
