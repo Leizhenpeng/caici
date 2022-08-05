@@ -25,6 +25,11 @@ import { t } from '~/i18n'
           href="https://twitter.com/cheeaun"
         >Chee Aun</a>
       </li>
+      <li>
+        <a href="https://cy.surprising.studio/" target="_blank">词影</a> - by <a
+          href="https://www.bilibili.com/video/BV1BZ4y1B73L"
+        >qscqesze</a>
+      </li>
     </ul>
   </div>
 </template>
