@@ -373,6 +373,8 @@ export const answers: string[][] = [
   ..._2022_SEP,
 ]
 
+// eslint-disable-next-line no-console
+console.log('import.meta.hot', import.meta)
 // duplicated check
 if (import.meta.hot) {
   const { checkValidIdiom } = await import('../logic')
