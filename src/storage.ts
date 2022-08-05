@@ -3,20 +3,20 @@ import { preferZhuyin, t } from './i18n'
 import { dayNo } from './state'
 import type { InputMode, Topic, TriesMeta } from './logic'
 
-export const legacyTries = useStorage<Record<number, string[]>>('handle-tries', {})
+export const legacyTries = useStorage<Record<number, string[]>>('caici-tries', {})
 
-export const history = useStorage<Record<number, TriesMeta>>('handle-tries-meta', {})
-export const initialized = useStorage('handle-initialized', false)
+export const history = useStorage<Record<number, TriesMeta>>('caici-tries-meta', {})
+export const initialized = useStorage('caici-initialized', false)
 
-export const inputMode = useStorage<InputMode>('handle-mode', preferZhuyin ? 'zy' : 'py')
-export const spMode = useStorage<SpMode>('handle-sp-mode', 'sougou')
-export const colorblind = useStorage('handle-colorblind', false)
-export const useNoHint = useStorage('handle-hard-mode', false)
-export const useNumberTone = useStorage('handle-number-tone', false)
-export const useCheckAssist = useStorage('handle-check-assist', false)
-export const useStrictMode = useStorage('handle-strict', true)
-export const acceptCollecting = useStorage('handle-accept-collecting', true)
-export const topicNow = useStorage<Topic>('handle-topic-now', 'chengyu4')
+export const inputMode = useStorage<InputMode>('caici-mode', preferZhuyin ? 'zy' : 'py')
+export const spMode = useStorage<SpMode>('caici-sp-mode', 'sougou')
+export const colorblind = useStorage('caici-colorblind', false)
+export const useNoHint = useStorage('caici-hard-mode', false)
+export const useNumberTone = useStorage('caici-number-tone', false)
+export const useCheckAssist = useStorage('caici-check-assist', false)
+export const useStrictMode = useStorage('caici-strict', true)
+export const acceptCollecting = useStorage('caici-accept-collecting', true)
+export const topicNow = useStorage<Topic>('caici-topic-now', 'chengyu4')
 
 export const meta = computed<TriesMeta>({
   get() {
