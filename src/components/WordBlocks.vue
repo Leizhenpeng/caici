@@ -42,8 +42,8 @@ watchEffect(() => {
       class="tile"
       :class="[
         flip ? 'revealed' : '',
-        ifMinFont5 ? '!w-16 !h-16' : '',
-        ifMinFont7 ? '!w-11 !h-11' : '',
+        ifMinFont5 ? '!w-16 !h-18' : '',
+        ifMinFont7 ? '!w-11 !h-13' : '',
       ]"
     >
       <template v-if="animate">

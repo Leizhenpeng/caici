@@ -81,3 +81,9 @@ ul {
     transform: translate(-1px);
   }
 }
+
+
+.tone-scale{
+  transform-origin: 20% 50%;
+  transform: scale(0.84);
+}

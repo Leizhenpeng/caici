@@ -82,8 +82,8 @@ const partTwo = computed(() => {
   <div
     h-20 w-20 border-2 flex="~ center" relative leading-1em font-serif :class="[
       blockColor,
-      ifMinFont5 ? '!w-16 !h-16 ' : '',
-      ifMinFont7 ? '!w-11 !h-12 ' : '',
+      ifMinFont5 ? '!w-16 !h-18 ' : '',
+      ifMinFont7 ? '!w-11 !h-13 ' : '',
     ]"
   >
     <template v-if="char?.char?.trim()">
@@ -119,25 +119,29 @@ const partTwo = computed(() => {
           absolute text-3xl leading-1em :class="[
             getColor(parsed?.char, true),
             useMask ? 'top-8.5' : 'top-7',
-            ifMinFont5 ? '!text-2xl !top-6' : '',
-            ifMinFont7 ? '!text-xl !top-4' : '',
-
+            ifMinFont5 ? useMask ? 'top-8.5' : '!text-3xl !top-6 !leading-30px' : '',
+            ifMinFont7 ? useMask ? '!text-xl !top-26px  !leading-20px' : '!text-xl !top-20px !leading-20px' : '',
           ]"
         >
           {{ char.char }}
         </div>
         <div
-          absolute font-mono text-center left-0 right-0 font-100 flex flex-col items-center :class="[
+          absolute font-mono text-center left-0 right-0 font-100 flex flex-col items-center justify-center :class="[
             useMask ? 'top-14px' : 'top-2',
-            ifMinFont5 ? '!text-14px' : '',
-            ifMinFont7 ? '!text-8px !top-4px ' : '',
+            ifMinFont5 ? '!text-14px !leading-16px' : '',
+            ifMinFont7 ? useMask ? '!top-11px !leading-11px !text-8px' : '!text-8px !top-4px  !leading-18px' : '',
           ]"
         >
-          <div relative ma items-start flex="~ x-center">
+          <div
+            relative ma items-start flex="~ x-center"
+            :class="[
+              ifMinFont7 ? useMask ? 'tone-scale' : '' : '',
+            ]"
+          >
             <div v-if="char._1" :class="getColor(parsed?._1)" mx-1px>
               {{ char._1 }}
             </div>
-            <div v-if="partTwo" mx-1px flex>
+            <div v-if="partTwo" flex>
               <div v-for="w, idx of partTwo" :key="idx" relative>
                 <div :class="getColor(parsed?._2)">
                   {{ inputMode === 'sp' ? w : w.replace('v', 'u') }}
@@ -150,7 +154,7 @@ const partTwo = computed(() => {
                   v-if="!useNumberTone && idx === toneCharLocation" :tone="char.tone"
                   :class="getColor(parsed?.tone)" absolute w="86%" left="8%" :style="{
                     bottom: useMask
-                      ? '1.25rem'
+                      ? ifMinFont7 ? '14px' : '1.25rem'
                       : w === 'v'
                         ? '0.85rem'
                         : '0.78rem',
