@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import confetti from 'canvas-confetti'
-import { isPassed } from '~/state'
+import { isPassed, showHelp } from '~/state'
 
 function congrats() {
   const defaults = {
@@ -41,7 +41,7 @@ function congrats() {
 }
 
 watch(isPassed, (v) => {
-  if (v)
+  if (v && !showHelp.value)
     setTimeout(congrats, 300)
 }, { flush: 'post' })
 </script>

@@ -13,7 +13,7 @@ import {
   showHelp,
   showHint,
 } from '~/state'
-import { markStart, currentMeta, tries, useNoHint, useStrictMode, wordLengthNow } from '~/storage'
+import { currentMeta, markStart, topicNow, tries, useNoHint, useStrictMode, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 const el = ref<HTMLInputElement>()
@@ -24,6 +24,17 @@ const shake = autoResetRef(false, 500)
 
 const isFinishedDelay = debouncedRef(isFinished, 800)
 
+function resetInputValue() {
+  inputValue.value = ''
+  input.value = ''
+}
+
+watch(
+  topicNow,
+  () => {
+    resetInputValue()
+  },
+)
 function enter() {
   if (input.value.length !== wordLengthNow.value)
     return
@@ -94,13 +105,7 @@ watchEffect(() => {
         </div>
       </template>
 
-      <WordBlocks
-        v-if="!isFinished"
-        :class="{ shake }"
-        :word="input"
-        :active="true"
-        @click="focus()"
-      />
+      <WordBlocks v-if="!isFinished" :class="{ shake }" :word="input" :active="true" @click="focus()" />
 
       <div mt-1 />
 
@@ -108,35 +113,20 @@ watchEffect(() => {
         <div v-if="!isFinished" flex="~ col gap-2" items-center>
           <div relative border="2 base rounded-0">
             <input
-              ref="el"
-              v-model="inputValue"
-              bg-transparent w-86 p3 outline-none text-center
-              type="text"
-              autocomplete="false"
-              :placeholder="t('input-placeholder')"
-              :disabled="isFinished"
-              :class="{ shake }"
-              @input="handleInput"
-              @keydown.enter="enter"
+              ref="el" v-model="inputValue" bg-transparent w-86 p3 outline-none text-center type="text"
+              autocomplete="false" :placeholder="t('input-placeholder')" :disabled="isFinished" :class="{ shake }"
+              @input="handleInput" @keydown.enter="enter"
             >
             <div
-              absolute top-0 left-0 right-0 bottom-0
-              flex="~ center" bg-base
-              transition-all duration-300 text-mis
-              pointer-events-none
-              :class="showToast ? '' : 'op0 translate-y--1'"
+              absolute top-0 left-0 right-0 bottom-0 flex="~ center" bg-base transition-all duration-300 text-mis
+              pointer-events-none :class="showToast ? '' : 'op0 translate-y--1'"
             >
               <span tracking-1 pl1>
                 {{ t('invalid-idiom') }}
               </span>
             </div>
           </div>
-          <button
-            mt3
-            btn p="x6 y2"
-            :disabled="input.length !== wordLengthNow"
-            @click="enter"
-          >
+          <button mt3 btn p="x6 y2" :disabled="input.length !== wordLengthNow" @click="enter">
             {{ t('ok-spaced') }}
           </button>
           <div v-if="tries.length > 4 && !isFailed" op50>
@@ -169,22 +159,13 @@ watchEffect(() => {
           测试用
         </div>
         <div flex gap2>
-          <a
-            class="btn"
-            :href="`/?dev=hey&d=${dayNo - 1}`"
-          >
+          <a class="btn" :href="`/?dev=hey&d=${dayNo - 1}`">
             上一天
           </a>
-          <button
-            class="btn"
-            @click="reset"
-          >
+          <button class="btn" @click="reset">
             重置
           </button>
-          <a
-            class="btn"
-            :href="`/?dev=hey&d=${dayNo + 1}`"
-          >
+          <a class="btn" :href="`/?dev=hey&d=${dayNo + 1}`">
             下一天
           </a>
         </div>
