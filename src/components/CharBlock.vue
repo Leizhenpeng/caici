@@ -129,7 +129,7 @@ const partTwo = computed(() => {
           absolute font-mono text-center left-0 right-0 font-100 flex flex-col items-center justify-center :class="[
             useMask ? 'top-14px' : 'top-2',
             ifMinFont5 ? '!text-14px !leading-16px' : '',
-            ifMinFont7 ? useMask ? '!top-11px !leading-11px !text-8px' : '!text-8px !top-4px  !leading-18px' : '',
+            ifMinFont7 ? useMask ? '!top-11px !leading-11px !text-8px' : '!text-12px !top-4px  !leading-18px' : '',
           ]"
         >
           <div
