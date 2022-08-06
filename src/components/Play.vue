@@ -93,7 +93,7 @@ watchEffect(() => {
     <p text-center w-full font-serif>
       <b>{{ dayNoHanzi }}·{{ nowTopicTitleShort }}</b>
     </p>
-    <div flex="~ col between" pt4 items-center>
+    <div v-show="!showHelp" flex="~ col between" pt4 items-centerl>
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" @click="focus()" />
 
       <template v-if="currentMeta.answer">
@@ -154,7 +154,7 @@ watchEffect(() => {
       </Transition>
 
       <template v-if="isDev">
-        <div h-200 />
+        <div h-20 />
         <div op50 mb-2>
           测试用
         </div>
