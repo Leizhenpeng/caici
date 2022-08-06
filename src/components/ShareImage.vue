@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { toPng } from 'html-to-image'
 import { saveAs } from 'file-saver'
+import { useQRCode } from '@vueuse/integrations/useQRCode'
 import { dayNoHanzi, isIOS, isMobile, useMask } from '~/state'
 import { tries } from '~/storage'
 import { t } from '~/i18n'
@@ -34,6 +35,15 @@ onMounted(() => render())
 async function download() {
   saveAs(dataUrl.value, `${t('name')} ${dayNoHanzi.value}${useMask.value ? ' 遮罩' : ''}.png`)
 }
+
+const text = ref('https://caicis.forkway.cn/')
+const qrcode = useQRCode(text, {
+  margin: 2,
+  color: {
+    // dark: '#ffffff80',
+    light: '#ffffff90',
+  },
+})
 </script>
 
 <template>
@@ -56,12 +66,17 @@ async function download() {
 
   <div v-if="show" fixed op0 top-0 left-0 pointer-events-none>
     <div ref="el" flex="~ col" items-center p="x6 y4" bg-base relative text-center>
-      <AppName w-full />
-      <div w-full text-xs mt1 mb3 op50 ws-nowrap>
-        caici.forkway.cn
+      <div flex="~ between" items-center w-full mb-2>
+        <div flex=" ~ col" items-start justify-end h-full>
+          <AppName />
+          <ResultFooter :day="true" mt2 w-full />
+        </div>
+        <img rounded-sm w-18 h-18 :src="qrcode" alt="QR Code">
       </div>
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" :animate="false" />
-      <ResultFooter :day="true" mt3 w-full />
+      <div text-xs mt3 op50 ws-nowrap>
+        caici.forkway.cn
+      </div>
     </div>
   </div>
 </template>

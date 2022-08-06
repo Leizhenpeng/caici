@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { currentMeta, formatDuration } from '~/storage'
 import { t } from '~/i18n'
-import { dayNoHanzi } from '~/state'
-
+import { dayNoHanzi, nowTopicTitleShort } from '~/state'
 defineProps<{
   day?: boolean
 }>()
@@ -37,7 +36,7 @@ const hintText = computed(() => {
 <template>
   <div op50 my1 text-sm ws-nowrap text-center>
     <template v-if="day">
-      {{ dayNoHanzi }} ·
+      {{ dayNoHanzi }} · {{ nowTopicTitleShort }} ·
     </template>
     {{ hintText }} ·
     <template v-if="currentMeta.strict">
