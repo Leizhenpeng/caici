@@ -65,8 +65,8 @@ const qrcode = useQRCode(text, {
   </div>
 
   <div v-if="show" fixed op0 top-0 left-0 pointer-events-none>
-    <div ref="el" flex="~ col" items-center p="x6 y4" bg-base relative text-center>
-      <div flex="~ between" items-center w-full mb-2>
+    <div ref="el" flex="~ col" items-center p="x6 t6" bg-base relative text-center>
+      <div flex="~ between" items-center w-full mb-3>
         <div flex=" ~ col" items-start justify-end h-full>
           <AppName />
           <ResultFooter :day="true" mt2 w-full />
@@ -74,7 +74,7 @@ const qrcode = useQRCode(text, {
         <img rounded-sm w-18 h-18 :src="qrcode" alt="QR Code">
       </div>
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" :animate="false" />
-      <div text-xs mt3 op50 ws-nowrap>
+      <div text-xs mt3 op50 mb2 ws-nowrap>
         caici.forkway.cn
       </div>
     </div>
