@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { colorblind, inputMode, currentMeta, spMode, useCheckAssist, useNoHint, useNumberTone as useNumberToneRaw, useStrictMode } from '~/storage'
+import { colorblind, currentMeta, inputMode, spMode, topicNow, useCheckAssist, useNoHint, useNumberTone as useNumberToneRaw, useStrictMode } from '~/storage'
 import { useNumberTone } from '~/state'
 import { locale, t } from '~/i18n'
 
@@ -85,7 +85,7 @@ defineProps<{
         square-btn m2
         :class="[
           useStrictMode ? 'text-primary' : 'op80',
-          !!currentMeta.tries?.length ? 'op50 pointer-events-none' : ''
+          (!!currentMeta.tries?.length || topicNow !== 'chengyu4') ? 'op50 pointer-events-none' : '',
         ]"
         @click="useStrictMode = !useStrictMode"
       >

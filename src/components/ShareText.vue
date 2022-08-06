@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { t } from '~/i18n'
-import { answer, dayNoHanzi, isMobile, parseWord, testAnswer } from '~/state'
+import { answer, dayNoHanzi, isMobile, nowTopicTitleShort, parseWord, testAnswer } from '~/state'
 import { currentMeta, tries } from '~/storage'
 
 const lines = computed(() => {
@@ -26,16 +26,18 @@ const lines = computed(() => {
   })
 
   return [
+    t('name'),
+    '',
     [
-      t('name'),
       dayNoHanzi.value,
+      nowTopicTitleShort.value,
       currentMeta.value.strict ? t('strict-mode').slice(0, 2) : '',
       !currentMeta.value.hint ? t('hint-level-none') : '',
     ].filter(Boolean).join(' · '),
     '',
     ...table,
     '',
-    'caici.forkway.cn',
+    'https://caici.forkway.cn',
   ]
 })
 
