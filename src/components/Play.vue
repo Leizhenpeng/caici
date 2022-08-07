@@ -7,6 +7,7 @@ import {
   isDev,
   isFailed,
   isFinished,
+  isMobile,
   nowTopicTitleShort,
   showCheatSheet,
   showFailed,
@@ -74,7 +75,11 @@ function sheet() {
 }
 
 watchEffect(() => {
-  if (!showHelp.value && breakpoints.lg)
+  if (showHelp.value)
+    return
+  if (isMobile)
+    return
+  if (breakpoints.lg)
     focus()
 })
 
