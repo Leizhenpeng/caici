@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <button
-    square-btn flex-gap-1
+    square-btn flex-gap-1 mx2
     :class="useMask ? 'text-primary' : hint ? 'op50' : ''" ma
     @click="useMask = !useMask"
   >

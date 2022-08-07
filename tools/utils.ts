@@ -41,3 +41,7 @@ export function normalizePinyin(pinyin: string) {
     return body + tone
   }).join(' ')
 }
+
+export function timeout(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}

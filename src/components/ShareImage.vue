@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import console from 'console'
 import { toPng } from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
@@ -14,7 +15,32 @@ const dataUrlMasked = ref('')
 
 const dataUrl = computed(() => useMask.value ? dataUrlMasked.value : dataUrlUnmasked.value)
 
+const text = ref('https://caicis.forkway.cn/')
+const qrcode = useQRCode(text, {
+  errorCorrectionLevel: 'H',
+  quality: 0.3,
+  margin: 2,
+  color: {
+    dark: isDark.value ? '#ffffff' : '#000000',
+    light: isDark.value ? '#00000010' : '#ffffff10',
+  },
+})
+
+// promise await qrcode is note empty
+async function waitQRCode() {
+  return new Promise<void>((resolve) => {
+    // until qrcode is not empty
+    const interval = setInterval(() => {
+      if (qrcode.value) {
+        clearInterval(interval)
+        resolve()
+      }
+    }, 200)
+  })
+}
+
 async function render() {
+  await waitQRCode()
   show.value = true
   await nextTick()
   await nextTick()
@@ -22,6 +48,7 @@ async function render() {
   const p = useMask.value
   useMask.value = false
   await nextTick()
+  await toPng(el.value!)
   dataUrlUnmasked.value = await toPng(el.value!)
   useMask.value = true
   await nextTick()
@@ -35,24 +62,13 @@ onMounted(() => render())
 async function download() {
   saveAs(dataUrl.value, `${t('name')} ${dayNoHanzi.value}${useMask.value ? ' 遮罩' : ''}.png`)
 }
-
-const text = ref('https://caicis.forkway.cn/')
-const qrcode = useQRCode(text, {
-  errorCorrectionLevel: 'H',
-  quality: 0.3,
-  margin: 2,
-  color: {
-    dark: isDark.value ? '#ffffff' : '#000000',
-    light: isDark.value ? '#00000010' : '#ffffff10',
-  },
-})
 </script>
 
 <template>
   <div v-if="isMobile" op50 mb4>
     {{ t('press-and-download-image') }}
   </div>
-  <img v-if="dataUrl" :src="dataUrl" w-80 min-h-10 border="~ base rounded">
+  <img v-if="dataUrl && qrcode" :src="dataUrl" w-80 min-h-10 border="~ base rounded">
   <div v-else w-80 border="~ base rounded" p4 animate-pulse>
     {{ t('rendering') }}
   </div>
@@ -63,7 +79,7 @@ const qrcode = useQRCode(text, {
       {{ t('download') }}
     </button>
 
-    <ToggleMask mx2 />
+    <ToggleMask />
   </div>
 
   <div v-if="show" fixed op0 top-0 left-0 pointer-events-none>
@@ -71,7 +87,9 @@ const qrcode = useQRCode(text, {
       <div flex="~ between" items-center w-full mb-3>
         <div flex=" ~ col" items-start justify-end h-full>
           <AppName />
-          <ResultFooter :day="true" mt2 w-full :demo-version="1" />
+          <div class="mt2 w-full">
+            <ResultFooter :day="true" :demo-version="1" />
+          </div>
         </div>
         <img rounded-sm w-18 h-18 :src="qrcode" alt="QR Code">
       </div>
