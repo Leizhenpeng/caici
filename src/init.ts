@@ -1,4 +1,4 @@
-import { initialized, markEnd, markStart, currentMeta, pauseTimer } from './storage'
+import { currentMeta, initialized, markEnd, markStart, pauseTimer } from './storage'
 import { answer, dayNo, daySince, isDev, isFinished, isPassed, showCheatSheet, showHelp } from './state'
 import { t } from './i18n'
 // import { sendAnalytics } from './analytics'
@@ -25,7 +25,7 @@ watch(daySince, (n, o) => {
 watch([isFinished, currentMeta], () => {
   if (isFinished.value)
     markEnd()
-    // sendAnalytics()
+  // sendAnalytics()
 }, { flush: 'post' })
 
 watch(isFinished, (v) => {
