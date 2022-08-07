@@ -6,6 +6,7 @@ import { useQRCode } from '@vueuse/integrations/useQRCode'
 import { dayNoHanzi, isDark, isIOS, isMobile, useMask } from '~/state'
 import { tries } from '~/storage'
 import { t } from '~/i18n'
+import { WHOLE_URL } from '~/logic'
 
 const el = ref<HTMLDivElement>()
 const show = ref(false)
@@ -15,7 +16,7 @@ const dataUrlMasked = ref('')
 
 const dataUrl = computed(() => useMask.value ? dataUrlMasked.value : dataUrlUnmasked.value)
 
-const text = ref('https://caicis.forkway.cn/')
+const text = ref(WHOLE_URL)
 const qrcode = useQRCode(text, {
   errorCorrectionLevel: 'H',
   quality: 0.3,
