@@ -2,7 +2,7 @@
 import { toPng } from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
-import { dayNoHanzi, isIOS, isMobile, useMask } from '~/state'
+import { dayNoHanzi, isDark, isIOS, isMobile, useMask } from '~/state'
 import { tries } from '~/storage'
 import { t } from '~/i18n'
 
@@ -38,10 +38,12 @@ async function download() {
 
 const text = ref('https://caicis.forkway.cn/')
 const qrcode = useQRCode(text, {
+  errorCorrectionLevel: 'H',
+  quality: 0.3,
   margin: 2,
   color: {
-    // dark: '#ffffff80',
-    light: '#ffffff90',
+    dark: isDark.value ? '#ffffff' : '#000000',
+    light: isDark.value ? '#00000010' : '#ffffff10',
   },
 })
 </script>
@@ -69,7 +71,7 @@ const qrcode = useQRCode(text, {
       <div flex="~ between" items-center w-full mb-3>
         <div flex=" ~ col" items-start justify-end h-full>
           <AppName />
-          <ResultFooter :day="true" mt2 w-full />
+          <ResultFooter :day="true" mt2 w-full :demo-version="1" />
         </div>
         <img rounded-sm w-18 h-18 :src="qrcode" alt="QR Code">
       </div>

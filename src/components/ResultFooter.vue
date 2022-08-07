@@ -2,10 +2,15 @@
 import { currentMeta, formatDuration } from '~/storage'
 import { t } from '~/i18n'
 import { dayNoHanzi, nowTopicTitleShort } from '~/state'
-defineProps<{
-  day?: boolean
-}>()
 
+const props = withDefaults(defineProps<{
+  day?: boolean
+  demoVersion?: number
+}>(), {
+  demoVersion: 0, // 0: paly, 1: shareImage, 2: demo2
+})
+
+const { demoVersion, day } = props
 // const hintText = computed(() => {
 //   if (!currentMeta.value.hintLevel)
 //     return t('hint-level-none')
@@ -34,7 +39,7 @@ const hintText = computed(() => {
 </script>
 
 <template>
-  <div op50 my1 text-sm ws-nowrap text-center>
+  <div v-if="demoVersion === 0" op50 my1 text-sm ws-nowrap text-center>
     <template v-if="day">
       {{ dayNoHanzi }} · {{ nowTopicTitleShort }} ·
     </template>
@@ -43,5 +48,17 @@ const hintText = computed(() => {
       {{ t('strict-mode') }} ·
     </template>
     {{ formatDuration(currentMeta.duration || 0) }}
+  </div>
+  <div v-if="demoVersion === 1" mt-2 text-md ws-nowrap text-left ml-1px>
+    <div v-if="day" font-serif op-80>
+      {{ dayNoHanzi }} · {{ nowTopicTitleShort }}
+    </div>
+    <p text-sm op-50>
+      {{ hintText }} ·
+      <template v-if="currentMeta.strict">
+        {{ t('strict-mode') }} ·
+      </template>
+      {{ formatDuration(currentMeta.duration || 0) }}
+    </p>
   </div>
 </template>
