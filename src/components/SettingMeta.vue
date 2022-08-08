@@ -1,10 +1,15 @@
 <script lang="ts" setup>
 import { defineProps } from 'vue'
-defineProps<{
+
+const props = withDefaults(defineProps<{
   keyName: string
   keyDescription?: string
+  keyType: 'str' | 'btn'
   keyValue?: string
-}>()
+}>(), {
+  keyType: 'str',
+})
+const { keyType } = props
 </script>
 
 <template>
@@ -13,7 +18,7 @@ defineProps<{
     font-serif
   >
     <div flex="~ col justify-start">
-      <p text-md>
+      <p text-base>
         {{ keyName }}
       </p>
       <p v-if="keyDescription!" text-xs>
@@ -21,8 +26,11 @@ defineProps<{
       </p>
     </div>
 
-    <slot name="key">
+    <div v-if="keyType === 'str'" text-base>
       {{ keyValue }}
-    </slot>
+    </div>
+    <div v-else-if="keyType === 'btn'">
+      <n-switch size="medium" />
+    </div>
   </div>
 </template>

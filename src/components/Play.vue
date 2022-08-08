@@ -13,6 +13,7 @@ import {
   showFailed,
   showHelp,
   showHint,
+  useMask,
 } from '~/state'
 import { currentMeta, markStart, topicNow, tries, useNoHint, useStrictMode, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
@@ -34,6 +35,7 @@ watch(
   topicNow,
   () => {
     resetInputValue()
+    useMask.value = false
   },
 )
 function enter() {

@@ -6,6 +6,7 @@ import Vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 export default defineConfig({
   resolve: {
@@ -29,6 +30,7 @@ export default defineConfig({
           dts: true,
         }),
         Components({
+          resolvers: [NaiveUiResolver()],
           dts: true,
         }),
         Unocss(),

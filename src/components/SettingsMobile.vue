@@ -32,30 +32,24 @@ function close() {
     <p text-xl font-serif mb4 mxa>
       <b>{{ t('setting-title') }} </b>
     </p>
-    <div flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-340px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded>
+    <div flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded>
       <p text-md font-serif pl-2>
         <b> 功能 </b>
       </p>
       <SettingMeta key-name="注音" key-description="汉字的拼读方案" key-value="拼音" />
       <SettingMeta key-name="拼法" key-description="双拼的方案选择" key-value="自然码" />
       <SettingMeta key-name="声形" key-description="拼音声调的样式" key-value="符号" />
-      <SettingMeta key-name="约束" key-description="限制输入内容必须为相应的成语或古诗词">
-        <template #key>
-          <button>
-            222
-          </button>
-        </template>
-      </SettingMeta>
+      <SettingMeta key-name="约束" key-description="限制输入内容必须为相应的成语或古诗词" key-type="btn" />
     </div>
-    <div flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-340px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded>
+    <div flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded>
       <p text-md font-serif pl-2>
         <b> 外观 </b>
       </p>
       <SettingMeta key-name="用言" key-description="这会影响到部分文案和提醒相关的功能" key-value="简体" />
       <SettingMeta key-name="用色" key-description="主题色" key-value="暗黑" />
-      <SettingMeta key-name="辅言" key-description="获取字音, 偏旁, 字形等方面的提醒" key-value="符号" />
-      <SettingMeta key-name="辅助" key-description="当前尝试信息是否重复" key-value="符号" />
-      <SettingMeta key-name="辅示" key-description="限制输入内容必须为相应的成语或古诗词">
+      <SettingMeta key-name="辅言" key-description="获取字音, 偏旁, 字形等方面的提醒" key-type="btn" />
+      <SettingMeta key-name="辅助" key-description="当前尝试信息是否重复" key-type="btn" />
+      <SettingMeta key-name="辅示" key-description="限制输入内容必须为相应的成语或古诗词" key-type="btn">
         <template #key>
           <button>
             222
