@@ -40,6 +40,7 @@ export const showCheatSheet = ref(false)
 export const showPrivacyNotes = ref(false)
 export const showShareDialog = ref(false)
 export const useMask = ref(false)
+export const showMultiplayer = ref(false)
 
 export const useNumberTone = computed(() => {
   if (inputMode.value === 'sp')
@@ -63,9 +64,9 @@ export const dayNoHanzi = computed(() => `${numberToHanzi(dayNo.value)}日`)
 export const answer = computed(() =>
   params.get('word')
     ? {
-        word: params.get('word')!,
-        hint: getHint(params.get('word')!),
-      }
+      word: params.get('word')!,
+      hint: getHint(params.get('word')!),
+    }
     : getAnswerOfDay(dayNo.value),
 )
 
