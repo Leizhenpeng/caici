@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { CSSProperties } from 'vue'
 import { defineProps } from 'vue'
 
 const props = withDefaults(defineProps<{
@@ -6,15 +7,38 @@ const props = withDefaults(defineProps<{
   keyDescription?: string
   keyType: 'str' | 'btn'
   keyValue?: string
+  modelValue?: any
+  ifDisabled?: boolean
 }>(), {
   keyType: 'str',
+  ifDisabled: false,
 })
+const emit = defineEmits(['update:modelValue'])
+const el = ref(null)
+const color = useCssVar('--c-ok', el)
+const railStyle = ({
+  focused,
+  checked,
+}: {
+  focused: boolean
+  checked: boolean
+}) => {
+  const style: CSSProperties = {}
+  if (checked) {
+    style.background = color.value
+    if (focused)
+      style.boxShadow = '0 0 0 2px #1d9c9c20'
+  }
+  return style
+}
+
 const { keyType } = props
 </script>
 
 <template>
   <div
-    flex="~ between row" px-2 py-1 rounded hover:bg-dark hover:bg-op-6 class="hover:dark:bg-white hover:dark:bg-op-6"
+    ref="el" flex="~ between row" px-2 py-1 rounded hover:bg-dark hover:bg-op-6
+    class="hover:dark:bg-white hover:dark:bg-op-6"
     font-serif
   >
     <div flex="~ col justify-start">
@@ -30,7 +54,13 @@ const { keyType } = props
       {{ keyValue }}
     </div>
     <div v-else-if="keyType === 'btn'">
-      <n-switch size="medium" />
+      <n-switch
+        :disabled="ifDisabled" :value="modelValue" :on-update:value="
+          (value: boolean) => {
+            emit('update:modelValue', value)
+          }
+        " size="medium" :rail-style="railStyle"
+      />
     </div>
   </div>
 </template>

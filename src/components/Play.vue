@@ -15,7 +15,7 @@ import {
   showHint,
   useMask,
 } from '~/state'
-import { currentMeta, markStart, topicNow, tries, useNoHint, useStrictMode, wordLengthNow } from '~/storage'
+import { currentMeta, markStart, topicNow, tries, useHint, useStrictMode, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 const el = ref<HTMLInputElement>()
@@ -147,7 +147,7 @@ watchEffect(() => {
             <button mx2 icon-btn text-base pb2 gap-1 flex="~ center" @click="sheet()">
               <div i-carbon-grid /> {{ t('cheatsheet') }}
             </button>
-            <button v-if="!useNoHint" mx2 icon-btn text-base pb2 gap-1 flex="~ center" @click="hint()">
+            <button v-if="useHint" mx2 icon-btn text-base pb2 gap-1 flex="~ center" @click="hint()">
               <div i-carbon-idea /> {{ t('hint') }}
             </button>
           </div>

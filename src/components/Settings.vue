@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { colorblind, currentMeta, inputMode, spMode, topicNow, useCheckAssist, useNoHint, useNumberTone as useNumberToneRaw, useStrictMode } from '~/storage'
+import { colorblind, currentMeta, inputMode, spMode, topicNow, useCheckAssist, useHint, useNumberTone as useNumberToneRaw, useStrictMode } from '~/storage'
 import { showSettings, useNumberTone } from '~/state'
 import { locale, t } from '~/i18n'
 
@@ -72,18 +72,20 @@ function close() {
       </div>
     </div>
     <div v-if="!lite" flex="~ center wrap">
-      <button square-btn m2 :class="useNoHint ? 'text-primary' : 'op80'" @click="useNoHint = !useNoHint">
+      <button square-btn m2 :class="!useHint ? 'text-primary' : 'op80'" @click="useHint = !useHint">
         {{ t('hard-mode') }}
-        <div v-if="useNoHint" square-btn-mark />
+        <div v-if="!useHint" square-btn-mark />
       </button>
       <button square-btn m2 :class="useCheckAssist ? 'text-primary' : 'op80'" @click="useCheckAssist = !useCheckAssist">
         {{ t('check-assist') }}
         <div v-if="useCheckAssist" square-btn-mark />
       </button>
-      <button square-btn m2 :class="[
-        useStrictMode ? 'text-primary' : 'op80',
-        (!!currentMeta.tries?.length || topicNow !== 'chengyu4') ? 'op50 pointer-events-none' : '',
-      ]" @click="useStrictMode = !useStrictMode">
+      <button
+        square-btn m2 :class="[
+          useStrictMode ? 'text-primary' : 'op80',
+          (!!currentMeta.tries?.length || topicNow !== 'chengyu4') ? 'op50 pointer-events-none' : '',
+        ]" @click="useStrictMode = !useStrictMode"
+      >
         {{ t('strict-mode') }}
         <div v-if="useStrictMode" square-btn-mark />
       </button>
