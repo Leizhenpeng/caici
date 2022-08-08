@@ -20,7 +20,8 @@ const lg = breakpoints.lg
     <CheatSheet />
   </Modal>
   <Modal v-model="showSettings" :direction="lg ? 'top' : 'bottom'">
-    <Settings my6 />
+    <Settings v-if="lg" my6 />
+    <SettingsMobile v-else my6 />
   </Modal>
   <Modal v-model="showHint" :direction="lg ? 'top' : 'bottom'">
     <Hint />
