@@ -5,7 +5,7 @@ import { defineProps } from 'vue'
 const props = withDefaults(defineProps<{
   keyName: string
   keyDescription?: string
-  keyType: 'str' | 'btn'
+  keyType?: 'str' | 'btn'
   keyValue?: string
   modelValue?: any
   ifDisabled?: boolean
@@ -37,8 +37,8 @@ const { keyType } = props
 
 <template>
   <div
-    ref="el" flex="~ between row" px-2 py-1 rounded hover:bg-dark hover:bg-op-6
-    class="hover:dark:bg-white hover:dark:bg-op-6"
+    ref="el" flex="~ between row" px-2 py-1 rounded
+    class="hover:dark:bg-white hover:dark:bg-op-6 hover:bg-dark hover:bg-op-6" :class="[ifDisabled ? 'op50' : '']"
     font-serif
   >
     <div flex="~ col justify-start">

@@ -30,6 +30,7 @@ declare module '@vue/runtime-core' {
     PrivacyNotes: typeof import('./src/components/PrivacyNotes.vue')['default']
     ResultFooter: typeof import('./src/components/ResultFooter.vue')['default']
     SettingMeta: typeof import('./src/components/SettingMeta.vue')['default']
+    SettingMetaCheck: typeof import('./src/components/SettingMetaCheck.vue')['default']
     Settings: typeof import('./src/components/Settings.vue')['default']
     SettingsMobile: typeof import('./src/components/SettingsMobile.vue')['default']
     ShareButton: typeof import('./src/components/ShareButton.vue')['default']
