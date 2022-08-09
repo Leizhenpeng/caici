@@ -3,6 +3,7 @@ import console from 'console'
 import { toPng } from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
+import AppNameLarge from './AppNameLarge.vue'
 import { dayNoHanzi, isDark, isIOS, isMobile, useMask } from '~/state'
 import { tries } from '~/storage'
 import { t } from '~/i18n'
@@ -83,12 +84,12 @@ async function download() {
     <ToggleMask />
   </div>
 
-  <div v-if="show" fixed op0 top-0 left-0 pointer-events-none>
+  <div v-if="show" fixed op0 top-0 left-0 pointer-events-none select-none>
     <div ref="el" flex="~ col" items-center p="x6 t6" bg-base relative text-center>
       <div flex="~ between" items-center w-full mb-3>
         <div flex=" ~ col" items-start justify-end h-full>
-          <AppName />
-          <div class="mt2 w-full">
+          <AppNameLarge />
+          <div class="mt-1px w-full">
             <ResultFooter :day="true" :demo-version="1" />
           </div>
         </div>

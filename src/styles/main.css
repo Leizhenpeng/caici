@@ -87,3 +87,9 @@ ul {
   transform-origin: 20% 50%;
   transform: scale(0.84);
 }
+
+
+.app-name-scale{
+  transform-origin: 0% 0%;
+  transform: scale(1.4);
+}
