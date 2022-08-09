@@ -249,6 +249,18 @@ watch(
     checkBack(1)
   },
 )
+
+const funcCheckedNow = computed(
+  () => {
+    return changeLevel.value[0].startsWith('1')
+  },
+)
+
+const StyleCheckedNow = computed(
+  () => {
+    return changeLevel.value[1].startsWith('1')
+  },
+)
 </script>
 
 <template>
@@ -261,48 +273,66 @@ watch(
     <p text-xl font-serif mb4 mxa>
       <b>{{ t('setting-title') }} </b>
     </p>
-    <div flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded>
-      <p text-md font-serif pl-2>
-        <b> {{ t('setting-func') }} </b>
-        <b v-if="changeLevel[0] === '1-0'"> {{ t('setting-change-dot') }}{{ t('zhuyin') }}</b>
-        <b v-if="changeLevel[0] === '1-1'"> {{ t('setting-change-dot') }}{{ t('pinfa') }} </b>
-        <b v-if="changeLevel[0] === '1-2'"> {{ t('setting-change-dot') }}{{ t('shenxing') }}</b>
-      </p>
+    <div
+      flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded
+      :class="[StyleCheckedNow ? 'op-40 blur-3 pointer-events-none ' : '']"
+    >
+      <div flex="~ row" justify-start items-center w-fit pl2 pt-1 icon-btn @click="checkBack()">
+        <div v-if="funcCheckedNow" i-carbon-undo />
+        <p text-base font-serif>
+          <b v-show="!funcCheckedNow" class="font-base-color!"> {{ t('setting-func') }} </b>
+          <b v-if="changeLevel[0] === '1-0'"> {{ t('setting-change-dot') }}{{ t('zhuyin') }}</b>
+          <b v-if="changeLevel[0] === '1-1'"> {{ t('setting-change-dot') }}{{ t('pinfa') }} </b>
+          <b v-if="changeLevel[0] === '1-2'"> {{ t('setting-change-dot') }}{{ t('shenxing') }}</b>
+        </p>
+      </div>
+
       <div v-show="changeLevel[0] === '0'" ref="el" flex="~  wrap col gap-1">
-        <SettingMeta :key-name="t('zhuyin')" :key-description="t('zhuyin-des')" :key-value="currentInputModeValue" @click="changeLevel[0] = '1-0'" />
+        <SettingMeta :key-name="t('zhuyin')" :key-description="t('zhuyin-des')" :key-value="currentInputModeValue" @click-item="changeLevel[0] = '1-0'" />
         <SettingMeta
+          v-show="inputMode === 'sp'"
           :key-name="t('pinfa')" :key-description="t('pinfa-des')" :key-value="currentSpModeValue" :if-disabled="inputMode !== 'sp'"
-          @click="changeLevel[0] = '1-1'"
+          @click-item="changeLevel[0] = '1-1'"
         />
-        <SettingMeta :key-name="t('shengxing')" :key-description="t('shengxing-des')" :key-value="currentToneValue" :if-disabled="inputMode === 'sp'" @click="changeLevel[0] = '1-2'" />
+        <SettingMeta
+          v-show="inputMode !== 'sp'"
+          :key-name="t('shengxing')" :key-description="t('shengxing-des')" :key-value="currentToneValue" :if-disabled="inputMode === 'sp'" @click-item="changeLevel[0] = '1-2'"
+        />
         <SettingMeta
           v-model="useStrictMode" :key-name="t('yueshu')" :key-description="t('yueshu-des')" key-type="btn"
           :if-disabled="!!currentMeta.tries?.length || topicNow !== 'chengyu4'"
         />
       </div>
-      <div v-show="changeLevel[0].startsWith('1')" :style="{ minHeight: `${tempHeight1}px` }">
+      <div v-show="funcCheckedNow" :style="{ minHeight: `${tempHeight1}px` }">
         <SettingMetaCheck v-if="changeLevel[0].endsWith('0')" v-model:options="inputModeOptions" @on-checked="checkBack(0)" />
         <SettingMetaCheck v-else-if="changeLevel[0].endsWith('1')" v-model:options="spModeOptions" @on-checked="checkBack(0)" />
         <SettingMetaCheck v-else-if="changeLevel[0].endsWith('2')" v-model:options="toneOptions" @on-checked="checkBack(0)" />
       </div>
     </div>
-    <div flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded>
-      <p text-md font-serif pl-2>
-        <b> {{ t('setting-show') }} </b>
-        <b v-if="changeLevel[1] === '1-0'"> {{ t('setting-change-dot') }}{{ t('yongyan') }} </b>
-        <b v-if="changeLevel[1] === '1-1'"> {{ t('setting-change-dot') }}{{ t('yongse') }} </b>
-      </p>
+
+    <div
+      flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded
+      :class="[funcCheckedNow ? 'op-40 blur-3 pointer-events-none ' : '']"
+    >
+      <div flex="~ row" justify-start items-center w-fit pl2 pt-1 icon-btn @click="checkBack(1)">
+        <div v-if="StyleCheckedNow" i-carbon-undo />
+        <p text-base font-serif>
+          <b v-show="!StyleCheckedNow" class="font-base-color!"> {{ t('setting-show') }} </b>
+          <b v-if="changeLevel[1] === '1-0'"> {{ t('setting-change-dot') }}{{ t('yongyan') }} </b>
+          <b v-if="changeLevel[1] === '1-1'"> {{ t('setting-change-dot') }}{{ t('yongse') }} </b>
+        </p>
+      </div>
       <div v-show="changeLevel[1] === '0'" ref="el1" flex="~  wrap col gap-1">
-        <SettingMeta :key-name="t('yongyan')" :key-description="t('yongyan-des')" :key-value="currentLanguageValue" @click="changeLevel[1] = '1-0'" />
+        <SettingMeta :key-name="t('yongyan')" :key-description="t('yongyan-des')" :key-value="currentLanguageValue" @click-item="changeLevel[1] = '1-0'" />
         <SettingMeta
           :key-name="t('yongse')" :key-description="t('yongse-des')" :key-value="currentThemeValue"
-          @click="changeLevel[1] = '1-1'"
+          @click-item="changeLevel[1] = '1-1'"
         />
         <SettingMeta v-model="useHint" :key-name="t('fuyan')" :key-description="t('fuyan-des')" key-type="btn" />
         <SettingMeta v-model="useCheckAssist" :key-name="t('fuzhu')" :key-description="t('fuzhu-des')" key-type="btn" />
         <SettingMeta v-model="colorblind" :key-name="t('fushi')" :key-description="t('fushi-des')" key-type="btn" />
       </div>
-      <div v-show="changeLevel[1].startsWith('1')" :style="{ minHeight: `${tempHeight2}px` }">
+      <div v-show="StyleCheckedNow" :style="{ minHeight: `${tempHeight2}px` }">
         <SettingMetaCheck
           v-if="changeLevel[1].endsWith('0')" v-model:options="languageOptions"
           @on-checked="checkBack(1)"

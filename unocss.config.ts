@@ -18,6 +18,7 @@ export default defineConfig({
 
       'tab-button': 'font-light op50 hover:op80 h-full px-4',
       'tab-button-active': 'op100 bg-gray-500:10',
+      'font-base-color': 'text-gray-700 dark:text-gray-300',
     },
     [/^(flex|grid)-center/g, () => 'justify-center items-center'],
     [/^(flex|grid)-between/g, () => 'justify-between items-center'],

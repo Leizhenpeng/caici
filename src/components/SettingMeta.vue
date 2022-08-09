@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { CSSProperties } from 'vue'
-import { defineProps } from 'vue'
 
 const props = withDefaults(defineProps<{
   keyName: string
@@ -13,7 +12,7 @@ const props = withDefaults(defineProps<{
   keyType: 'str',
   ifDisabled: false,
 })
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'clickItem', 'clickAll'])
 const el = ref(null)
 const color = useCssVar('--c-ok', el)
 const railStyle = ({
@@ -40,6 +39,7 @@ const { keyType } = props
     ref="el" flex="~ between row" px-2 py-1 rounded
     class="hover:dark:bg-white hover:dark:bg-op-6 hover:bg-dark hover:bg-op-6" :class="[ifDisabled ? 'op50' : '']"
     font-serif
+    @click="$emit('clickAll')"
   >
     <div flex="~ col justify-start">
       <p text-base>
@@ -50,7 +50,11 @@ const { keyType } = props
       </p>
     </div>
 
-    <div v-if="keyType === 'str'" text-base>
+    <div
+      v-if="keyType === 'str'" text-base px-2 @click="$emit(
+        'clickItem',
+      )"
+    >
       {{ keyValue }}
     </div>
     <div v-else-if="keyType === 'btn'">
