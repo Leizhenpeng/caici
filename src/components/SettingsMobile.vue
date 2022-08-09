@@ -21,49 +21,49 @@ defineProps<{
 function close() {
   showSettings.value = false
 }
-
 // index-0 功能 0: 一级 1-0: 二级-第一行 1-1: 二级-第二行 ...
 // index-1 外观 0: 一级 1-0: 二级-第一行 1-1: 二级-第二行 ...
 const changeLevel = ref(['0', '0'])
-const languageOptions = ref([
-  {
-    value: 'hans',
-    label: '简体',
-    check: true,
-  },
-  {
-    value: 'hant',
-    label: '繁体',
-    check: false,
-  },
-])
+const languageOptions = ref(
+  [
+    {
+      value: 'hans',
+      label: '简体',
+      check: true,
+    },
+    {
+      value: 'hant',
+      label: '繁体',
+      check: false,
+    },
+  ])
+
 const themeOptions = ref([
   {
     value: false,
-    label: '明亮风格',
+    label: t('theme-light'),
     check: true,
   },
   {
     value: true,
-    label: '暗色风格',
+    label: t('theme-dark'),
     check: false,
   },
 ])
-
 const inputModeOptions = ref([
   {
     value: 'py',
-    label: '拼音',
+    label: t('pinyin'),
     check: true,
   },
   {
     value: 'zy',
-    label: '注音',
+    label: t('zhuyin'),
     check: false,
   },
   {
     value: 'sp',
-    label: '双拼',
+    label: t('shuangpin'),
     check: false,
   },
 ])
@@ -71,12 +71,12 @@ const inputModeOptions = ref([
 const spModeOptions = ref([
   {
     value: 'sougou',
-    label: '搜狗双拼',
+    label: t('shuangpin-sougou'),
     check: true,
   },
   {
     value: 'xiaohe',
-    label: '小鹤双拼',
+    label: t('shuangpin-xiaohe'),
     check: false,
   },
   // {
@@ -88,12 +88,12 @@ const spModeOptions = ref([
 const toneOptions = ref([
   {
     value: false,
-    label: '符号声调',
+    label: t('tone-symbol'),
     check: true,
   },
   {
     value: true,
-    label: '数字声调',
+    label: t('tone-number'),
     check: false,
   },
 ])
@@ -172,7 +172,7 @@ watch(
 watch(
   themeOptions,
   (value) => {
-    const theme = value.find(item => item.check) as { value: boolean }
+    const theme = value!.find(item => item.check) as { value: boolean }
     isDark.value = theme?.value
   }, {
     deep: true,
@@ -263,15 +263,15 @@ watch(
     </p>
     <div flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded>
       <p text-md font-serif pl-2>
-        <b> 功能 </b>
-        <b v-if="changeLevel[0] === '1-0'"> - 改注译 </b>
-        <b v-if="changeLevel[0] === '1-1'"> - 改拼法 </b>
-        <b v-if="changeLevel[0] === '1-2'"> - 改声形 </b>
+        <b> {{ t('setting-func') }} </b>
+        <b v-if="changeLevel[0] === '1-0'"> {{ t('setting-change-dot') }}{{ t('zhuyin') }}</b>
+        <b v-if="changeLevel[0] === '1-1'"> {{ t('setting-change-dot') }}{{ t('pinfa') }} </b>
+        <b v-if="changeLevel[0] === '1-2'"> {{ t('setting-change-dot') }}{{ t('shenxing') }}</b>
       </p>
       <div v-show="changeLevel[0] === '0'" ref="el" flex="~  wrap col gap-1">
-        <SettingMeta key-name="注音" key-description="汉字的拼读方案" :key-value="currentInputModeValue" @click="changeLevel[0] = '1-0'" />
+        <SettingMeta :key-name="t('zhuyin')" :key-description="t('zhuyin-des')" :key-value="currentInputModeValue" @click="changeLevel[0] = '1-0'" />
         <SettingMeta
-          key-name="拼法" key-description="双拼的方案选择" :key-value="currentSpModeValue" :if-disabled="inputMode !== 'sp'"
+          :key-name="t('pinfa')" key-description="双拼的方案选择" :key-value="currentSpModeValue" :if-disabled="inputMode !== 'sp'"
           @click="changeLevel[0] = '1-1'"
         />
         <SettingMeta key-name="声形" key-description="拼音声调的样式" :key-value="currentToneValue" :if-disabled="inputMode === 'sp'" @click="changeLevel[0] = '1-2'" />
@@ -288,17 +288,19 @@ watch(
     </div>
     <div flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded>
       <p text-md font-serif pl-2>
-        <b> 外观 </b>
+        <b> {{ t('setting-show') }} </b>
+        <b v-if="changeLevel[1] === '1-0'"> {{ t('setting-change-dot') }}{{ t('yongyan') }} </b>
+        <b v-if="changeLevel[1] === '1-1'"> {{ t('setting-change-dot') }}{{ t('yongse') }} </b>
       </p>
       <div v-show="changeLevel[1] === '0'" ref="el1" flex="~  wrap col gap-1">
-        <SettingMeta key-name="用言" key-description="这会影响到部分文案和提醒相关的功能" :key-value="currentLanguageValue" @click="changeLevel[1] = '1-0'" />
+        <SettingMeta :key-name="t('yongyan')" :key-description="t('yongyan-des')" :key-value="currentLanguageValue" @click="changeLevel[1] = '1-0'" />
         <SettingMeta
-          key-name="用色" key-description="主题色" :key-value="currentThemeValue"
+          :key-name="t('yongse')" :key-description="t('yongse-des')" :key-value="currentThemeValue"
           @click="changeLevel[1] = '1-1'"
         />
-        <SettingMeta v-model="useHint" key-name="辅言" key-description="获取字音, 偏旁, 字形等方面的提醒" key-type="btn" />
-        <SettingMeta v-model="useCheckAssist" key-name="辅助" key-description="当前尝试信息是否重复" key-type="btn" />
-        <SettingMeta v-model="colorblind" key-name="辅示" key-description="改善色弱用户游戏体验" key-type="btn" />
+        <SettingMeta v-model="useHint" :key-name="t('fuyan')" :key-description="t('fuyan-des')" key-type="btn" />
+        <SettingMeta v-model="useCheckAssist" :key-name="t('fuzhu')" :key-description="t('fuzhu-des')" key-type="btn" />
+        <SettingMeta v-model="colorblind" :key-name="t('fushi')" :key-description="t('fushi-des')" key-type="btn" />
       </div>
       <div v-show="changeLevel[1].startsWith('1')" :style="{ minHeight: `${tempHeight2}px` }">
         <SettingMetaCheck

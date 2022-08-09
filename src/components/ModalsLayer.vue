@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { nanoid } from 'nanoid'
+import { locale } from '~/i18n'
 import {
   breakpoints,
   showCheatSheet,
@@ -13,6 +15,13 @@ import {
 } from '~/state'
 
 const lg = breakpoints.lg
+
+const localeId = ref(nanoid())
+watch((locale), () => {
+  localeId.value = nanoid()
+}, {
+  immediate: true,
+})
 </script>
 
 <template>
@@ -21,7 +30,7 @@ const lg = breakpoints.lg
   </Modal>
   <Modal v-model="showSettings" :direction="lg ? 'top' : 'bottom'">
     <Settings v-if="lg" my6 />
-    <SettingsMobile v-else my6 />
+    <SettingsMobile v-else :key="localeId" my6 />
   </Modal>
   <Modal v-model="showHint" :direction="lg ? 'top' : 'bottom'">
     <Hint />

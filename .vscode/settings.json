@@ -37,7 +37,9 @@
     "titleBar.activeForeground": "#FFF8FD"
   },
   "i18n-ally.extract.ignored": [
-    "Chee Aun"
+    "Chee Aun",
+    "简体",
+    "繁体"
   ],
   "testing.automaticallyOpenPeekView": "never",
   "i18n-ally.extract.ignoredByFiles": {
