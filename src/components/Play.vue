@@ -93,6 +93,11 @@ watchEffect(() => {
     }, 1200)
   }
 })
+
+function magicDelete() {
+  resetInputValue()
+  focus()
+}
 </script>
 
 <template>
@@ -132,7 +137,7 @@ watchEffect(() => {
                 {{ t('invalid-idiom') }}
               </span>
             </div>
-            <div absolute top-0 right-0 bottom-0 mya px3 flex="~ center" icon-btn op-60 @click="resetInputValue">
+            <div absolute top-0 right-0 bottom-0 mya px3 flex="~ center" icon-btn op-60 @click="magicDelete">
               <div i-carbon-magic-wand-filled />
             </div>
           </div>
