@@ -271,12 +271,12 @@ watch(
       <div v-show="changeLevel[0] === '0'" ref="el" flex="~  wrap col gap-1">
         <SettingMeta :key-name="t('zhuyin')" :key-description="t('zhuyin-des')" :key-value="currentInputModeValue" @click="changeLevel[0] = '1-0'" />
         <SettingMeta
-          :key-name="t('pinfa')" key-description="双拼的方案选择" :key-value="currentSpModeValue" :if-disabled="inputMode !== 'sp'"
+          :key-name="t('pinfa')" :key-description="t('pinfa-des')" :key-value="currentSpModeValue" :if-disabled="inputMode !== 'sp'"
           @click="changeLevel[0] = '1-1'"
         />
-        <SettingMeta key-name="声形" key-description="拼音声调的样式" :key-value="currentToneValue" :if-disabled="inputMode === 'sp'" @click="changeLevel[0] = '1-2'" />
+        <SettingMeta :key-name="t('shengxing')" :key-description="t('shengxing-des')" :key-value="currentToneValue" :if-disabled="inputMode === 'sp'" @click="changeLevel[0] = '1-2'" />
         <SettingMeta
-          v-model="useStrictMode" key-name="约束" key-description="限制输入内容必须为相应的成语或古诗词" key-type="btn"
+          v-model="useStrictMode" :key-name="t('yueshu')" :key-description="t('yueshu-des')" key-type="btn"
           :if-disabled="!!currentMeta.tries?.length || topicNow !== 'chengyu4'"
         />
       </div>
