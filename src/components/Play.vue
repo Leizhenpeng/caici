@@ -132,6 +132,9 @@ watchEffect(() => {
                 {{ t('invalid-idiom') }}
               </span>
             </div>
+            <div absolute top-0 right-0 bottom-0 mya px3 flex="~ center" icon-btn op-60 @click="resetInputValue">
+              <div i-carbon-magic-wand-filled />
+            </div>
           </div>
           <button mt3 btn p="x6 y2" :disabled="input.length !== wordLengthNow" @click="enter">
             {{ t('ok-spaced') }}
