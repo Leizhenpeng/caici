@@ -21,6 +21,7 @@ declare module '@vue/runtime-core' {
     Hint: typeof import('./src/components/Hint.vue')['default']
     Modal: typeof import('./src/components/Modal.vue')['default']
     ModalsLayer: typeof import('./src/components/ModalsLayer.vue')['default']
+    Multiplayer: typeof import('./src/components/Multiplayer.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     NoFuturePlay: typeof import('./src/components/NoFuturePlay.vue')['default']
     NoPastPlay: typeof import('./src/components/NoPastPlay.vue')['default']

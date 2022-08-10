@@ -61,8 +61,10 @@ const validWords = computed(() => allWords.value.filter(i => checkValidIdiom(i, 
         <div w-4 flex-none text-right op50>
           {{ i === 10 ? '10+' : i }}
         </div>
-        <div bg-primary h-5 text-white text-right flex justify-end
-          :style="{ width: triesMap.get(i) ? `${triesMap.get(i)! / tiresMaxCount * 100}%` : '1%' }">
+        <div
+          bg-primary h-5 text-white text-right flex justify-end
+          :style="{ width: triesMap.get(i) ? `${triesMap.get(i)! / tiresMaxCount * 100}%` : '1%' }"
+        >
           <div text-sm mya mr1>
             {{ triesMap.get(i) }}
           </div>
@@ -77,8 +79,10 @@ const validWords = computed(() => allWords.value.filter(i => checkValidIdiom(i, 
     </div>
     <div flex="~ wrap gap-4" justify-center min-w-100px py2>
       <DashboardItem :value="allWords.length" :text="t('used-words')" />
-      <DashboardItem :value="`${Math.round(validWords.length / allWords.length * 100)}%`"
-        :text="t('valid-words-rate')" />
+      <DashboardItem
+        :value="`${Math.round(validWords.length / allWords.length * 100)}%`"
+        :text="t('valid-words-rate')"
+      />
     </div>
     <div flex="~ wrap gap-4" justify-center min-w-100px py2>
       <DashboardItem :value="(historyTriesCount / gamesCount).toFixed(1)" :text="t('average-tries-count')" />

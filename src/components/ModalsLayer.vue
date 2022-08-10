@@ -8,6 +8,7 @@ import {
   showFailed,
   showHelp,
   showHint,
+  showMultiplayer,
   showPrivacyNotes,
   showSettings,
   showShareDialog,
@@ -25,6 +26,9 @@ watch((locale), () => {
 </script>
 
 <template>
+  <Modal v-model="showMultiplayer" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
+    <Multiplayer />
+  </Modal>
   <Modal v-model="showCheatSheet" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
     <CheatSheet />
   </Modal>

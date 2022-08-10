@@ -1,13 +1,18 @@
+<!-- eslint-disable no-console -->
 <script setup lang="ts">
 import type { MatchResult, MatchType, ParsedChar } from '~/logic/types'
-import { inputMode, useCheckAssist, wordLengthNow } from '~/storage'
-import { getSymbolState, ifMinFont5, ifMinFont7, useMask, useNumberTone } from '~/state'
+import { inputMode, useCheckAssist } from '~/storage'
+import { getSymbolState, ifMinFont5 as ifMinFont5_, ifMinFont7 as ifMinFont7_, useMask, useNumberTone } from '~/state'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   char?: ParsedChar
   answer?: MatchResult
   active?: boolean
-}>()
+  forceFour?: boolean
+}>(), {
+  forceFour: false,
+})
+
 const exact = computed(() => props.answer && Object.values(props.answer).every(i => i === 'exact'))
 
 const parsed = computed(() => {
@@ -75,6 +80,17 @@ const partTwo = computed(() => {
   if (!useNumberTone.value && two[index] === 'i')
     return `${two.slice(0, index)}ı${two.slice(index + 1)}`
   return two
+})
+
+const ifMinFont5 = computed(() => {
+  if (!props.forceFour)
+    return ifMinFont5_.value
+  return false
+})
+const ifMinFont7 = computed(() => {
+  if (!props.forceFour)
+    return ifMinFont7_.value
+  return false
 })
 </script>
 

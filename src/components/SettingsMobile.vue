@@ -343,5 +343,6 @@ const StyleCheckedNow = computed(
         />
       </div>
     </div>
+    <div mt-8 />
   </div>
 </template>

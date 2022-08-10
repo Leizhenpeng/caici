@@ -5,7 +5,8 @@ export default defineConfig({
   shortcuts: [
     {
       'btn': 'px-4 py-1 rounded inline-block bg-primary text-white cursor-pointer tracking-wide op90 hover:op100 disabled:cursor-default disabled:bg-gray-600 disabled:!op50 disabled:pointer-events-none',
-      'icon-btn': 'text-1.2em cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-primary disabled:pointer-events-none',
+      'icon-btn-base': 'text-1.2em cursor-pointer select-none opacity-75 transition duration-200 ease-in-out disabled:pointer-events-none',
+      'icon-btn': 'icon-btn-base hover:opacity-100 hover:text-primary ',
       'square-btn': 'flex flex-gap-2 items-center border border-base px2 py1 relative !outline-none',
       'square-btn-mark': 'absolute h-2 w-2 bg-primary -right-0.2rem -top-0.2rem',
 
