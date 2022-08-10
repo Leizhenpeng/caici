@@ -44,7 +44,7 @@ function magicDelete() {
       </button>
     </div>
     <p text-xl font-serif mb2>
-      <b>{{ t('play-together') }}</b>
+      <b>{{ t('play-together') }}-🏗WIP</b>
     </p>
 
     <div>
