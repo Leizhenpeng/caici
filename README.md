@@ -1,4 +1,3 @@
-项目正在🏗 WIP 中, 欢迎 PR. 
 
 # 猜词(CaiCi)
 
@@ -44,6 +43,18 @@
 
 
 请勿剧透！PLEASE DO NOT SPOIL
+
+
+
+
+## Project Status
+
+项目正在🏗 WIP 中, 欢迎 PR
+
+dev 版:https://caici.vercel.app/
+
+稳定版: https://caici.forkway.cn/
+
 
 ## Development Setup
 
