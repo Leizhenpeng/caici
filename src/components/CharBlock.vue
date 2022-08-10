@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{
   char?: ParsedChar
   answer?: MatchResult
   active?: boolean
-  forceFour?: boolean
+  forceFour?: boolean // 强制 4字, 用在多人成语口令中
 }>(), {
   forceFour: false,
 })
@@ -113,7 +113,7 @@ const ifMinFont7 = computed(() => {
         >
           {{ char.char }}
         </div>
-        <div absolute flex items-center text-center top-0 bottom-0 right="2.5" w="5">
+        <div v-if="!forceFour" absolute flex items-center text-center top-0 bottom-0 right="2.5" w="5">
           <div flex="~ center" text-xs style="writing-mode: vertical-rl">
             <span v-if="char._1" :class="getColor(parsed?._1)">
               {{ char._1 }}
@@ -134,6 +134,7 @@ const ifMinFont7 = computed(() => {
         <div
           absolute text-3xl leading-1em :class="[
             getColor(parsed?.char, true),
+            forceFour ? 'text-5xl !top-3 op-80' : '',
             useMask ? 'top-8.5' : 'top-7',
             ifMinFont5 ? useMask ? 'top-8.5' : '!text-3xl !top-6 !leading-30px' : '',
             ifMinFont7 ? useMask ? '!text-xl !top-26px  !leading-20px' : '!text-xl !top-20px !leading-20px' : '',
@@ -142,6 +143,7 @@ const ifMinFont7 = computed(() => {
           {{ char.char }}
         </div>
         <div
+          v-if="!forceFour"
           absolute font-mono text-center left-0 right-0 font-100 flex flex-col items-center justify-center :class="[
             useMask ? 'top-14px' : 'top-2',
             ifMinFont5 ? '!text-14px !leading-16px' : '',

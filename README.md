@@ -1,5 +1,7 @@
 
 # 猜词(CaiCi)
+![Vercel](https://vercelbadge.vercel.app/api/leizhenpeng/caici) 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/341b0594-568f-4029-b0a7-bef466d2195f/deploy-status)](https://app.netlify.com/sites/caici/deploys) 
 
 身为一个[ 汉兜(handle) ](https://handle.antfu.me)老粉丝,天天猜成语有些歪腻, 
 

@@ -25,6 +25,9 @@ function enter() {
 function handleInput(e: Event) {
   const el = (e.target! as HTMLInputElement)
   input.value = filterNonChineseChars(el.value).slice(0, 4)
+
+  if (input.value.length === 4)
+    inputValue.value = input.value
 }
 function resetInputValue() {
   inputValue.value = ''
@@ -46,9 +49,16 @@ function magicDelete() {
     <p text-xl font-serif mb2>
       <b>{{ t('play-together') }}-🏗WIP</b>
     </p>
-
+    <div mt-1 op50 text-md w-full>
+      <p text-center>
+        {{ t('multiplayer-des1') }}
+      </p>
+      <p text-center>
+        {{ t('multiplayer-des2') }}
+      </p><p />
+    </div>
     <div>
-      <WordBlocks :word="input" :active="false" :force-four="true" @click="focus()" />
+      <WordBlocks :word="input" :active="false" :force-four="true" :revealed="false" @click="focus()" />
       <div relative border="2 base rounded-0 ">
         <input
           ref="el" v-model="inputValue" bg-transparent w-86 p3 outline-none text-center type="text"

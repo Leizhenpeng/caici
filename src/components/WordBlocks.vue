@@ -8,7 +8,7 @@ const props = withDefaults(
     answer?: string
     animate?: boolean
     active?: boolean
-    forceFour?: boolean
+    forceFour?: boolean // 强制 4字, 用在多人成语口令中
   }>(), {
     animate: true,
     forceFour: false,
