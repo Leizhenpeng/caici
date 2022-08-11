@@ -8,9 +8,11 @@ const props = withDefaults(defineProps<{
   keyValue?: string
   modelValue?: any
   ifDisabled?: boolean
+  ifShowMask?: boolean
 }>(), {
   keyType: 'str',
   ifDisabled: false,
+  ifShowMask: true,
 })
 const emit = defineEmits(['update:modelValue', 'clickItem', 'clickAll'])
 const el = ref(null)
@@ -37,9 +39,8 @@ const { keyType } = props
 <template>
   <div
     ref="el" flex="~ between row" px-2 py-1 rounded
-    class="hover:dark:bg-white hover:dark:bg-op-6 hover:bg-dark hover:bg-op-6" :class="[ifDisabled ? 'op50' : '']"
-    font-serif
-    @click="$emit('clickAll')"
+    :class="[ifDisabled ? 'op50' : '', ifShowMask ? 'hover:dark:bg-white hover:dark:bg-op-6 hover:bg-dark hover:bg-op-6' : '']"
+    font-serif @click="$emit('clickAll')"
   >
     <div flex="~ col justify-start">
       <p text-base>
@@ -50,21 +51,23 @@ const { keyType } = props
       </p>
     </div>
 
-    <div
-      v-if="keyType === 'str'" text-base px-2 @click="$emit(
-        'clickItem',
-      )"
-    >
-      {{ keyValue }}
-    </div>
-    <div v-else-if="keyType === 'btn'">
-      <n-switch
-        :disabled="ifDisabled" :value="modelValue" :on-update:value="
-          (value: boolean) => {
-            emit('update:modelValue', value)
-          }
-        " size="medium" :rail-style="railStyle"
-      />
-    </div>
+    <slot name="changePart">
+      <div
+        v-if="keyType === 'str'" text-base px-2 @click="$emit(
+          'clickItem',
+        )"
+      >
+        {{ keyValue }}
+      </div>
+      <div v-else-if="keyType === 'btn'">
+        <n-switch
+          :disabled="ifDisabled" :value="modelValue" :on-update:value="
+            (value: boolean) => {
+              emit('update:modelValue', value)
+            }
+          " size="medium" :rail-style="railStyle"
+        />
+      </div>
+    </slot>
   </div>
 </template>

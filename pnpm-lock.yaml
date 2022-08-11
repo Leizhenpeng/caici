@@ -22,6 +22,7 @@ importers:
       '@vue/test-utils': ^2.0.2
       '@vueuse/core': ^8.9.1
       '@vueuse/integrations': ^9.1.0
+      '@vueuse/motion': 2.0.0-beta.12
       axios: ^0.27.2
       canvas-confetti: ^1.5.1
       cheerio: ^1.0.0-rc.12
@@ -52,6 +53,7 @@ importers:
       '@supabase/supabase-js': 1.35.4
       '@vueuse/core': 8.9.1_vue@3.2.37
       '@vueuse/integrations': 9.1.0_aaszetfij6yh4zj2ztczrkab3e
+      '@vueuse/motion': 2.0.0-beta.12_vue@3.2.37
       axios: 0.27.2
       canvas-confetti: 1.5.1
       html-to-image: 1.9.0
@@ -1259,6 +1261,24 @@ packages:
 
   /@vueuse/metadata/9.1.0:
     resolution: {integrity: sha512-8OEhlog1iaAGTD3LICZ8oBGQdYeMwByvXetOtAOZCJOzyCRSwqwdggTsmVZZ1rkgYIEqgUBk942AsAPwM21s6A==}
+    dev: false
+
+  /@vueuse/motion/2.0.0-beta.12_vue@3.2.37:
+    resolution: {integrity: sha512-cAZqXexLX6xo+H1N1Mv+wBSSqG4wB+BdjIuHQ50jwlelXCDxSi8gj0K/9nDS+aUZtWh6YMwS6UGCKg58jMVglA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.1
+      vue: ^2.0.0 || >=3.0.0-rc.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      '@vueuse/core': 8.9.1_vue@3.2.37
+      '@vueuse/shared': 8.9.1_vue@3.2.37
+      framesync: 6.1.0
+      popmotion: 11.0.3
+      style-value-types: 5.1.0
+      vue: 3.2.37
+      vue-demi: 0.12.1_vue@3.2.37
     dev: false
 
   /@vueuse/shared/8.9.1_vue@3.2.37:
@@ -3037,6 +3057,18 @@ packages:
       combined-stream: 1.0.8
       mime-types: 2.1.34
 
+  /framesync/6.0.1:
+    resolution: {integrity: sha512-fUY88kXvGiIItgNC7wcTOl0SNRCVXMKSWW2Yzfmn7EKNc+MpCzcz9DhdHcdjbrtN3c6R4H5dTY2jiCpPdysEjA==}
+    dependencies:
+      tslib: 2.4.0
+    dev: false
+
+  /framesync/6.1.0:
+    resolution: {integrity: sha512-aBX+hdWAvwiJYeQlFLY2533VxeL6OEu71CAgV4GGKksrj6+dE6i7K86WSSiRBEARCoJn5bFqffhg4l07eA27tg==}
+    dependencies:
+      tslib: 2.4.0
+    dev: false
+
   /fs-extra/10.0.1:
     resolution: {integrity: sha512-NbdoVMZso2Lsrn/QwLXOy6rm0ufY2zEOKCDzJR/0kBsb0E6qed0P3iYK+Ath3BfvXEeu4JhEtXLgILx5psUfag==}
     engines: {node: '>=12'}
@@ -3258,6 +3290,10 @@ packages:
     dependencies:
       function-bind: 1.1.1
     dev: true
+
+  /hey-listen/1.0.8:
+    resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
+    dev: false
 
   /highlight.js/11.6.0:
     resolution: {integrity: sha512-ig1eqDzJaB0pqEvlPVIpSSyMaO92bH1N2rJpLMN/nX396wTpDA4Eq0uK+7I/2XG17pFaaKE0kjV/XPeGt7Evjw==}
@@ -4405,6 +4441,15 @@ packages:
     hasBin: true
     dev: true
 
+  /popmotion/11.0.3:
+    resolution: {integrity: sha512-Y55FLdj3UxkR7Vl3s7Qr4e9m0onSnP8W7d/xQLsoJM40vs6UKHFdygs6SWryasTZYqugMjm3BepCF4CWXDiHgA==}
+    dependencies:
+      framesync: 6.0.1
+      hey-listen: 1.0.8
+      style-value-types: 5.0.0
+      tslib: 2.4.0
+    dev: false
+
   /postcss-selector-parser/6.0.10:
     resolution: {integrity: sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==}
     engines: {node: '>=4'}
@@ -4861,6 +4906,20 @@ packages:
       acorn: 8.7.1
     dev: true
 
+  /style-value-types/5.0.0:
+    resolution: {integrity: sha512-08yq36Ikn4kx4YU6RD7jWEv27v4V+PUsOGa4n/as8Et3CuODMJQ00ENeAVXAeydX4Z2j1XHZF1K2sX4mGl18fA==}
+    dependencies:
+      hey-listen: 1.0.8
+      tslib: 2.4.0
+    dev: false
+
+  /style-value-types/5.1.0:
+    resolution: {integrity: sha512-DRIfBtjxQ4ztBZpexkFcI+UR7pODC5qLMf2Syt+bH98PAHHRH2tQnzxBuDQlqcAoYar6GzWnj8iAfqfwnEzCiQ==}
+    dependencies:
+      hey-listen: 1.0.8
+      tslib: 2.4.0
+    dev: false
+
   /supports-color/5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
@@ -4961,6 +5020,10 @@ packages:
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
+
+  /tslib/2.4.0:
+    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
+    dev: false
 
   /tsutils/3.21.0_typescript@4.7.4:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}

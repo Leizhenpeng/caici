@@ -134,7 +134,7 @@ const ifMinFont7 = computed(() => {
         <div
           absolute text-3xl leading-1em :class="[
             getColor(parsed?.char, true),
-            forceFour ? 'text-5xl !top-3 op-80' : '',
+            forceFour ? 'text-4xl !top-5 op-80 font-400' : '',
             useMask ? 'top-8.5' : 'top-7',
             ifMinFont5 ? useMask ? 'top-8.5' : '!text-3xl !top-6 !leading-30px' : '',
             ifMinFont7 ? useMask ? '!text-xl !top-26px  !leading-20px' : '!text-xl !top-20px !leading-20px' : '',
