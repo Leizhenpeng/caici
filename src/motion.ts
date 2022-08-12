@@ -1,18 +1,15 @@
-const pop_bottom = {
+const right_slide_in = {
   initial: {
+    x: 200,
     opacity: 0,
-    y: 100,
   },
-  visible: {
+  enter: {
+    x: 0,
     opacity: 1,
-    y: 0,
-  },
-  leave: {
-    y: -100,
-    opacity: 0.1,
+    transition: { type: 'spring', stiffness: 250, damping: 25, mass: 0.5 },
   },
 }
 
 export const customMotion = {
-  'pop-bottom': pop_bottom,
+  'right-slide-in': right_slide_in,
 }

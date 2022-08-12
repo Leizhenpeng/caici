@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { SpMode } from '@hankit/tools'
+import { useMotions } from '@vueuse/motion'
 import { locale, t } from '~/i18n'
 import { isDark, showSettings } from '~/state'
 import {
@@ -261,6 +262,8 @@ const StyleCheckedNow = computed(
     return changeLevel.value[1].startsWith('1')
   },
 )
+
+const motions = useMotions()
 </script>
 
 <template>
@@ -274,8 +277,8 @@ const StyleCheckedNow = computed(
       <b>{{ t('setting-title') }} </b>
     </p>
     <div
-      flex="~  wrap col gap-1" px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded
-      :class="[StyleCheckedNow ? 'op-40 blur-3 pointer-events-none ' : '']"
+      flex="~  wrap col gap-1" relative px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2
+      rounded :class="[StyleCheckedNow ? 'op-40 blur-3 pointer-events-none ' : '']"
     >
       <div flex="~ row" justify-start items-center w-fit pl2 pt-1 icon-btn @click="checkBack()">
         <div v-if="funcCheckedNow" i-carbon-undo />
@@ -287,27 +290,69 @@ const StyleCheckedNow = computed(
         </p>
       </div>
 
-      <div v-show="changeLevel[0] === '0'" ref="el" flex="~  wrap col gap-1">
-        <SettingMeta :key-name="t('zhuyin')" :key-description="t('zhuyin-des')" :key-value="currentInputModeValue" @click-item="changeLevel[0] = '1-0'" />
+      <div
+        v-if="changeLevel[0] === '0'" ref="el"
+        v-motion-right-slide-in
+        flex="~  wrap col gap-1"
+      >
         <SettingMeta
-          v-show="inputMode === 'sp'"
-          :key-name="t('pinfa')" :key-description="t('pinfa-des')" :key-value="currentSpModeValue" :if-disabled="inputMode !== 'sp'"
-          @click-item="changeLevel[0] = '1-1'"
+          :key-name="t('zhuyin')" :key-description="t('zhuyin-des')" :key-value="currentInputModeValue"
+          @click-item="changeLevel[0] = '1-0'"
         />
         <SettingMeta
-          v-show="inputMode !== 'sp'"
-          :key-name="t('shengxing')" :key-description="t('shengxing-des')" :key-value="currentToneValue" :if-disabled="inputMode === 'sp'" @click-item="changeLevel[0] = '1-2'"
+          v-show="inputMode === 'sp'" :key-name="t('pinfa')" :key-description="t('pinfa-des')"
+          :key-value="currentSpModeValue" :if-disabled="inputMode !== 'sp'" @click-item="changeLevel[0] = '1-1'"
+        />
+        <SettingMeta
+          v-show="inputMode !== 'sp'" :key-name="t('shengxing')" :key-description="t('shengxing-des')"
+          :key-value="currentToneValue" :if-disabled="inputMode === 'sp'" @click-item="changeLevel[0] = '1-2'"
         />
         <SettingMeta
           v-model="useStrictMode" :key-name="t('yueshu')" :key-description="t('yueshu-des')" key-type="btn"
           :if-disabled="!!currentMeta.tries?.length || topicNow !== 'chengyu4'"
         />
       </div>
-      <div v-show="funcCheckedNow" :style="{ minHeight: `${tempHeight1}px` }">
-        <SettingMetaCheck v-if="changeLevel[0].endsWith('0')" v-model:options="inputModeOptions" @on-checked="checkBack(0)" />
-        <SettingMetaCheck v-else-if="changeLevel[0].endsWith('1')" v-model:options="spModeOptions" @on-checked="checkBack(0)" />
-        <SettingMetaCheck v-else-if="changeLevel[0].endsWith('2')" v-model:options="toneOptions" @on-checked="checkBack(0)" />
-      </div>
+      <Transition :css="false" @leave="(el: Element, done: any) => motions.metaCheck1.leave(done)">
+        <div
+          v-if="funcCheckedNow" v-motion="'metaCheck1'" :style="{ minHeight: `${tempHeight1}px` }"
+          :initial="{ x: -400, opacity: 0 }"
+          :enter="{
+            x: 0,
+            opacity: 1,
+            height: tempHeight1,
+            transition: { type: 'spring', stiffness: 250, damping: 25, mass: 0.5 },
+          }"
+          :leave="{
+            position: 'absolute',
+            top: '40px',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            opacity: 0,
+            x: -400,
+            transition: {
+              type: 'spring',
+              stiffness: 250,
+              damping: 25,
+              mass: 0.5,
+            },
+
+          }"
+        >
+          <SettingMetaCheck
+            v-if="changeLevel[0].endsWith('0')" v-model:options="inputModeOptions"
+            @on-checked="checkBack(0)"
+          />
+          <SettingMetaCheck
+            v-else-if="changeLevel[0].endsWith('1')" v-model:options="spModeOptions"
+            @on-checked="checkBack(0)"
+          />
+          <SettingMetaCheck
+            v-else-if="changeLevel[0].endsWith('2')" v-model:options="toneOptions"
+            @on-checked="checkBack(0)"
+          />
+        </div>
+      </Transition>
     </div>
 
     <div
@@ -322,8 +367,11 @@ const StyleCheckedNow = computed(
           <b v-if="changeLevel[1] === '1-1'"> {{ t('setting-change-dot') }}{{ t('yongse') }} </b>
         </p>
       </div>
-      <div v-show="changeLevel[1] === '0'" ref="el1" flex="~  wrap col gap-1">
-        <SettingMeta :key-name="t('yongyan')" :key-description="t('yongyan-des')" :key-value="currentLanguageValue" @click-item="changeLevel[1] = '1-0'" />
+      <div v-if="changeLevel[1] === '0'" ref="el1" v-motion-right-slide-in flex="~  wrap col gap-1">
+        <SettingMeta
+          :key-name="t('yongyan')" :key-description="t('yongyan-des')" :key-value="currentLanguageValue"
+          @click-item="changeLevel[1] = '1-0'"
+        />
         <SettingMeta
           :key-name="t('yongse')" :key-description="t('yongse-des')" :key-value="currentThemeValue"
           @click-item="changeLevel[1] = '1-1'"
@@ -332,16 +380,42 @@ const StyleCheckedNow = computed(
         <SettingMeta v-model="useCheckAssist" :key-name="t('fuzhu')" :key-description="t('fuzhu-des')" key-type="btn" />
         <SettingMeta v-model="colorblind" :key-name="t('fushi')" :key-description="t('fushi-des')" key-type="btn" />
       </div>
-      <div v-show="StyleCheckedNow" :style="{ minHeight: `${tempHeight2}px` }">
-        <SettingMetaCheck
-          v-if="changeLevel[1].endsWith('0')" v-model:options="languageOptions"
-          @on-checked="checkBack(1)"
-        />
-        <SettingMetaCheck
-          v-if="changeLevel[1].endsWith('1')" v-model:options="themeOptions"
-          @on-checked="checkBack(1)"
-        />
-      </div>
+      <Transition :css="false" @leave="(el: Element, done: any) => motions.metaCheck2.leave(done)">
+        <div
+          v-if="StyleCheckedNow" v-motion="'metaCheck2'" :initial="{ x: -400, opacity: 0 }"
+          :enter="{
+            x: 0,
+            opacity: 1,
+            height: tempHeight2,
+            transition: { type: 'spring', stiffness: 250, damping: 25, mass: 0.5 },
+          }"
+          :leave="{
+            position: 'absolute',
+            top: '40px',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            opacity: 0,
+            x: -400,
+            transition: {
+              type: 'spring',
+              stiffness: 250,
+              damping: 25,
+              mass: 0.5,
+            },
+
+          }" :style="{ minHeight: `${tempHeight2}px` }"
+        >
+          <SettingMetaCheck
+            v-if="changeLevel[1].endsWith('0')" v-model:options="languageOptions"
+            @on-checked="checkBack(1)"
+          />
+          <SettingMetaCheck
+            v-if="changeLevel[1].endsWith('1')" v-model:options="themeOptions"
+            @on-checked="checkBack(1)"
+          />
+        </div>
+      </Transition>
     </div>
     <div mt-8 />
   </div>
