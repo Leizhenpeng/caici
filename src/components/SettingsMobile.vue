@@ -264,6 +264,11 @@ const StyleCheckedNow = computed(
 )
 
 const motions = useMotions()
+function delayTap(func: () => void) {
+  setTimeout(() => {
+    func()
+  }, 300)
+}
 </script>
 
 <template>
@@ -290,22 +295,24 @@ const motions = useMotions()
         </p>
       </div>
 
-      <div
-        v-if="changeLevel[0] === '0'" ref="el"
-        v-motion-right-slide-in
-        flex="~  wrap col gap-1"
-      >
+      <div v-if="changeLevel[0] === '0'" ref="el" v-motion-right-slide-in flex="~  wrap col gap-1">
         <SettingMeta
           :key-name="t('zhuyin')" :key-description="t('zhuyin-des')" :key-value="currentInputModeValue"
-          @click-item="changeLevel[0] = '1-0'"
+          @click-all="delayTap(() => changeLevel[0] = '1-0')"
         />
         <SettingMeta
           v-show="inputMode === 'sp'" :key-name="t('pinfa')" :key-description="t('pinfa-des')"
-          :key-value="currentSpModeValue" :if-disabled="inputMode !== 'sp'" @click-item="changeLevel[0] = '1-1'"
+          :key-value="currentSpModeValue" :if-disabled="inputMode !== 'sp'"
+          @click-all="
+            delayTap(() =>
+              changeLevel[0] = '1-1')"
         />
         <SettingMeta
           v-show="inputMode !== 'sp'" :key-name="t('shengxing')" :key-description="t('shengxing-des')"
-          :key-value="currentToneValue" :if-disabled="inputMode === 'sp'" @click-item="changeLevel[0] = '1-2'"
+          :key-value="currentToneValue" :if-disabled="inputMode === 'sp'"
+          @click-all="
+            delayTap(() =>
+              changeLevel[0] = '1-2')"
         />
         <SettingMeta
           v-model="useStrictMode" :key-name="t('yueshu')" :key-description="t('yueshu-des')" key-type="btn"
@@ -315,14 +322,12 @@ const motions = useMotions()
       <Transition :css="false" @leave="(el: Element, done: any) => motions.metaCheck1.leave(done)">
         <div
           v-if="funcCheckedNow" v-motion="'metaCheck1'" :style="{ minHeight: `${tempHeight1}px` }"
-          :initial="{ x: -400, opacity: 0 }"
-          :enter="{
+          :initial="{ x: -400, opacity: 0 }" :enter="{
             x: 0,
             opacity: 1,
             height: tempHeight1,
             transition: { type: 'spring', stiffness: 250, damping: 25, mass: 0.5 },
-          }"
-          :leave="{
+          }" :leave="{
             position: 'absolute',
             top: '40px',
             bottom: 0,
@@ -370,11 +375,15 @@ const motions = useMotions()
       <div v-if="changeLevel[1] === '0'" ref="el1" v-motion-right-slide-in flex="~  wrap col gap-1">
         <SettingMeta
           :key-name="t('yongyan')" :key-description="t('yongyan-des')" :key-value="currentLanguageValue"
-          @click-item="changeLevel[1] = '1-0'"
+          @click-all="
+            delayTap(() =>
+              changeLevel[1] = '1-0')"
         />
         <SettingMeta
           :key-name="t('yongse')" :key-description="t('yongse-des')" :key-value="currentThemeValue"
-          @click-item="changeLevel[1] = '1-1'"
+          @click-all="
+            delayTap(() =>
+              changeLevel[1] = '1-1')"
         />
         <SettingMeta v-model="useHint" :key-name="t('fuyan')" :key-description="t('fuyan-des')" key-type="btn" />
         <SettingMeta v-model="useCheckAssist" :key-name="t('fuzhu')" :key-description="t('fuzhu-des')" key-type="btn" />
@@ -382,14 +391,12 @@ const motions = useMotions()
       </div>
       <Transition :css="false" @leave="(el: Element, done: any) => motions.metaCheck2.leave(done)">
         <div
-          v-if="StyleCheckedNow" v-motion="'metaCheck2'" :initial="{ x: -400, opacity: 0 }"
-          :enter="{
+          v-if="StyleCheckedNow" v-motion="'metaCheck2'" :initial="{ x: -400, opacity: 0 }" :enter="{
             x: 0,
             opacity: 1,
             height: tempHeight2,
             transition: { type: 'spring', stiffness: 250, damping: 25, mass: 0.5 },
-          }"
-          :leave="{
+          }" :leave="{
             position: 'absolute',
             top: '40px',
             bottom: 0,
