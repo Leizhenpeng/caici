@@ -34,13 +34,18 @@ const railStyle = ({
 }
 
 const { keyType } = props
+function clickAllTrigger() {
+  emit('clickAll')
+  if (keyType === 'btn')
+    emit('update:modelValue', !props.modelValue)
+}
 </script>
 
 <template>
   <div
     ref="el" flex="~ between row" px-2 py-1 rounded
     :class="[ifDisabled ? 'op50' : '', ifShowMask ? 'hover:dark:bg-white hover:dark:bg-op-6 hover:bg-dark hover:bg-op-6' : '']"
-    font-serif @click="$emit('clickAll')"
+    font-serif @click="clickAllTrigger"
   >
     <div flex="~ col justify-start">
       <p text-base>
