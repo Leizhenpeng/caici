@@ -200,7 +200,7 @@ function handleInput(e: Event) {
             <div i-carbon-rotate icon-btn @click="startSearch()" />
             <div
               i-carbon-add icon-btn @click="addPlayer({
-                name: '杜大甫',
+                name: '杜大杜大甫杜大甫甫',
                 type: 'player',
               })"
             />

@@ -83,9 +83,9 @@ const { variant: avatarVar } = useMotion(avatar, {
           backgroundColor: 'gray',
         }"
       >
-        {{ props.name }}
+        {{ props.name.slice(0, 1) }}
       </n-avatar>
-      <p text-xs op-80>
+      <p text-xs op-80 truncate max-w-48px>
         {{ props.name }}
       </p>
     </div>
