@@ -35,8 +35,8 @@ function magicDelete() {
 }
 
 const motions = useMotions()
-const showCodeTip = ref(false)
-const showPlayer = ref(true)
+const showCodeTip = ref(true)
+const showPlayer = ref(false)
 
 const showRoomTip = computed(() => {
   return !showCodeTip.value
@@ -70,14 +70,15 @@ const PlayersLastInsertOne = computed<EPlayer[]>(() => {
   })
   return _players
 })
-watch(() => {
-  return PlayersLastInsertOne.value
-}, (players) => {
-  console.log('players', players)
-})
-const addPlayer = (player: EPlayer) => {
-  playersInRoom.value.push(player)
-}
+// watch(() => {
+//   return PlayersLastInsertOne.value
+// }, (players) => {
+//   console.log('players', players)
+// })
+
+// const addPlayer = (player: EPlayer) => {
+//   playersInRoom.value.push(player)
+// }
 function handleInput(e: Event) {
   const el = (e.target! as HTMLInputElement)
   input.value = filterNonChineseChars(el.value).slice(0, 4)
@@ -94,14 +95,14 @@ function handleInput(e: Event) {
 </script>
 
 <template>
-  <div flex="~ col gap-4" items-center min-h-90vh relative>
+  <div flex="~ col gap-4" items-center min-h-80vh relative>
     <div absolute top-4 right-4 flex="~ gap-3">
       <button icon-btn @click="close()">
         <div i-carbon-close />
       </button>
     </div>
     <p pt8 text-xl font-serif mb2>
-      <b>{{ t('play-together') }}-🏗WIP</b>
+      <b>{{ t('play-together') }}-🏗正在施工</b>
     </p>
     <transition :css="false">
       <div
@@ -198,12 +199,12 @@ function handleInput(e: Event) {
           >
             <input type="text" bg-transparent max-w-90px outline-none>
             <div i-carbon-rotate icon-btn @click="startSearch()" />
-            <div
+            <!-- <div
               i-carbon-add icon-btn @click="addPlayer({
                 name: '杜大杜大甫杜大甫甫',
                 type: 'player',
               })"
-            />
+            /> -->
           </div>
         </template>
       </SettingMeta>
