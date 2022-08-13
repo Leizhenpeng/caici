@@ -99,7 +99,7 @@ const ifMinFont7 = computed(() => {
     h-20 w-20 border-2 flex="~ center" relative leading-1em font-serif :class="[
       blockColor,
       ifMinFont5 ? '!w-16 !h-18 ' : '',
-      ifMinFont7 ? '!w-11 !h-13 ' : '',
+      ifMinFont7 ? '!w-12 !h-13 ' : '',
     ]"
   >
     <template v-if="char?.char?.trim()">
@@ -113,7 +113,10 @@ const ifMinFont7 = computed(() => {
         >
           {{ char.char }}
         </div>
-        <div v-if="!forceFour" absolute flex items-center text-center top-0 bottom-0 right="2.5" w="5">
+        <div
+          v-if="!forceFour" absolute flex items-center text-center top-0 bottom-0 right="2.5"
+          w="5"
+        >
           <div flex="~ center" text-xs style="writing-mode: vertical-rl">
             <span v-if="char._1" :class="getColor(parsed?._1)">
               {{ char._1 }}
@@ -143,20 +146,22 @@ const ifMinFont7 = computed(() => {
           {{ char.char }}
         </div>
         <div
-          v-if="!forceFour"
-          absolute font-mono text-center left-0 right-0 font-100 flex flex-col items-center justify-center :class="[
+          v-if="!forceFour" absolute font-mono text-center left-0 right-0
+          font-100 flex flex-col items-center justify-center :class="[
             useMask ? 'top-14px' : 'top-2',
             ifMinFont5 ? '!text-14px !leading-16px' : '',
             ifMinFont7 ? useMask ? '!top-11px !leading-11px !text-8px' : '!text-12px !top-4px  !leading-18px' : '',
           ]"
         >
           <div
-            relative ma items-start flex="~ x-center"
-            :class="[
+            relative ma items-start flex="~ x-center" :class="[
               ifMinFont7 ? useMask ? 'tone-scale' : '' : '',
             ]"
           >
-            <div v-if="char._1" :class="getColor(parsed?._1)" mx-1px>
+            <div
+              v-if="char._1"
+              :class="[getColor(parsed?._1), ifMinFont7 ? 'ml--2px mr-1px' : 'mx1px']"
+            >
               {{ char._1 }}
             </div>
             <div v-if="partTwo" flex>
@@ -165,8 +170,8 @@ const ifMinFont7 = computed(() => {
                   {{ inputMode === 'sp' ? w : w.replace('v', 'u') }}
                 </div>
                 <VDots
-                  v-if="!useMask && idx === vLocation && inputMode === 'py'" :class="getColor(parsed?._2)" absolute
-                  w="87%" left="8%" bottom="0.76rem"
+                  v-if="!useMask && idx === vLocation && inputMode === 'py'"
+                  :class="getColor(parsed?._2)" absolute w="87%" left="8%" bottom="0.76rem"
                 />
                 <ToneSymbol
                   v-if="!useNumberTone && idx === toneCharLocation" :tone="char.tone"
@@ -180,7 +185,10 @@ const ifMinFont7 = computed(() => {
                 />
               </div>
             </div>
-            <div v-if="useNumberTone" :class="getColor(parsed?.tone)" text-xs leading-1em mr--3 mt--1 ml-1px>
+            <div
+              v-if="useNumberTone" :class="getColor(parsed?.tone)" text-xs leading-1em mr--3
+              mt--1 ml-1px
+            >
               {{ char.tone }}
             </div>
           </div>
