@@ -41,7 +41,6 @@
     "简体",
     "繁体"
   ],
-  "testing.automaticallyOpenPeekView": "never",
   "i18n-ally.extract.ignoredByFiles": {
     "src/components/Hint.vue": [
       "查看提醒会被计分板记录哦"

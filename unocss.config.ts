@@ -20,7 +20,7 @@ export default defineConfig({
       'tab-button': 'font-light op50 hover:op80 h-full px-4',
       'tab-button-active': 'op100 bg-gray-500:10',
       'font-base-color': 'text-gray-700 dark:text-gray-300',
-      'card-meta': ' px-2 py-2 mt-4 min-w-370px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded',
+      'card-meta': ' py-2 min-w-360px mxa bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded',
       'item-hover': 'hover:dark:bg-white hover:dark:bg-op-6 hover:bg-dark hover:bg-op-6',
     },
     [/^(flex|grid)-center/g, () => 'justify-center items-center'],

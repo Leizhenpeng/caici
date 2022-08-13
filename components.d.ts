@@ -9,6 +9,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppName: typeof import('./src/components/AppName.vue')['default']
     AppNameLarge: typeof import('./src/components/AppNameLarge.vue')['default']
+    Avatar: typeof import('./src/components/Avatar.vue')['default']
     CharBlock: typeof import('./src/components/CharBlock.vue')['default']
     CheatSheet: typeof import('./src/components/CheatSheet.vue')['default']
     ChooseTopic: typeof import('./src/components/ChooseTopic.vue')['default']
@@ -23,6 +24,7 @@ declare module '@vue/runtime-core' {
     ModalsLayer: typeof import('./src/components/ModalsLayer.vue')['default']
     MultiLoading: typeof import('./src/components/MultiLoading.vue')['default']
     Multiplayer: typeof import('./src/components/Multiplayer.vue')['default']
+    NAvatar: typeof import('naive-ui')['NAvatar']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
     NoFuturePlay: typeof import('./src/components/NoFuturePlay.vue')['default']
     NoPastPlay: typeof import('./src/components/NoPastPlay.vue')['default']

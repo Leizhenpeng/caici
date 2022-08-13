@@ -52,3 +52,11 @@ export interface TriesMeta {
   dayNo?: number // 第几天
   mode?: ETriesMode // 模式
 }
+
+export interface EPlayer {
+  name: string
+  type: 'player' | 'faker'
+  id?: string
+  joinTime?: number
+
+}
