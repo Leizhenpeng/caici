@@ -58,5 +58,4 @@ export interface EPlayer {
   type: 'player' | 'faker'
   id?: string
   joinTime?: number
-
 }
