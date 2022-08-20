@@ -45,5 +45,6 @@
     "src/components/Hint.vue": [
       "查看提醒会被计分板记录哦"
     ]
-  }
+  },
+  "testing.automaticallyOpenPeekView": "never"
 }

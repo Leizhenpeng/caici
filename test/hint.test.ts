@@ -5,11 +5,6 @@ it(
   'getRandomHint',
   () => {
     expect(getRandomHint()).toBeDefined()
-    expect(getRandomHint()).toSatisfy(
-      (r: string) => {
-        return r.endsWith('。')
-      },
-    )
   },
 )
 
