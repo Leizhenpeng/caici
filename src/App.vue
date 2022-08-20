@@ -1,4 +1,7 @@
+<!-- eslint-disable no-console -->
 <script setup lang="ts">
+import { inject } from 'vue'
+
 import '~/init'
 import { answer, dayNo, daySince, isDev } from '~/state'
 import { colorblind } from '~/storage'
@@ -9,6 +12,16 @@ const { height } = useWindowSize()
 watchEffect(() => {
   document.documentElement.style.setProperty('--vh', `${height.value / 100}px`)
 })
+
+const socket = inject('socket') as SocketIOClient.Socket
+
+console.log('socket', socket)
+socket.on('connect', () => {
+  console.log('#connected: ', socket.id)
+})
+</script>
+
+<script lang="ts">
 </script>
 
 <template>
