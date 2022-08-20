@@ -9,14 +9,16 @@ import './styles/main.css'
 import 'uno.css'
 import { customMotion } from './motion'
 import SocketIO from './plugins/io'
+import { isDevPro } from './state'
 
 const app = createApp(App)
-app.use(
-  SocketIO, {
-    connection: 'http://localhost:3004/together',
-  },
-)
-
+if (isDevPro) {
+  app.use(
+    SocketIO, {
+      connection: import.meta.env.VITE_SOCKET_URL,
+    },
+  )
+}
 app.use(MotionPlugin, {
   directives: {
     ...customMotion,

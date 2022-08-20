@@ -3,7 +3,7 @@
 import { inject } from 'vue'
 
 import '~/init'
-import { answer, dayNo, daySince, isDev } from '~/state'
+import { answer, dayNo, daySince, isDev, isDevPro } from '~/state'
 import { colorblind } from '~/storage'
 import { DAYS_PLAY_BACK } from '~/logic/constants'
 
@@ -13,12 +13,13 @@ watchEffect(() => {
   document.documentElement.style.setProperty('--vh', `${height.value / 100}px`)
 })
 
-const socket = inject('socket') as SocketIOClient.Socket
-
-console.log('socket', socket)
-socket.on('connect', () => {
-  console.log('#connected: ', socket.id)
-})
+if (isDevPro) {
+  console.log('👋 Hello, developer!')
+  const socket = inject('socket') as SocketIOClient.Socket
+  socket.on('connect', () => {
+    console.log('#connected: ', socket.id)
+  })
+}
 </script>
 
 <script lang="ts">

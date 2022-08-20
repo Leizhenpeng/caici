@@ -74,3 +74,4 @@ if (import.meta.hot) {
   if ((answers_chengyu4.length - daySince.value) < 10)
     throw new Error('Not enough days left!')
 }
+
