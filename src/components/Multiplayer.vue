@@ -75,7 +75,7 @@ watchDebounced(
 const playersInRoom = computed<EPlayer[]>(() => {
   return [
     {
-      name: 'dasda',
+      name: '李小白',
       type: 'player',
       id: 'initOne',
     },
