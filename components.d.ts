@@ -34,6 +34,8 @@ declare module '@vue/runtime-core' {
     Play: typeof import('./src/components/Play.vue')['default']
     PrivacyNotes: typeof import('./src/components/PrivacyNotes.vue')['default']
     ResultFooter: typeof import('./src/components/ResultFooter.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
     SettingMeta: typeof import('./src/components/SettingMeta.vue')['default']
     SettingMetaCheck: typeof import('./src/components/SettingMetaCheck.vue')['default']
     Settings: typeof import('./src/components/Settings.vue')['default']

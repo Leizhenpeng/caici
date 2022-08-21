@@ -1,5 +1,6 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
+import type { Socket } from 'socket.io-client'
 import '~/init'
 import { DAYS_PLAY_BACK } from '~/logic/constants'
 import { answer, dayNo, daySince, isDev, mySocket } from '~/state'
@@ -11,7 +12,7 @@ watchEffect(() => {
   document.documentElement.style.setProperty('--vh', `${height.value / 100}px`)
 })
 
-const socket = inject('socket') as SocketIOClient.Socket
+const socket = inject('socket') as Socket
 mySocket.value = socket
 </script>
 
@@ -22,12 +23,7 @@ mySocket.value = socket
   <main font-sans text="center gray-700 dark:gray-300" :class="{ colorblind }">
     <NotTodayBanner v-if="dayNo < daySince" />
     <Navbar />
-    <div p="4">
-      <NoQuizToday v-if="!answer.word" />
-      <NoFuturePlay v-else-if="dayNo > daySince && !isDev" />
-      <NoPastPlay v-else-if="daySince - dayNo > DAYS_PLAY_BACK && !isDev" />
-      <Play v-else />
-    </div>
+    <router-view />
     <ModalsLayer />
     <Confetti />
   </main>

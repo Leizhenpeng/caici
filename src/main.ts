@@ -9,6 +9,7 @@ import 'uno.css'
 import { customMotion } from './motion'
 import SocketIO from './plugins/io'
 import { isDevPro } from './state'
+import { setupRouter } from './router'
 
 const app = createApp(App)
 if (isDevPro) {
@@ -27,4 +28,7 @@ app.use(MotionPlugin, {
   },
 },
 )
+
+setupRouter(app)
+
 app.mount('#app')
