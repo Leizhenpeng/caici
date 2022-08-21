@@ -7,6 +7,7 @@ import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
 import { isDevPro, showMultiplayer } from '~/state'
+import { nickName } from '~/storage'
 
 const input = ref('')
 const inputValue = ref('')
@@ -63,21 +64,28 @@ function startSearch(status?: boolean) {
     showPlayer.value = status
   }
 }
-const nickName = ref('无名氏')
+const nickNameUsed = ref(nickName.value)
 watchDebounced(
   nickName,
   () => {
-    console.log('nickName', nickName)
+    nickNameUsed.value = nickName.value ? nickName.value : '无名氏'
   },
-  { debounce: 500, maxWait: 1000 },
+  { debounce: 600, maxWait: 1000, immediate: true },
 )
-const playersInRoom = ref<EPlayer[]>([
-  {
-    name: nickName.value,
-    type: 'player',
-    id: nanoid(),
-  },
-])
+const playersInRoom = computed<EPlayer[]>(() => {
+  return [
+    {
+      name: 'dasda',
+      type: 'player',
+      id: 'initOne',
+    },
+    {
+      name: nickNameUsed.value,
+      type: 'player',
+      id: 'initTwo',
+    },
+  ]
+})
 
 const PlayersLastInsertOne = computed<EPlayer[]>(() => {
   // deepclone array
@@ -85,7 +93,7 @@ const PlayersLastInsertOne = computed<EPlayer[]>(() => {
   _players.push({
     name: 'faker',
     type: 'faker',
-    id: nanoid(),
+    id: 'fakerAddOne',
   })
   return _players
 })
@@ -126,7 +134,7 @@ const playerRole = ref<EPlayer['type']>('master')
         <div i-carbon-close />
       </button>
     </div>
-    <p pt8 text-xl font-serif mb2>
+    <p pt8 text-xl font-serif mb2 @click="startSearch(true)">
       <b>{{ t('play-together') }}-🏗正在施工</b>
     </p>
     <transition :css="false">

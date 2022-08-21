@@ -20,6 +20,7 @@ export const useStrictMode = useStorage('caici-strict', true)
 export const acceptCollecting = useStorage('caici-accept-collecting', true)
 export const topicNow = useStorage<Topic>('caici-topic-now', 'chengyu4')
 export const modeNow = useStorage<ETriesMode>('caici-mode-now', ETriesMode.Normal)
+export const nickName = useStorage('caici-nickname', '无名氏')
 export const curMetaByDayAndTopicAndMode = computed(
   () => {
     const day = dayNo.value
