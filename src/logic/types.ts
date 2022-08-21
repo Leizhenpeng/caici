@@ -55,7 +55,7 @@ export interface TriesMeta {
 
 export interface EPlayer {
   name: string
-  type: 'player' | 'faker'
+  type: 'player' | 'master' | 'watcher' | 'faker'
   id?: string
   joinTime?: number
 }

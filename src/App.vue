@@ -1,11 +1,9 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
-import { inject } from 'vue'
-
 import '~/init'
-import { answer, dayNo, daySince, isDev, isDevPro } from '~/state'
-import { colorblind } from '~/storage'
 import { DAYS_PLAY_BACK } from '~/logic/constants'
+import { answer, dayNo, daySince, isDev, mySocket } from '~/state'
+import { colorblind } from '~/storage'
 
 const { height } = useWindowSize()
 
@@ -13,13 +11,8 @@ watchEffect(() => {
   document.documentElement.style.setProperty('--vh', `${height.value / 100}px`)
 })
 
-if (isDevPro) {
-  console.log('👋 Hello, developer!')
-  const socket = inject('socket') as SocketIOClient.Socket
-  socket.on('connect', () => {
-    console.log('#connected: ', socket.id)
-  })
-}
+const socket = inject('socket') as SocketIOClient.Socket
+mySocket.value = socket
 </script>
 
 <script lang="ts">

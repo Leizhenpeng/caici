@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 import { breakpointsTailwind } from '@vueuse/core'
+import type { Socket } from 'socket.io-client'
 import type { MatchType, ParsedChar } from './logic'
 import {
   START_DATE,
@@ -31,7 +33,7 @@ export const now = useNow({ interval: 1000 })
 export const isDark = useDark()
 export const showHint = ref(false)
 export const showSettings = ref(false)
-export const showHelp = ref(true)
+export const showHelp = ref(false)
 export const showShare = ref(false)
 export const showFailed = ref(false)
 export const showDashboard = ref(false)
@@ -40,7 +42,7 @@ export const showCheatSheet = ref(false)
 export const showPrivacyNotes = ref(false)
 export const showShareDialog = ref(false)
 export const useMask = ref(false)
-export const showMultiplayer = ref(false) // TODO:change false
+export const showMultiplayer = ref(true) // TODO:change false
 
 export const useNumberTone = computed(() => {
   if (inputMode.value === 'sp')
@@ -199,3 +201,20 @@ watch(
   },
 )
 
+export const mySocket = ref<Socket>()
+// console.log('this.$socket', this.$socket)
+watch(
+  showMultiplayer,
+  (value) => {
+    const socket = unref(mySocket) as Socket
+    if (value && socket && !socket!.connected)
+      socket && socket!.connect()
+
+    socket && socket.on('connect', () => {
+      console.log('#connected: ', socket.id)
+    })
+  },
+  {
+    immediate: true,
+  },
+)
