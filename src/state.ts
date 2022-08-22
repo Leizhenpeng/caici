@@ -203,18 +203,17 @@ watch(
 
 export const mySocket = ref<Socket>()
 // console.log('this.$socket', this.$socket)
-watch(
-  showMultiplayer,
-  (value) => {
-    const socket = unref(mySocket) as Socket
-    if (value && socket && !socket!.connected)
-      socket && socket!.connect()
-
-    socket && socket.on('connect', () => {
-      console.log('#connected: ', socket.id)
-    })
-  },
-  {
-    immediate: true,
-  },
-)
+// watch(
+//   showMultiplayer,
+//   (value) => {
+//     const socket = unref(mySocket) as Socket
+//     if (value && socket && !socket!.connected)
+//       socket && socket!.connect()
+//     socket && socket.on('connect', () => {
+//       console.log('#connected: ', socket.id)
+//     })
+//   },
+//   {
+//     immediate: true,
+//   },
+// )
