@@ -1,14 +1,25 @@
 <script setup lang="ts">
-import { isDark, showDashboard, showHelp, showMultiplayer, showSettings, useMask } from '~/state'
+import { useRoute, useRouter } from 'vue-router'
+import { isDark, showDashboard, showHelp, showSettings, useMask } from '~/state'
 import { gamesCount } from '~/storage'
 
 const toggleDark = useToggle(isDark)
 const toggleSettings = useToggle(showSettings)
 const toggleDashboard = useToggle(showDashboard)
-const toggleMultiplier = useToggle(showMultiplayer)
 function openHelp() {
   showHelp.value = true
   useMask.value = false
+}
+const route = useRoute()
+const router = useRouter()
+const isSinglePlayer = computed(() => {
+  return route.meta.mode === 'solo'
+})
+const goSolo = () => {
+  router.push({ name: 'solo' })
+}
+const goTogether = () => {
+  router.push({ name: 'together' })
 }
 </script>
 
@@ -27,9 +38,13 @@ function openHelp() {
         </button>
       </div>
       <div flex items-center>
-        <button icon-btn mx2 @click="toggleMultiplier()">
+        <button v-if="isSinglePlayer" icon-btn mx2 @click="goTogether">
           <div i-carbon-partnership />
         </button>
+        <button v-else icon-btn mx2 @click="goSolo">
+          <div i-carbon-user-military />
+        </button>
+
         <button v-if="gamesCount" icon-btn mx2 @click="toggleDashboard()">
           <div i-carbon-catalog />
         </button>

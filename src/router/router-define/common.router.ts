@@ -6,15 +6,31 @@ export const RootRoute: RouteRecordRaw = {
   name: 'Root',
   redirect: EPagePath.SinglePlayer,
   meta: {
+    mode: 'solo',
   },
 }
 
 export const SingleRoute: RouteRecordRaw = {
   path: EPagePath.SinglePlayer,
-  name: 'Single',
+  name: 'solo',
   component: () => import('../../page/singlePlayer.vue'),
   meta: {
     mode: 'solo',
   },
-
+}
+export const TogetherRoute: RouteRecordRaw = {
+  path: EPagePath.MultiPlayer,
+  name: 'together',
+  component: () => import('../../page/multiPlayer.vue'),
+  meta: {
+    mode: 'together',
+  },
+}
+export const LeftRoute: RouteRecordRaw = {
+  path: '/:pathMatch(.*)*',
+  name: 'solo',
+  component: () => import('../../page/singlePlayer.vue'),
+  meta: {
+    mode: 'solo',
+  },
 }

@@ -129,11 +129,11 @@ const playerRole = ref<EPlayer['type']>('master')
 
 <template>
   <div flex="~ col gap-4" items-center min-h-90vh relative>
-    <div absolute top-4 right-4 flex="~ gap-3">
+    <!-- <div absolute top-4 right-4 flex="~ gap-3">
       <button icon-btn @click="close()">
         <div i-carbon-close />
       </button>
-    </div>
+    </div> -->
     <p pt8 text-xl font-serif mb2 @click="startSearch(true)">
       <b>{{ t('play-together') }}-🏗正在施工</b>
     </p>
@@ -218,7 +218,7 @@ const playerRole = ref<EPlayer['type']>('master')
         <template #changePart>
           <div class="item-hover" min-w-130px flex="~ between" bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded px2 py1>
             <input v-model="nickName" maxlength="3" type="text" bg-transparent max-w-90px outline-none>
-            <div i-carbon-rotate icon-btn @click="startSearch()" />
+            <div i-carbon-observed-hail icon-btn @click="startSearch()" />
             <!-- <div
               i-carbon-add icon-btn @click="addPlayer({
                 name: '杜大杜大甫杜大甫甫',

@@ -2,8 +2,7 @@
 <script setup lang="ts">
 import type { Socket } from 'socket.io-client'
 import '~/init'
-import { DAYS_PLAY_BACK } from '~/logic/constants'
-import { answer, dayNo, daySince, isDev, mySocket } from '~/state'
+import { dayNo, daySince, mySocket } from '~/state'
 import { colorblind } from '~/storage'
 
 const { height } = useWindowSize()

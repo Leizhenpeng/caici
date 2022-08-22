@@ -26,9 +26,9 @@ watch((locale), () => {
 </script>
 
 <template>
-  <Modal v-model="showMultiplayer" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
+  <!-- <Modal v-model="showMultiplayer" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
     <Multiplayer />
-  </Modal>
+  </Modal> -->
   <Modal v-model="showCheatSheet" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
     <CheatSheet />
   </Modal>
