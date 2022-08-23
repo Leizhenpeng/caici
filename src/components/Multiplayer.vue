@@ -6,7 +6,7 @@ import { findAndJoinRoom } from '~/api'
 import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
-import { ByeToPlayer, CheckRoom, RoomLeaveOut, WelcomeNewPlater } from '~/socket-io'
+import { BroadcastChangeName, ByeToPlayer, CheckRoom, NicknameChange, RoomLeaveOut, WelcomeNewPlater } from '~/socket-io'
 import { isDevPro, mySocket } from '~/state'
 import { deviceId, nickName } from '~/storage'
 
@@ -78,6 +78,8 @@ watchDebounced(
   nickName,
   () => {
     nickNameUsed.value = nickName.value ? nickName.value : '无名氏'
+    console.log('nickNameUsed.value', nickNameUsed.value)
+    mySocket.value?.emit(NicknameChange, nickNameUsed.value)
   },
   { debounce: 600, maxWait: 1000, immediate: true },
 )
@@ -121,7 +123,9 @@ const PlayersLastInsertOne = computed<EPlayer[]>(() => {
 const canStartGame = computed(() => {
   return playersInRoom.value.length >= 2
 })
-
+function reGenerateNickname() {
+  nickName.value = '佚名'
+}
 if (isDevPro) {
   // console.log('👋 Hello, developer!')
   // const socket = inject('socket') as SocketIOClient.Socket
@@ -143,6 +147,15 @@ mySocket.value?.on(WelcomeNewPlater, (newPlayerInfo) => {
 mySocket.value?.on(ByeToPlayer, (leavePlayerInfo) => {
   console.log('leavePlayerInfo', leavePlayerInfo)
   initPlayerList.value = initPlayerList.value.filter(player => player.id !== leavePlayerInfo.id)
+})
+
+mySocket.value?.on(BroadcastChangeName, (changeMeta) => {
+  console.log('changeMeta', changeMeta)
+  initPlayerList.value = initPlayerList.value.map((player) => {
+    if (player.id === changeMeta.id)
+      player.name = changeMeta.name
+    return player
+  })
 })
 
 const playerRole = ref<EPlayer['type']>('master')
@@ -239,7 +252,7 @@ const playerRole = ref<EPlayer['type']>('master')
         <template #changePart>
           <div class="item-hover" min-w-130px flex="~ between" bg-dark bg-op-2 dark:bg-white dark:bg-op-2 rounded px2 py1>
             <input v-model="nickName" maxlength="3" type="text" bg-transparent max-w-90px outline-none>
-            <div i-carbon-observed-hail icon-btn @click="startSearch()" />
+            <div i-carbon-observed-hail icon-btn @click="reGenerateNickname" />
             <!-- <div
               i-carbon-add icon-btn @click="addPlayer({
                 name: '杜大杜大甫杜大甫甫',
