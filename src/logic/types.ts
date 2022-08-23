@@ -1,3 +1,6 @@
+import { SocketReadyState } from 'net'
+import type { SocketRole } from '~/state'
+
 export type MatchType = 'exact' | 'misplaced' | 'none' | 'deleted'
 
 export type InputMode = 'py' | 'zy' | 'sp'
@@ -55,7 +58,7 @@ export interface TriesMeta {
 
 export interface EPlayer {
   name: string
-  type: 'player' | 'master' | 'watcher' | 'faker'
+  type: SocketRole
   id?: string
   joinTime?: number
 }

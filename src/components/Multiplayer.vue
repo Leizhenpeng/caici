@@ -7,7 +7,7 @@ import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
 import { BroadcastChangeName, ByeToPlayer, CheckRoom, NicknameChange, RoomLeaveOut, WelcomeNewPlater } from '~/socket-io'
-import { isDevPro, mySocket } from '~/state'
+import { SocketRole, isDevPro, mySocket } from '~/state'
 import { deviceId, nickName } from '~/storage'
 
 const input = ref('')
@@ -36,7 +36,10 @@ function handleInput(e: Event) {
 const motions = useMotions()
 const showCodeTip = ref(true)
 const showPlayer = ref(false)
-
+const nickNameUsed = computed(() => {
+  const chineseNickName = filterNonChineseChars(nickName.value).slice(0, 3)
+  return chineseNickName.length > 0 ? chineseNickName : '无名氏'
+})
 watchDebounced(
   input, // 只会去取前四个字
   () => {
@@ -49,7 +52,7 @@ watchDebounced(
         words: input.value,
         socketId: mySocket.value?.id,
         topicId: 1,
-        nickName: nickName.value,
+        nickName: nickNameUsed.value,
       })
     }
     else {
@@ -73,11 +76,10 @@ function startSearch(status?: boolean) {
     showPlayer.value = status
   }
 }
-const nickNameUsed = ref(nickName.value)
+
 watchDebounced(
-  nickName,
+  nickNameUsed,
   () => {
-    nickNameUsed.value = nickName.value ? nickName.value : '无名氏'
     console.log('nickNameUsed.value', nickNameUsed.value)
     mySocket.value?.emit(NicknameChange, nickNameUsed.value)
   },
@@ -105,7 +107,7 @@ const PlayersLastInsertOne = computed<EPlayer[]>(() => {
   const _players = playersInRoom.value.slice()
   _players.push({
     name: 'faker',
-    type: 'faker',
+    type: SocketRole.faker,
     id: 'fakerAddOne',
   })
   return _players
@@ -241,7 +243,7 @@ const playerRole = ref<EPlayer['type']>('master')
             <MultiLoading />
           </div> -->
           <div v-for="item in PlayersLastInsertOne" :key="item.id" w12 h12>
-            <Avatar :if-wait="item.type === 'faker'" :name="item.name" />
+            <Avatar :if-wait="item.type === SocketRole.faker" :name="item.name" :type="item.type" />
           </div>
         </div>
       </div>

@@ -217,3 +217,10 @@ export const mySocket = ref<Socket>()
 //     immediate: true,
 //   },
 // )
+
+export enum SocketRole {
+  Master = 'master',
+  Player = 'player',
+  watcher = 'watcher',
+  faker = 'faker',
+}
