@@ -1,13 +1,14 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
-import { useMotions } from '@vueuse/motion'
 import { watchDebounced } from '@vueuse/core'
+import { useMotions } from '@vueuse/motion'
+import { findAndJoinRoom } from '~/api'
 import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
-import { isDevPro } from '~/state'
-import { nickName } from '~/storage'
-import { checkHealth } from '~/api'
+import { ByeToPlayer, CheckRoom, RoomLeaveOut, WelcomeNewPlater } from '~/socket-io'
+import { isDevPro, mySocket } from '~/state'
+import { deviceId, nickName } from '~/storage'
 
 const input = ref('')
 const inputValue = ref('')
@@ -37,18 +38,23 @@ const showCodeTip = ref(true)
 const showPlayer = ref(false)
 
 watchDebounced(
-  input,
+  input, // 只会去取前四个字
   () => {
     console.log('input', input)
     if (input.value.length >= 4) {
       showPlayer.value = true
       startSearch(true)
-      checkHealth().then((res) => {
-        console.log('checkHealth', res)
+      findAndJoinRoom({
+        uuid: deviceId.value,
+        words: input.value,
+        socketId: mySocket.value?.id,
+        topicId: 1,
+        nickName: nickName.value,
       })
     }
     else {
       startSearch(false)
+      mySocket.value?.emit(RoomLeaveOut)
     }
   },
   { debounce: 600, maxWait: 1000 },
@@ -75,18 +81,20 @@ watchDebounced(
   },
   { debounce: 600, maxWait: 1000, immediate: true },
 )
+const initPlayerList = ref<EPlayer[]>([])
 const playersInRoom = computed<EPlayer[]>(() => {
   return [
-    {
-      name: '李小白',
-      type: 'player',
-      id: 'initOne',
-    },
-    {
-      name: nickNameUsed.value,
-      type: 'player',
-      id: 'initTwo',
-    },
+    // {
+    //   name: '李小白',
+    //   type: 'player',
+    //   id: 'initOne',
+    // },
+    // {
+    //   name: nickNameUsed.value,
+    //   type: 'player',
+    //   id: 'initTwo',
+    // },
+    ...initPlayerList.value,
   ]
 })
 
@@ -122,6 +130,20 @@ if (isDevPro) {
   //   console.log('#connected: ', socket.id)
   // })
 }
+
+mySocket.value?.on(CheckRoom, (playerList) => {
+  console.log('playerList', playerList)
+  initPlayerList.value = playerList
+})
+mySocket.value?.on(WelcomeNewPlater, (newPlayerInfo) => {
+  console.log('newPlayerInfo', newPlayerInfo)
+  initPlayerList.value.push(newPlayerInfo)
+})
+
+mySocket.value?.on(ByeToPlayer, (leavePlayerInfo) => {
+  console.log('leavePlayerInfo', leavePlayerInfo)
+  initPlayerList.value = initPlayerList.value.filter(player => player.id !== leavePlayerInfo.id)
+})
 
 const playerRole = ref<EPlayer['type']>('master')
 </script>

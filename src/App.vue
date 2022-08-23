@@ -14,18 +14,19 @@ const { getData: get_fp_id } = useVisitorData(
   { extendedResult: true },
   { immediate: false },
 )
-function checkDeviceId() {
+async function checkDeviceId() {
   if (!deviceId.value) {
-    get_fp_id().then((res) => {
+    await get_fp_id().then((res) => {
       const { visitorId } = res!
-      deviceId.value = visitorId
-      SignUpDeviceId(deviceId.value)
+      deviceId.value = `FP_${visitorId}`
       //   .then((res) => {
       //   console.log('SignUpDeviceFeedBack', res)
       // })
     })
   }
+  SignUpDeviceId(deviceId.value)
 }
+
 onMounted(() => {
   checkDeviceId()
 })
