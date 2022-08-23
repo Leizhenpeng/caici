@@ -1,6 +1,7 @@
 // register vue composition api globally
 import { createApp } from 'vue'
 import { MotionPlugin } from '@vueuse/motion'
+import fpjsPlugin from '@fingerprintjs/fingerprintjs-pro-vue-v3'
 import App from './App.vue'
 
 import '@unocss/reset/tailwind.css'
@@ -12,6 +13,8 @@ import { isDevPro } from './state'
 import { setupRouter } from './router'
 
 const app = createApp(App)
+
+// socket.io
 if (isDevPro) {
   app.use(
     SocketIO, {
@@ -22,13 +25,17 @@ if (isDevPro) {
     },
   )
 }
+
+// motion plugin
 app.use(MotionPlugin, {
   directives: {
     ...customMotion,
   },
 },
 )
+app.use(fpjsPlugin, { loadOptions: { apiKey: import.meta.env.VITE_FINGERPRINT_KEY } })
 
+// router setup
 setupRouter(app)
 
 app.mount('#app')

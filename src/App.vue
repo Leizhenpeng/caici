@@ -2,10 +2,27 @@
 <script setup lang="ts">
 import type { Socket } from 'socket.io-client'
 import '~/init'
+import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-vue-v3'
 import { dayNo, daySince, mySocket } from '~/state'
-import { colorblind } from '~/storage'
+import { colorblind, deviceId } from '~/storage'
 
 const { height } = useWindowSize()
+
+// printFinger
+const { getData: get_fp_id } = useVisitorData(
+  { extendedResult: true },
+  { immediate: false },
+)
+function checkDeviceId() {
+  if (!deviceId.value) {
+    get_fp_id().then((res) => {
+      deviceId.value = res?.visitorId
+    })
+  }
+}
+onMounted(() => {
+  checkDeviceId()
+})
 
 watchEffect(() => {
   document.documentElement.style.setProperty('--vh', `${height.value / 100}px`)

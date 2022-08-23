@@ -1,9 +1,9 @@
 import type { SpMode } from '@hankit/tools'
 import { nanoid } from 'nanoid'
 import { preferZhuyin, t } from './i18n'
+import type { InputMode, Topic, TriesMeta } from './logic'
 import { ETriesMode } from './logic'
 import { dayNo } from './state'
-import type { InputMode, Topic, TriesMeta } from './logic'
 
 export const legacyTries = useStorage<Record<number, string[]>>('caici-tries', {})
 
@@ -21,6 +21,8 @@ export const acceptCollecting = useStorage('caici-accept-collecting', true)
 export const topicNow = useStorage<Topic>('caici-topic-now', 'chengyu4')
 export const modeNow = useStorage<ETriesMode>('caici-mode-now', ETriesMode.Normal)
 export const nickName = useStorage('caici-nickname', '无名氏')
+export const deviceId = useStorage('caici-deviceId', '')
+
 export const curMetaByDayAndTopicAndMode = computed(
   () => {
     const day = dayNo.value
@@ -140,3 +142,4 @@ export const wordLengthNow = computed(() => {
 
   return 4
 })
+
