@@ -3,6 +3,7 @@
 import type { Socket } from 'socket.io-client'
 import '~/init'
 import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-vue-v3'
+import { SignUpDeviceId } from './api'
 import { dayNo, daySince, mySocket } from '~/state'
 import { colorblind, deviceId } from '~/storage'
 
@@ -16,7 +17,12 @@ const { getData: get_fp_id } = useVisitorData(
 function checkDeviceId() {
   if (!deviceId.value) {
     get_fp_id().then((res) => {
-      deviceId.value = res?.visitorId
+      const { visitorId } = res!
+      deviceId.value = visitorId
+      SignUpDeviceId(deviceId.value)
+      //   .then((res) => {
+      //   console.log('SignUpDeviceFeedBack', res)
+      // })
     })
   }
 }

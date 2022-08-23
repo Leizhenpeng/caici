@@ -6,6 +6,7 @@
  * @description：axios 接口导出文件
  */
 
+import { tr } from 'date-fns/locale'
 import { netConfig } from './config.axios'
 import { customTransform } from './hook.axios'
 import HttpClient from './httpClient.axios'
@@ -23,8 +24,8 @@ function httpClient() {
       authenticationScheme: 'Bearer',
       // 是否返回原生响应头 比如：需要获取响应头时使用该属性,注意同时在 get 接口处修改返回值的类型
       isReturnNativeResponse: false,
-      // 需要对返回数据进行处理 //false ,直接返回 rawResp.data
-      isTransformResponse: false,
+      // 需要对返回数据进行处理 // false ,直接返回 rawResp.data ; true, 进一步获取 data
+      isTransformResponse: true,
       // 对返回错误处理
       isTransformFailResponse: true,
       // post请求的时候添加参数到url,后端 query 接受

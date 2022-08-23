@@ -1,13 +1,13 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
 import { useMotions } from '@vueuse/motion'
-import { nanoid } from 'nanoid'
 import { watchDebounced } from '@vueuse/core'
 import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
 import { isDevPro } from '~/state'
 import { nickName } from '~/storage'
+import { checkHealth } from '~/api'
 
 const input = ref('')
 const inputValue = ref('')
@@ -43,6 +43,9 @@ watchDebounced(
     if (input.value.length >= 4) {
       showPlayer.value = true
       startSearch(true)
+      checkHealth().then((res) => {
+        console.log('checkHealth', res)
+      })
     }
     else {
       startSearch(false)

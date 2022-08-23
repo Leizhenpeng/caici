@@ -1,5 +1,5 @@
 import { http } from '../axios'
-import type { RootResponseModel } from './test.dto'
+import type { RootResponseModel } from '../axios/type'
 
 enum ETestApi {
   checkHealth = '/',
@@ -12,3 +12,4 @@ export const checkHealth = () => {
     },
   )
 }
+
