@@ -6,7 +6,7 @@ import { watchDebounced } from '@vueuse/core'
 import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
-import { isDevPro, showMultiplayer } from '~/state'
+import { isDevPro } from '~/state'
 import { nickName } from '~/storage'
 
 const input = ref('')
@@ -15,9 +15,6 @@ const el = ref<HTMLInputElement>()
 const showToast = autoResetRef(false, 1000)
 const shake = autoResetRef(false, 500)
 
-function close() {
-  showMultiplayer.value = false
-}
 function focus() {
   el.value?.focus()
 }
@@ -31,6 +28,10 @@ function magicDelete() {
   focus()
 }
 
+function handleInput(e: Event) {
+  const el = (e.target! as HTMLInputElement)
+  input.value = filterNonChineseChars(el.value).slice(0, 4)
+}
 const motions = useMotions()
 const showCodeTip = ref(true)
 const showPlayer = ref(false)
@@ -39,7 +40,6 @@ watchDebounced(
   input,
   () => {
     console.log('input', input)
-
     if (input.value.length >= 4) {
       showPlayer.value = true
       startSearch(true)
@@ -110,11 +110,7 @@ const PlayersLastInsertOne = computed<EPlayer[]>(() => {
 const canStartGame = computed(() => {
   return playersInRoom.value.length >= 2
 })
-function handleInput(e: Event) {
-  const el = (e.target! as HTMLInputElement)
-  input.value = filterNonChineseChars(el.value).slice(0, 4)
-  // inputValue.value = input.value
-}
+
 if (isDevPro) {
   // console.log('👋 Hello, developer!')
   // const socket = inject('socket') as SocketIOClient.Socket

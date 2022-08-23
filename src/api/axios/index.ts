@@ -17,14 +17,14 @@ function httpClient() {
     headers: { 'Content-Type': ContentType.JSON },
     transform: customTransform,
     requestOptions: {
+      // 接口地址
+      apiUrl: netConfig.apiBase,
       // 自定义token头
       authenticationScheme: 'Bearer',
-      // 默认将prefix 添加到url
-      joinPrefix: false,
       // 是否返回原生响应头 比如：需要获取响应头时使用该属性,注意同时在 get 接口处修改返回值的类型
       isReturnNativeResponse: false,
-      // 需要对返回数据进行处理
-      isTransformResponse: true,
+      // 需要对返回数据进行处理 //false ,直接返回 rawResp.data
+      isTransformResponse: false,
       // 对返回错误处理
       isTransformFailResponse: true,
       // post请求的时候添加参数到url,后端 query 接受
@@ -33,8 +33,8 @@ function httpClient() {
       formatDate: true,
       // 消息提示类型
       errorMessageMode: 'message',
-      // 接口地址
-      apiUrl: netConfig.apiBase,
+      // 默认将prefix 添加到url
+      joinPrefix: true,
       // 接口拼接地址：/v1
       urlPrefix: netConfig.apiUrlPrefix,
       //  是否加入时间戳
