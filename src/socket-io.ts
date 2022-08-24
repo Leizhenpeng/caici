@@ -10,9 +10,10 @@ export const PlayerIntroduce = 'pi'
 export const PlayerChangeInfo = 'pci'
 
 // p 个人发送 r 房间广播
-export const CheckRoom = 'p:cr' // 返回当前房间信息
-export const CheckRoomUpdate = 'p:cru' // 更新当前房间信息
-export const WelcomeNewPlater = 'r:wnp' // 新人加入房间
-export const ByeToPlayer = 'r:btp' // 离开房间
+export const CheckRoomInit = 'p:cri' // 返回当前房间信息
+export const CheckRoomUpdate = 'r:cru' // 更新当前房间信息
+export const WelcomeNewPlayer = 'r:wnp' // 新人加入房间
+export const ByeOldPlayer = 'r:btp' // 离开房间
 export const BroadcastChangeName = 'r:bcn' // 修改昵称
-export const startGame = 'r:sg'
+export const BroadcastChangeMaster = 'r:bcm' // 修改房主
+export const StartGame = 'r:sg'

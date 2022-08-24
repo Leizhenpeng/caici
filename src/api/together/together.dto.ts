@@ -1,3 +1,5 @@
+import type { SocketRole } from '~/state'
+
 export class FindRoomRequest {
   /**
      * userId or deviceId
@@ -29,4 +31,21 @@ export class FindRoomRequest {
     * @example 山北杨
     */
   nickName: string | undefined
+}
+
+export class FindRoomResponse {
+  /**
+    * 房间唯一标识
+    * @example ['xxxxxx']
+    */
+  roomId: string
+  /**
+    * 房间身份
+    * @example Master
+    */
+  role: SocketRole
+  constructor(roomId: string, role: SocketRole) {
+    this.roomId = roomId
+    this.role = role
+  }
 }
