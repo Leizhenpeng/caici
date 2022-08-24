@@ -18,7 +18,7 @@ const avatar = ref<HTMLElement>()
 const playerIconPool = [
   'i-mdi-seat-legroom-normal',
   'i-mdi-seat-legroom-reduced',
-  'i-mdi-seat-recline-extra',
+  'i-mdi-seat-legroom-extra',
 ]
 // random get one from playerIconPool
 const playerIcon = ref(playerIconPool[Math.floor(Math.random() * playerIconPool.length)])
@@ -92,7 +92,7 @@ useMotion(avatar, {
           backgroundColor: 'gray',
         }"
       >
-        <div v-if="type === SocketRole.Master" i-mdi-seat-outline btn-icon disabled />
+        <div v-if="type === SocketRole.Master" i-ic-sharp-event-seat btn-icon scale-112 disabled />
         <div v-else-if="type === SocketRole.Player " :class="playerIcon" btn-icon disabled />
         <div v-else i-mdi-ghost-outline btn-icon disabled />
       </n-avatar>

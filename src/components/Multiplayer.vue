@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 import { useMotions } from '@vueuse/motion'
-import { findAndJoinRoom } from '~/api'
+import { findAndJoinRoom, genRandomNickname } from '~/api'
 import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
@@ -125,8 +125,9 @@ const PlayersLastInsertOne = computed<EPlayer[]>(() => {
 const canStartGame = computed(() => {
   return playersInRoom.value.length >= 2
 })
-function reGenerateNickname() {
-  nickName.value = '佚名'
+async function reGenerateNickname() {
+  // nickName.value = '佚名'
+  nickName.value = await genRandomNickname()
 }
 if (isDevPro) {
   // console.log('👋 Hello, developer!')
@@ -160,7 +161,7 @@ mySocket.value?.on(BroadcastChangeName, (changeMeta) => {
   })
 })
 
-const playerRole = ref<EPlayer['type']>('master')
+const playerRole = ref<EPlayer['type']>(SocketRole.Master)
 </script>
 
 <template>

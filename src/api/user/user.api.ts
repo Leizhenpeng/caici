@@ -2,12 +2,20 @@ import { http } from '../axios'
 import type { DeviceIdResponse } from './user.dto'
 
 enum EUserApi {
-  lookUp = '/users/device',
+  DeviceSignUp = '/users/device',
+  GenRandomNickname = '/users/nickname',
 }
 
 export const SignUpDeviceId = (fingerprint: string) => {
   return http.post<DeviceIdResponse>({
-    url: EUserApi.lookUp,
+    url: EUserApi.DeviceSignUp,
     data: { deviceId: fingerprint },
   })
 }
+
+export const genRandomNickname = () => {
+  return http.get<string>({
+    url: EUserApi.GenRandomNickname,
+  })
+}
+
