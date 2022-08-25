@@ -8,6 +8,9 @@ export const RoomLeaveOut = 'ro'
 export const NicknameChange = 'nnc'
 export const PlayerIntroduce = 'pi'
 export const PlayerChangeInfo = 'pci'
+export const RoomGameModeChange = 'rgmc'
+export const RoomGameTopicChange = 'rgtc'
+export const RoomGameStart = 'rgs'
 
 // p 个人发送 r 房间广播
 export const CheckRoomInit = 'p:cri' // 返回当前房间信息
@@ -16,4 +19,3 @@ export const WelcomeNewPlayer = 'r:wnp' // 新人加入房间
 export const ByeOldPlayer = 'r:btp' // 离开房间
 export const BroadcastChangeName = 'r:bcn' // 修改昵称
 export const BroadcastChangeMaster = 'r:bcm' // 修改房主
-export const StartGame = 'r:sg'

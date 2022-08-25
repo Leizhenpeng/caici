@@ -3,20 +3,21 @@
 import { watchDebounced } from '@vueuse/core'
 import { useMotions } from '@vueuse/motion'
 import uniqBy from 'lodash/uniqBy'
+import type { MetaRoomEntity } from '~/api'
 import { findAndJoinRoom, genRandomNickname } from '~/api'
 import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
-import { BroadcastChangeMaster, BroadcastChangeName, ByeOldPlayer, CheckRoomInit, NicknameChange, RoomLeaveOut, WelcomeNewPlayer } from '~/socket-io'
+import { BroadcastChangeMaster, BroadcastChangeName, ByeOldPlayer, CheckRoomInit, CheckRoomUpdate, NicknameChange, RoomGameModeChange, RoomGameTopicChange, RoomLeaveOut, WelcomeNewPlayer } from '~/socket-io'
 import { SocketRole, isDevPro, mySocket } from '~/state'
-import { deviceId, nickName } from '~/storage'
+import { TogetherGameMode, deviceId, nickName, togetherRecentGameMode, togetherRecentTopic } from '~/storage'
 
 const input = ref('')
 const inputValue = ref('')
 const el = ref<HTMLInputElement>()
 const showToast = autoResetRef(false, 1000)
 const shake = autoResetRef(false, 500)
-
+const roomInfo = ref < MetaRoomEntity>()
 function focus() {
   el.value?.focus()
 }
@@ -43,7 +44,34 @@ const nickNameUsed = computed(() => {
   return chineseNickName.length > 0 ? chineseNickName : '无名氏'
 })
 const initPlayerList = ref<EPlayer[]>([])
+const { state: gameModeNow, next: nextGameMode } = useCycleList([TogetherGameMode.Competition, TogetherGameMode.Cooperation], {
+  initialValue: togetherRecentGameMode.value,
+})
 
+const { state: topicNow, next: nextGameTopic } = useCycleList([1, 2, 3], {
+  initialValue: togetherRecentTopic.value,
+})
+watchDebounced(gameModeNow, () => {
+  mySocket.value?.emit(RoomGameModeChange, gameModeNow.value)
+}, { debounce: 1000, maxWait: 1200 })
+
+watchDebounced(topicNow, () => {
+  mySocket.value?.emit(RoomGameTopicChange, topicNow.value)
+}, { debounce: 1000, maxWait: 1200 })
+
+const generalGameMode = computed(() => {
+  if (playerRole.value === SocketRole.Master)
+    return gameModeNow.value
+  else
+    return togetherRecentGameMode.value
+})
+
+const generalTopic = computed(() => {
+  if (playerRole.value === SocketRole.Master)
+    return topicNow.value
+  else
+    return togetherRecentTopic.value
+})
 watchDebounced(
   input, // 只会去取前四个字
   () => {
@@ -53,8 +81,9 @@ watchDebounced(
         uuid: deviceId.value,
         words: input.value,
         socketId: mySocket.value?.id,
-        topicId: 1,
+        topicId: togetherRecentTopic.value,
         nickName: nickNameUsed.value,
+        gameMode: togetherRecentGameMode.value,
       }).then((res) => {
         console.log('res', res)
         playerRole.value = res.role
@@ -87,7 +116,6 @@ watchDebounced(
 watchDebounced(
   nickNameUsed,
   () => {
-    console.log('nickNameUsed.value', nickNameUsed.value)
     mySocket.value?.emit(NicknameChange, nickNameUsed.value)
   },
   { debounce: 600, maxWait: 1000, immediate: true },
@@ -180,8 +208,22 @@ mySocket.value?.on(BroadcastChangeMaster, (changeMeta) => {
   })
 })
 
+mySocket.value?.on(CheckRoomUpdate, (latestRoomInfo) => {
+  roomInfo.value = latestRoomInfo
+  console.log('latestRoomInfo', latestRoomInfo)
+  togetherRecentGameMode.value = roomInfo.value?.mode
+  // 牺牲一点历史偏好一致性, 避免界面出现 闪烁 bug
+  // gameModeNow.value = togetherRecentGameMode.value
+  togetherRecentTopic.value = parseInt(`${roomInfo.value?.topicId}`)
+},
+)
+
 const ifInWaitMode = computed(() => {
   return playersInRoom.value.length > 0
+})
+
+const ifCanChangeSetting = computed(() => {
+  return playerRole.value === SocketRole.Master
 })
 </script>
 
@@ -270,19 +312,29 @@ const ifInWaitMode = computed(() => {
           <div class="room-info" absolute left-6 bottom-4 flex="~ row gap-4">
             <button
               min-w-12 rounded-md bg-dark bg-op-2 dark:bg-white dark:bg-op-2 px-2 min-h-6 flex="~ row center" font-serif text-12px
-              leading-4 item-hover
+              leading-4 item-hover :disabled="!ifCanChangeSetting" @click="nextGameTopic()"
             >
-              <div i-ph-number-square-four-bold mx1 />四字成语
-              <!-- <div i-ph-number-square-five-bold mx1 />五言诗词 -->
-              <!-- <div i-ph-number-square-seven-bold mx1 />七言诗词 -->
+              <div v-if="generalTopic === 1" flex="~ row center">
+                <div i-ph-number-square-four-bold mx1 />四字成语
+              </div>
+              <div v-else-if="generalTopic === 2" flex="~ row center">
+                <div i-ph-number-square-five-bold mx1 />五言诗词
+              </div>
+              <div v-else-if="generalTopic === 3" flex="~ row center">
+                <div i-ph-number-square-seven-bold mx1 />七言诗词
+              </div>
             </button>
 
             <button
               min-w-12 rounded-md bg-dark bg-op-2 dark:bg-white dark:bg-op-2 px-2 min-h-6 flex="~ row center" font-serif text-12px
-              leading-4 item-hover
+              leading-4 item-hover :disabled="!ifCanChangeSetting" @click="nextGameMode()"
             >
-              <!-- <div i-carbon-partnership />轮猜模式 -->
-              <div i-carbon-two-person-lift mx1 />抢答模式
+              <div v-if=" generalGameMode === TogetherGameMode.Competition" flex="~ row center">
+                <div i-carbon-two-person-lift mx1 />限时轮猜
+              </div>
+              <div v-else-if="generalGameMode === TogetherGameMode.Cooperation" flex="~ row center">
+                <div i-carbon-partnership mx1 />好友协作
+              </div>
             </button>
           </div>
         </div>

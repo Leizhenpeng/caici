@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { breakpointsTailwind } from '@vueuse/core'
 import type { Socket } from 'socket.io-client'
 import type { MatchType, ParsedChar } from './logic'
@@ -24,6 +23,7 @@ import {
 } from './storage'
 import { getAnswerOfDay } from './answers'
 import { t } from './i18n'
+import type { AllTopicResponse } from './api'
 
 export const isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 export const isMobile = isIOS || /iPad|iPhone|iPod|Android|Phone|webOS/i.test(navigator.userAgent)
@@ -43,6 +43,7 @@ export const showPrivacyNotes = ref(false)
 export const showShareDialog = ref(false)
 export const useMask = ref(false)
 export const showMultiplayer = ref(true) // TODO:change false
+export const totalTopics = ref()
 
 export const useNumberTone = computed(() => {
   if (inputMode.value === 'sp')
@@ -224,3 +225,4 @@ export enum SocketRole {
   watcher = 'watcher',
   faker = 'faker',
 }
+

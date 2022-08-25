@@ -1,4 +1,5 @@
 import type { SocketRole } from '~/state'
+import type { TogetherGameMode } from '~/storage'
 
 export class FindRoomRequest {
   /**
@@ -31,6 +32,12 @@ export class FindRoomRequest {
     * @example 山北杨
     */
   nickName: string | undefined
+
+  /**
+   * 游戏模式
+   * @example cooperation
+   */
+  gameMode: string | undefined
 }
 
 export class FindRoomResponse {
@@ -47,5 +54,23 @@ export class FindRoomResponse {
   constructor(roomId: string, role: SocketRole) {
     this.roomId = roomId
     this.role = role
+  }
+}
+
+export class MetaRoomEntity {
+  uniDoor: string | undefined
+  wordRaw: string | undefined
+  wordHash: string | undefined
+  topicId: number | undefined
+  answerId: number | undefined
+  masterId: string | undefined
+  status: string | undefined
+  mode: TogetherGameMode | undefined
+  createAt: string | undefined
+  total?: number
+  constructor(
+    param: any,
+  ) {
+    Object.assign(this, param)
   }
 }

@@ -3,8 +3,8 @@
 import type { Socket } from 'socket.io-client'
 import '~/init'
 import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-vue-v3'
-import { SignUpDeviceId } from './api'
-import { dayNo, daySince, mySocket } from '~/state'
+import { SignUpDeviceId, getAllTopic } from './api'
+import { dayNo, daySince, mySocket, totalTopics } from '~/state'
 import { colorblind, deviceId } from '~/storage'
 
 const { height } = useWindowSize()
@@ -27,8 +27,19 @@ async function checkDeviceId() {
   SignUpDeviceId(deviceId.value)
 }
 
+async function checkTopicInit() {
+  if (!totalTopics.value) {
+    await getAllTopic().then((res) => {
+      totalTopics.value = res
+    })
+  }
+  // TODO: delete this
+  console.log('totalTopics', totalTopics)
+}
+
 onMounted(() => {
   checkDeviceId()
+  checkTopicInit()
 })
 
 watchEffect(() => {

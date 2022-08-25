@@ -1,4 +1,4 @@
 export * from './axios'
-export * from './test'
+export * from './common'
 export * from './together'
 export * from './user'
