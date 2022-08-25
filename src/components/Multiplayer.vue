@@ -247,7 +247,7 @@ const ifInWaitMode = computed(() => {
         </div>
         <div
           v-if="ifInWaitMode" v-motion="'multiPlayer'" card-meta max-h-400px min-h-200px max-w-370px flex="justify-start ~ wrap gap-4 "
-          items-start content-start relative px8 py4 :initial="{
+          items-start content-start relative px6 py4 :initial="{
             scale: 0,
             y: -40,
             opacity: 0,
@@ -266,6 +266,24 @@ const ifInWaitMode = computed(() => {
           </div> -->
           <div v-for="item in PlayersLastInsertOne" :key="item.id" w12 h12>
             <Avatar :if-wait="item.type === SocketRole.faker" :name="item.name" :type="item.type" />
+          </div>
+          <div class="room-info" absolute left-6 bottom-4 flex="~ row gap-4">
+            <button
+              min-w-12 rounded-md bg-dark bg-op-2 dark:bg-white dark:bg-op-2 px-2 min-h-6 flex="~ row center" font-serif text-12px
+              leading-4 item-hover
+            >
+              <div i-ph-number-square-four-bold mx1 />四字成语
+              <!-- <div i-ph-number-square-five-bold mx1 />五言诗词 -->
+              <!-- <div i-ph-number-square-seven-bold mx1 />七言诗词 -->
+            </button>
+
+            <button
+              min-w-12 rounded-md bg-dark bg-op-2 dark:bg-white dark:bg-op-2 px-2 min-h-6 flex="~ row center" font-serif text-12px
+              leading-4 item-hover
+            >
+              <!-- <div i-carbon-partnership />轮猜模式 -->
+              <div i-carbon-two-person-lift mx1 />抢答模式
+            </button>
           </div>
         </div>
       </div>
