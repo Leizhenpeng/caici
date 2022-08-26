@@ -9,7 +9,7 @@ import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
 import { BroadcastChangeMaster, BroadcastChangeName, ByeOldPlayer, CheckRoomInit, CheckRoomUpdate, NicknameChange, RoomGameModeChange, RoomGameTopicChange, RoomLeaveOut, WelcomeNewPlayer } from '~/socket-io'
-import { SocketRole, isDevPro, mySocket, showTogetherShare } from '~/state'
+import { SocketRole, isDevPro, mySocket, showTogetherShare, togetherWords } from '~/state'
 import { TogetherGameMode, deviceId, nickName, togetherRecentGameMode, togetherRecentTopic } from '~/storage'
 
 const props = withDefaults(defineProps<{
@@ -84,6 +84,7 @@ watchDebounced(
   () => {
     console.log('input', input)
     if (input.value.length >= 4) {
+      togetherWords.value = input.value
       findAndJoinRoom({
         uuid: deviceId.value,
         words: input.value,

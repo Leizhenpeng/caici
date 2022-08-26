@@ -1,44 +1,24 @@
 <script setup lang="ts">
 import { t } from '~/i18n'
 import { WHOLE_URL } from '~/logic/constants'
-import { answer, dayNoHanzi, isMobile, nowTopicTitleShort, parseWord, testAnswer } from '~/state'
-import { currentMeta, tries } from '~/storage'
+import { isMobile, togetherWords } from '~/state'
 
+const inviteText = '绿蚁新醅酒，红泥小火炉。/n晚来天欲雪，能猜一词无？'
 const lines = computed(() => {
-  const table = tries.value.map((word) => {
-    const parsed = parseWord(word, answer.value.word)
-    return testAnswer(parsed)
-      .map((i, idx) => {
-        if (i.char === 'exact')
-          return '🟩'
-        if (i.char === 'misplaced')
-          return '🟧'
-        if (parsed[idx]._1 && i._1 === 'exact')
-          return '🟠'
-        if (parsed[idx]._2 && i._2 === 'exact')
-          return '🟠'
-        if (parsed[idx]._3 && i._3 === 'exact')
-          return '🟠'
-        if (i._1 === 'misplaced' || i._2 === 'misplaced' || i._3 === 'misplaced')
-          return '🟡'
-        return '⬜️'
-      })
-      .join('')
-  })
-
   return [
-    t('name'),
-    '',
+    // t('name'),
+    // '',
     [
-      dayNoHanzi.value,
-      nowTopicTitleShort.value,
-      currentMeta.value.strict ? t('strict-mode').slice(0, 2) : '',
-      !currentMeta.value.hint ? t('hint-level-none') : '',
-    ].filter(Boolean).join(' · '),
+      // nickName.value,
+      '问才子',
+    ].filter(Boolean).join(''),
     '',
-    ...table,
+    ...inviteText.split('/n'),
     '',
-    'https://caici.forkway.cn',
+    '',
+    `雅令：${togetherWords.value}`,
+    '',
+    'https://caici.forkway.cn/together',
   ]
 })
 
@@ -74,7 +54,7 @@ onMounted(async () => {
     {{ copied ? t('invite-copied') : t('invite-not-copied') }}
   </p>
   <textarea
-    bg-gray-500:5 rounded p5 select-text resize-none outline-none w-90 text-center
+    bg-gray-500:5 rounded p5 select-text resize-none outline-none w-90 text-center font-serif
     style="line-height: 19px;letter-spacing: 1px;" :rows="lines.length" :value="text" readonly
   />
   <button v-if="share.isSupported" my4 square-btn @click="shareSystem()">

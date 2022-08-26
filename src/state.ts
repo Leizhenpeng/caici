@@ -38,6 +38,7 @@ export const showShareDialog = ref(false)
 export const useMask = ref(false)
 export const showMultiplayer = ref(true) // TODO:change false
 export const totalTopics = ref()
+export const togetherWords = ref('')
 
 export const useNumberTone = computed(() => {
   if (inputMode.value === 'sp')

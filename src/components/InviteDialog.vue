@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { showShareDialog } from '~/state'
+import { showTogetherShare } from '~/state'
 import { t } from '~/i18n'
 
 const shareType = ref<'text' | 'image' | null>()
-watch(showShareDialog, (v) => {
+watch(showTogetherShare, (v) => {
   if (!v)
     shareType.value = null
 })
@@ -12,7 +12,7 @@ watch(showShareDialog, (v) => {
 <template>
   <div flex="~ col" p6 items-center relative>
     <div absolute top-4 right-4 flex="~">
-      <button icon-btn @click="showShareDialog = false">
+      <button icon-btn @click="showTogetherShare = false">
         <div i-carbon-close />
       </button>
     </div>
@@ -24,7 +24,7 @@ watch(showShareDialog, (v) => {
 
     <p text-xl font-serif mb4>
       <b>
-        请客书
+        请柬
       </b>
     </p>
     <template v-if="!shareType">
@@ -47,7 +47,7 @@ watch(showShareDialog, (v) => {
       <SocialLinks />
     </template>
     <template v-if="shareType === 'image'">
-      <ShareImage />
+      <InviteImage />
       <SocialLinks />
     </template>
   </div>
