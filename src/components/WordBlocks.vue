@@ -9,9 +9,13 @@ const props = withDefaults(
     animate?: boolean
     active?: boolean
     forceFour?: boolean // 强制 4字, 用在多人成语口令中
+    showPlayer?: boolean
+    playerNick?: string
   }>(), {
     animate: true,
     forceFour: false,
+    showPlayer: false,
+    playerNick: '无名氏',
   },
 )
 
@@ -55,11 +59,14 @@ const ifMinFont7 = computed(() => {
 
 <template>
   <div flex>
+    <div v-if="showPlayer" op50 mt1 m1 max-w-3 text-sm scale-90 leading-4 font-serif flex="~ col center">
+      <div v-for="item, index in playerNick" :key="index">
+        {{ item }}
+      </div>
+      <div i-carbon-circle-filled w-3 pl-3 bg-yellow />
+    </div>
     <div
-      v-for="c, i in parseWord(word.padEnd(wordLength, ' '), answer || todayAnswer.word)" :key="i"
-      w-20 h-20 m1
-      class="tile"
-      :class="[
+      v-for="c, i in parseWord(word.padEnd(wordLength, ' '), answer || todayAnswer.word)" :key="i" w-20 h-20 m1 class="tile" :class="[
         flip ? 'revealed' : '',
         ifMinFont5 ? '!w-16 !h-18' : '',
         ifMinFont7 ? '!w-11 !h-13' : '',
@@ -67,31 +74,18 @@ const ifMinFont7 = computed(() => {
     >
       <template v-if="animate">
         <CharBlock
-          class="front"
-          :char="c"
-          :active="active"
-          :style="{ transitionDelay: `${i * (300 + Math.random() * 50)}ms` }"
+          class="front" :char="c" :active="active" :style="{ transitionDelay: `${i * (300 + Math.random() * 50)}ms` }"
           :force-four="forceFour"
         />
         <CharBlock
-          class="back"
-          :char="c"
-          :answer="result[i]"
-          :force-four="forceFour"
-
-          :style="{
+          class="back" :char="c" :answer="result[i]" :force-four="forceFour" :style="{
             transitionDelay: `${i * (300 + Math.random() * 50)}ms`,
             animationDelay: `${i * (100 + Math.random() * 50)}ms`,
           }"
         />
       </template>
       <template v-else>
-        <CharBlock
-          :char="c"
-          :answer="result[i]"
-          :active="active"
-          :force-four="forceFour"
-        />
+        <CharBlock :char="c" :answer="result[i]" :active="active" :force-four="forceFour" />
       </template>
     </div>
   </div>

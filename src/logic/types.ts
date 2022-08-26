@@ -1,4 +1,3 @@
-import { SocketReadyState } from 'net'
 import type { SocketRole } from '~/state'
 
 export type MatchType = 'exact' | 'misplaced' | 'none' | 'deleted'

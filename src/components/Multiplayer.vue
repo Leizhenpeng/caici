@@ -17,7 +17,7 @@ const inputValue = ref('')
 const el = ref<HTMLInputElement>()
 const showToast = autoResetRef(false, 1000)
 const shake = autoResetRef(false, 500)
-const roomInfo = ref < MetaRoomEntity>()
+const roomInfo = ref<MetaRoomEntity>()
 function focus() {
   el.value?.focus()
 }
@@ -175,6 +175,7 @@ if (isDevPro) {
 mySocket.value?.on(CheckRoomInit, (playerList) => {
   console.log('playerList', playerList)
   initPlayerList.value = playerList
+  nickName.value = initPlayerList.value.find(player => player.id === mySocket.value?.id)?.name || nickName.value
 })
 
 mySocket.value?.on(WelcomeNewPlayer, (newPlayerInfo) => {
@@ -329,7 +330,7 @@ const ifCanChangeSetting = computed(() => {
               min-w-12 rounded-md bg-dark bg-op-2 dark:bg-white dark:bg-op-2 px-2 min-h-6 flex="~ row center" font-serif text-12px
               leading-4 item-hover :disabled="!ifCanChangeSetting" @click="nextGameMode()"
             >
-              <div v-if=" generalGameMode === TogetherGameMode.Competition" flex="~ row center">
+              <div v-if="generalGameMode === TogetherGameMode.Competition" flex="~ row center">
                 <div i-carbon-two-person-lift mx1 />限时轮猜
               </div>
               <div v-else-if="generalGameMode === TogetherGameMode.Cooperation" flex="~ row center">
