@@ -1,29 +1,22 @@
 import { breakpointsTailwind } from '@vueuse/core'
 import type { Socket } from 'socket.io-client'
+import { getAnswerOfDay } from './answers'
+import { t } from './i18n'
 import type { MatchType, ParsedChar } from './logic'
 import {
   START_DATE,
   TRIES_LIMIT,
   parseWord as _parseWord,
-  testAnswer as _testAnswer,
-  checkPass,
-  getHint,
-  isDstObserved,
-  numberToHanzi,
+  testAnswer as _testAnswer, checkPass, getHint, isDstObserved, numberToHanzi,
 } from './logic'
 import {
   useNumberTone as _useNumberTone,
   currentMeta,
   inputMode,
   spMode,
-  topicNow,
-  tries,
-  useStrictMode,
+  topicNow, tries, useStrictMode,
   wordLengthNow,
 } from './storage'
-import { getAnswerOfDay } from './answers'
-import { t } from './i18n'
-import type { AllTopicResponse } from './api'
 
 export const isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 export const isMobile = isIOS || /iPad|iPhone|iPod|Android|Phone|webOS/i.test(navigator.userAgent)
@@ -35,6 +28,7 @@ export const showHint = ref(false)
 export const showSettings = ref(false)
 export const showHelp = ref(false)
 export const showShare = ref(false)
+export const showTogetherShare = ref(false)
 export const showFailed = ref(false)
 export const showDashboard = ref(false)
 export const showVariants = ref(false)

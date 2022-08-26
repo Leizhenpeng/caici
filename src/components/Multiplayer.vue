@@ -9,11 +9,18 @@ import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
 import { BroadcastChangeMaster, BroadcastChangeName, ByeOldPlayer, CheckRoomInit, CheckRoomUpdate, NicknameChange, RoomGameModeChange, RoomGameTopicChange, RoomLeaveOut, WelcomeNewPlayer } from '~/socket-io'
-import { SocketRole, isDevPro, mySocket } from '~/state'
+import { SocketRole, isDevPro, mySocket, showTogetherShare } from '~/state'
 import { TogetherGameMode, deviceId, nickName, togetherRecentGameMode, togetherRecentTopic } from '~/storage'
 
-const input = ref('')
-const inputValue = ref('')
+const props = withDefaults(defineProps<{
+  prePutWord?: string
+}>(), {
+  prePutWord: '',
+})
+const { prePutWord: rawInputWord } = props
+const prePutWord = filterNonChineseChars(rawInputWord)
+const input = ref(prePutWord)
+const inputValue = ref(prePutWord)
 const el = ref<HTMLInputElement>()
 const showToast = autoResetRef(false, 1000)
 const shake = autoResetRef(false, 500)
@@ -96,7 +103,7 @@ watchDebounced(
       mySocket.value?.emit(RoomLeaveOut)
     }
   },
-  { debounce: 600, maxWait: 1000 },
+  { debounce: 600, maxWait: 1000, immediate: true },
 )
 // const showRoomTip = computed(() => {
 //   return !showCodeTip.value
@@ -226,6 +233,9 @@ const ifInWaitMode = computed(() => {
 const ifCanChangeSetting = computed(() => {
   return playerRole.value === SocketRole.Master
 })
+const openShare = () => {
+  showTogetherShare.value = true
+}
 </script>
 
 <template>
@@ -335,6 +345,16 @@ const ifCanChangeSetting = computed(() => {
               </div>
               <div v-else-if="generalGameMode === TogetherGameMode.Cooperation" flex="~ row center">
                 <div i-carbon-partnership mx1 />好友协作
+              </div>
+            </button>
+          </div>
+          <div class="room-share" absolute right-6 bottom-4>
+            <button
+              min-w-12 rounded-md bg-dark bg-op-2 dark:bg-white dark:bg-op-2 px-2 min-h-6 flex="~ row center" font-serif text-12px
+              leading-4 item-hover @click="openShare()"
+            >
+              <div flex="~ row center">
+                <div i-carbon-share mr1 />邀请
               </div>
             </button>
           </div>
