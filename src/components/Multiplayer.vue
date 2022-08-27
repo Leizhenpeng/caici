@@ -40,6 +40,9 @@ const redictGameRoom = (targetRoomId: string) => {
     query: {
       id: targetRoomId,
     },
+    params: {
+      pass: 1,
+    },
   })
 }
 watch(leftTimeStart, (v) => {

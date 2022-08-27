@@ -91,3 +91,14 @@ export class ifOngameResponse {
     this.roomId = roomId
   }
 }
+
+export class ifRoomIdAccessibleResponse {
+  /**
+   * 是否可访问
+   * @example true
+   */
+  ifAccessible: boolean
+  constructor(ifAccessible: boolean) {
+    this.ifAccessible = ifAccessible
+  }
+}

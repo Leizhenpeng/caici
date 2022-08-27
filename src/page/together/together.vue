@@ -1,11 +1,7 @@
 <!-- eslint-disable no-console -->
 <script lang="ts" setup>
 import { nanoid } from 'nanoid'
-import { useRoute } from 'vue-router'
 import { mySocket } from '~/state'
-
-const router = useRoute()
-const wordFromUrl = router.query?.q as string
 
 onMounted(() => {
   mySocket.value?.connect()
@@ -21,9 +17,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div p="4">
-    <Multiplayer :pre-put-word="wordFromUrl" />
-  </div>
+  <router-view />
 </template>
 
 <style lang="scss" scoped>
