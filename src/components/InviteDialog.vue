@@ -24,7 +24,7 @@ watch(showTogetherShare, (v) => {
 
     <p text-xl font-serif mb4>
       <b>
-        请柬
+        请柬书
       </b>
     </p>
     <template v-if="!shareType">
@@ -38,17 +38,17 @@ watch(showTogetherShare, (v) => {
         </button>
         <button flex="~ col center" border="~ base" p4 op80 class="hover:op100 hover:bg-gray:5" w-30 h-30 @click="shareType = 'image'">
           <div i-ep-picture text-10 op70 mb1 />
-          <div>{{ '保存图片' }}</div>
+          <div>{{ '发送图片' }}</div>
         </button>
       </div>
     </template>
     <template v-if="shareType === 'text'">
       <InviteText />
-      <SocialLinks />
+      <!-- <SocialLinks /> -->
     </template>
     <template v-if="shareType === 'image'">
       <InviteImage />
-      <SocialLinks />
+      <!-- <SocialLinks /> -->
     </template>
   </div>
 </template>

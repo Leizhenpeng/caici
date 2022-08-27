@@ -1,14 +1,15 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
-import { watchDebounced } from '@vueuse/core'
+import { useInterval, watchDebounced } from '@vueuse/core'
 import { useMotions } from '@vueuse/motion'
 import uniqBy from 'lodash/uniqBy'
+import { useRouter } from 'vue-router'
 import type { MetaRoomEntity } from '~/api'
-import { findAndJoinRoom, genRandomNickname } from '~/api'
+import { findAndJoinRoom, genRandomNickname, ifOnGame } from '~/api'
 import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
-import { BroadcastChangeMaster, BroadcastChangeName, ByeOldPlayer, CheckRoomInit, CheckRoomUpdate, NicknameChange, RoomGameModeChange, RoomGameTopicChange, RoomLeaveOut, WelcomeNewPlayer } from '~/socket-io'
+import { BroadcashStartGame, BroadcastChangeMaster, BroadcastChangeName, ByeOldPlayer, CheckRoomInit, CheckRoomUpdate, NicknameChange, RoomGameModeChange, RoomGameStart, RoomGameTopicChange, RoomLeaveOut, WelcomeNewPlayer } from '~/socket-io'
 import { SocketRole, isDevPro, mySocket, showTogetherShare, togetherWords } from '~/state'
 import { TogetherGameMode, deviceId, nickName, togetherRecentGameMode, togetherRecentTopic } from '~/storage'
 
@@ -25,6 +26,43 @@ const el = ref<HTMLInputElement>()
 const showToast = autoResetRef(false, 1000)
 const shake = autoResetRef(false, 500)
 const roomInfo = ref<MetaRoomEntity>()
+const totalTimeWaited = ref(5)
+const { counter: timeCounter, pause: pauseCount, resume: resumeCount } = useInterval(800, { controls: true, immediate: false })
+const startGameSoon = ref(false)
+const leftTimeStart = computed(
+  () => totalTimeWaited.value - timeCounter.value,
+)
+
+const router = useRouter()
+const redictGameRoom = (targetRoomId: string) => {
+  router.replace({
+    name: 'room',
+    query: {
+      id: targetRoomId,
+    },
+  })
+}
+watch(leftTimeStart, (v) => {
+  if (v <= 1) {
+    pauseCount()
+    startGameSoon.value = false
+    timeCounter.value = 0
+    if (roomInfo.value?.uniDoor)
+      redictGameRoom(roomInfo.value.uniDoor)
+  }
+})
+function ifOngameCheck() {
+  ifOnGame(deviceId.value).then((data) => {
+    if (data.ifOnGame)
+      redictGameRoom(data.roomId!)
+  })
+}
+
+onMounted(
+  () => {
+    ifOngameCheck()
+  },
+)
 function focus() {
   el.value?.focus()
 }
@@ -51,7 +89,7 @@ const nickNameUsed = computed(() => {
   return chineseNickName.length > 0 ? chineseNickName : '无名氏'
 })
 const initPlayerList = ref<EPlayer[]>([])
-const { state: gameModeNow, next: nextGameMode } = useCycleList([TogetherGameMode.Competition, TogetherGameMode.Cooperation], {
+const { state: gameModeNow, next: nextGameMode } = useCycleList([TogetherGameMode.COMPETITION, TogetherGameMode.COOPERATION], {
   initialValue: togetherRecentGameMode.value,
 })
 
@@ -179,11 +217,13 @@ if (isDevPro) {
   //   console.log('#connected: ', socket.id)
   // })
 }
-
+function refreshNickName() {
+  nickName.value = initPlayerList.value.find(player => player.id === mySocket.value?.id)?.name || nickName.value
+}
 mySocket.value?.on(CheckRoomInit, (playerList) => {
   console.log('playerList', playerList)
   initPlayerList.value = playerList
-  nickName.value = initPlayerList.value.find(player => player.id === mySocket.value?.id)?.name || nickName.value
+  refreshNickName()
 })
 
 mySocket.value?.on(WelcomeNewPlayer, (newPlayerInfo) => {
@@ -227,6 +267,14 @@ mySocket.value?.on(CheckRoomUpdate, (latestRoomInfo) => {
 },
 )
 
+mySocket.value?.on(BroadcashStartGame, () => {
+  // refresh nikcName
+  console.log('BroadcashStartGame')
+  refreshNickName()
+  startGameSoon.value = true
+  resumeCount()
+})
+
 const ifInWaitMode = computed(() => {
   return playersInRoom.value.length > 0
 })
@@ -237,6 +285,14 @@ const ifCanChangeSetting = computed(() => {
 const openShare = () => {
   showTogetherShare.value = true
 }
+
+const startGame = () => {
+  if (canStartGame.value)
+    mySocket.value?.emit(RoomGameStart)
+}
+const ifInWatchMode = computed(() => {
+  return playerRole.value === SocketRole.watcher
+})
 </script>
 
 <template>
@@ -295,8 +351,11 @@ const openShare = () => {
     <transition :css="false" @leave="(el: Element, done: any) => motions.multiPlayer.leave(done)">
       <div>
         <div v-if="ifInWaitMode" mb-2 op50 text-md w-full>
-          <p text-center>
+          <p v-if="!ifInWatchMode" text-center>
             {{ t('multiplayer-room-tip') }}
+          </p>
+          <p v-else text-center>
+            下面同学正在游戏,可旁学受业
           </p>
         </div>
         <div
@@ -341,10 +400,10 @@ const openShare = () => {
               min-w-12 rounded-md bg-dark bg-op-2 dark:bg-white dark:bg-op-2 px-2 min-h-6 flex="~ row center" font-serif text-12px
               leading-4 item-hover :disabled="!ifCanChangeSetting" @click="nextGameMode()"
             >
-              <div v-if="generalGameMode === TogetherGameMode.Competition" flex="~ row center">
+              <div v-if="generalGameMode === TogetherGameMode.COMPETITION" flex="~ row center">
                 <div i-carbon-two-person-lift mx1 />限时轮猜
               </div>
-              <div v-else-if="generalGameMode === TogetherGameMode.Cooperation" flex="~ row center">
+              <div v-else-if="generalGameMode === TogetherGameMode.COOPERATION" flex="~ row center">
                 <div i-carbon-partnership mx1 />好友协作
               </div>
             </button>
@@ -380,25 +439,35 @@ const openShare = () => {
       </SettingMeta>
     </div>
     <div v-show="ifInWaitMode">
-      <div v-if="playerRole === SocketRole.Master">
-        <button v-if="canStartGame" btn p="x4 y2" m1>
-          <span tracking-1 pl1>{{ t('start') }}</span>
+      <div v-if="startGameSoon">
+        <button btn p="x4 y2" m1 disabled flex="~ center row">
+          <div i-ic-round-timelapse />
+          <span tracking-wide pl1>{{ `${leftTimeStart}秒后开始猜词` }}</span>
+        </button>
+      </div>
+      <div v-else-if="playerRole === SocketRole.Master">
+        <button v-if="canStartGame" btn p="x4 y2" m1 flex="~ center row" @click="startGame">
+          <div i-mdi-human-dolly />
+          <span tracking-wide pl1>{{ t('start') }}</span>
         </button>
 
-        <button v-else btn disabled p="x4 y2" m1>
+        <button v-else btn disabled p="x4 y2" m1 flex="~ center row">
+          <div i-mdi-human-greeting />
           <span pl1>等候好友进入</span>
         </button>
       </div>
 
       <div v-else-if="playerRole === SocketRole.Player">
-        <button btn disabled p="x4 y2" m1>
+        <button btn disabled p="x4 y2" m1 flex="~ center row">
+          <div i-mdi-human-female-dance />
           <span pl1>等候游戏开始</span>
         </button>
       </div>
 
       <div v-else-if="playerRole === SocketRole.watcher">
-        <button btn p="x4 y2" m1>
-          <span tracking-1 pl1>前往观看</span>
+        <button btn p="x4 y2" m1 flex="~ center row">
+          <div i-mdi-google-cardboard />
+          <span tracking-wide pl2>前往观看</span>
         </button>
       </div>
     </div>

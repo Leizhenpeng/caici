@@ -74,3 +74,20 @@ export class MetaRoomEntity {
     Object.assign(this, param)
   }
 }
+
+export class ifOngameResponse {
+  /**
+   * 是否正在游戏中
+   * @example true
+   */
+  ifOnGame: boolean
+  /**
+   * 房间唯一标识
+   * @example ['xxxxxx']
+   */
+  roomId?: string
+  constructor(ifOnGame: boolean, roomId?: string) {
+    this.ifOnGame = ifOnGame
+    this.roomId = roomId
+  }
+}

@@ -5,10 +5,9 @@ import type { InputMode, Topic, TriesMeta } from './logic'
 import { ETriesMode } from './logic'
 import { dayNo } from './state'
 export enum TogetherGameMode {
-  Cooperation = 'cooperation',
-  Competition = 'competition',
+  COOPERATION = 'COOPERATION',
+  COMPETITION = 'COMPETITION',
 }
-
 export const legacyTries = useStorage<Record<number, string[]>>('caici-tries', {})
 
 export const historyMeta = useStorage<TriesMeta[]>('caici-tries-meta', [])
@@ -27,7 +26,7 @@ export const modeNow = useStorage<ETriesMode>('caici-mode-now', ETriesMode.Norma
 export const nickName = useStorage('caici-nickname', '无名氏')
 export const deviceId = useStorage('caici-deviceId', '')
 export const togetherRecentTopic = useStorage('caici-together-recent-topic', 1)
-export const togetherRecentGameMode = useStorage('caici-together-recent-game-mode', TogetherGameMode.Competition)
+export const togetherRecentGameMode = useStorage('caici-together-recent-game-mode', TogetherGameMode.COMPETITION)
 
 export const curMetaByDayAndTopicAndMode = computed(
   () => {
