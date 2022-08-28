@@ -19,12 +19,14 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div v-if="loadRouter">
-    <router-view />
+  <div>
+    <div v-if="loadRouter">
+      <router-view />
+    </div>
+    <div v-else>
+      <loading-one mx-a my-30vh />
+    </div>
   </div>
-  <!-- <div v-else>
-    <loading-one mx-a my-30vh />
-  </div> -->
 </template>
 
 <style lang="scss" scoped>

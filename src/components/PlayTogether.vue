@@ -1,3 +1,4 @@
+<!-- eslint-disable no-console -->
 <script setup lang="ts">
 import { filterNonChineseChars } from '@hankit/tools'
 import {
@@ -7,34 +8,42 @@ import {
   isFailed,
   isFinished,
   isMobile,
-  nowTopicTitleShort,
   showCheatSheet,
   showFailed,
   showHelp,
   showHint,
+  totalTopics,
   useMask,
 } from '~/state'
-import { TogetherGameMode, currentMeta, markStart, nickName, topicNow, tries, useHint, useStrictMode, wordLengthNow } from '~/storage'
+import { TogetherGameMode, currentMeta, markStart, nickName, topicNow, tries, useHint, useStrictMode } from '~/storage'
 import { t } from '~/i18n'
+import type { Topic } from '~/logic'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 
 const props = withDefaults(defineProps <{
-  wordLength?: number
-  topicShort?: string
+  topicId?: number
   gameMode?: TogetherGameMode
 }>(), {
-  wordLength: wordLengthNow.value,
-  topicShort: nowTopicTitleShort.value,
+  topicId: 1,
   gameMode: TogetherGameMode.COMPETITION,
 })
-const { wordLength } = props
+
+const chooseTopic = computed(() => {
+  return totalTopics.value!.find(
+    topic => topic.id === props.topicId)
+})
+
+const wordLength = computed(() => {
+  return chooseTopic.value?.wordLength || 4
+})
 
 watch(() => {
-  return wordLength
+  return chooseTopic
 }, () => {
-  console.log('wordLength', wordLength)
+  topicNow.value = chooseTopic.value?.nameCode as Topic
 }, {
   deep: true,
+  immediate: true,
 })
 const el = ref<HTMLInputElement>()
 const input = ref('')
@@ -56,7 +65,7 @@ watch(
   },
 )
 function enter() {
-  if (input.value.length !== wordLength)
+  if (input.value.length !== wordLength.value)
     return
   if (!checkValidIdiom(input.value, useStrictMode.value)) {
     showToast.value = true
@@ -77,7 +86,7 @@ function reset() {
 }
 function handleInput(e: Event) {
   const el = (e.target! as HTMLInputElement)
-  input.value = filterNonChineseChars(el.value).slice(0, wordLength)
+  input.value = filterNonChineseChars(el.value).slice(0, wordLength.value)
   markStart()
 }
 function focus() {
@@ -129,7 +138,7 @@ const gameModeTitle = computed(() => {
 <template>
   <div>
     <p text-center w-full font-serif>
-      <b>相与来戏·{{ gameModeTitle }}{{ topicShort }}</b>
+      <b>相与来戏·{{ gameModeTitle }}{{ chooseTopic?.nameShort }}</b>
     </p>
     <div v-show="!showHelp" flex="~ col between" pt4 items-centerl>
       <WordBlocks

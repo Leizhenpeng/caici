@@ -1,3 +1,4 @@
+<!-- eslint-disable no-console -->
 <script lang="ts" setup>
 import { useRoute, useRouter } from 'vue-router'
 import { roomAccess, roomInfo } from '~/api'
@@ -11,7 +12,7 @@ const ifPass = route.params?.pass as string
 
 const wordLength = ref(0)
 const playMode = ref(TogetherGameMode.COMPETITION)
-
+const topicId = ref(2)
 const redictWaitRoom = () => {
   router.replace({
     name: 'together-wait',
@@ -24,21 +25,23 @@ const redictWaitRoom = () => {
 // master? player? watcher?
 async function checkRoomIfAccessible(roomId: string, uuid: string) {
   if (!roomId) {
-    router.replace({ name: 'together-wait' })
+    redictWaitRoom()
     return false
   }
 
   if (ifPass)
     return true
+
   const { ifAccessible } = await roomAccess(roomId, deviceId.value, mySocket.value?.id as string)
   if (!ifAccessible)
-    router.replace({ name: 'together-wait' })
+    redictWaitRoom()
 }
 
 async function getRoomInfo(roomId: string, uuid: string) {
   roomInfo(roomId, uuid).then(
     (out) => {
-      wordLength.value = out.wordLength!
+      console.log('out', out)
+      topicId.value = out.topicId!
       playMode.value = out.playMode as TogetherGameMode
     },
   ).catch(
@@ -57,7 +60,7 @@ onMounted(async () => {
 
 <template>
   <div p="4">
-    <PlayTogether :key="wordLength" :word-length="wordLength" :game-mode="playMode" />
+    <PlayTogether :key="wordLength" :word-length="wordLength" :game-mode="playMode" :topic-id="topicId" />
   </div>
 </template>
 

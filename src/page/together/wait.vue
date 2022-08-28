@@ -9,7 +9,7 @@ const route = useRoute()
 const wordFromUrl = route.query?.q as string
 const notCheck = route.params?.notCheck as string
 const showWait = ref(false)
-
+console.log('notCheck', notCheck)
 const redictGameRoom = (targetRoomId: string) => {
   router.replace({
     name: 'room',

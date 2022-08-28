@@ -117,18 +117,23 @@ export class roomBaseInfoResponse {
   playMode?: TogetherGameMode | string
 
   /**
-   * 词语长度
+   * topicId
    * @example 5
    */
-  wordLength?: number
+  topicId?: number
 
+  /** answer
+   */
+  answer?: string
   constructor(
     roomId?: string,
     playMode?: TogetherGameMode | string,
-    wordLength?: number,
+    topicId?: number,
+    answer?: string,
   ) {
     this.roomId = roomId
     this.playMode = playMode
-    this.wordLength = wordLength
+    this.topicId = topicId
+    this.answer = answer
   }
 }

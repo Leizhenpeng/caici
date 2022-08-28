@@ -1,6 +1,7 @@
 import { breakpointsTailwind } from '@vueuse/core'
 import type { Socket } from 'socket.io-client'
 import { getAnswerOfDay } from './answers'
+import type { AllTopicResponse } from './api'
 import { t } from './i18n'
 import type { MatchType, ParsedChar } from './logic'
 import {
@@ -37,7 +38,7 @@ export const showPrivacyNotes = ref(false)
 export const showShareDialog = ref(false)
 export const useMask = ref(false)
 export const showMultiplayer = ref(true) // TODO:change false
-export const totalTopics = ref()
+export const totalTopics = ref<AllTopicResponse[]>()
 export const togetherWords = ref('')
 
 export const useNumberTone = computed(() => {
