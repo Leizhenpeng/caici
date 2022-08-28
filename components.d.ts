@@ -24,6 +24,8 @@ declare module '@vue/runtime-core' {
     InviteDialog: typeof import('./src/components/InviteDialog.vue')['default']
     InviteImage: typeof import('./src/components/InviteImage.vue')['default']
     InviteText: typeof import('./src/components/InviteText.vue')['default']
+    Loading: typeof import('./src/components/Loading.vue')['default']
+    LoadingOne: typeof import('./src/components/LoadingOne.vue')['default']
     Modal: typeof import('./src/components/Modal.vue')['default']
     ModalsLayer: typeof import('./src/components/ModalsLayer.vue')['default']
     MultiLoading: typeof import('./src/components/MultiLoading.vue')['default']

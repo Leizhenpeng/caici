@@ -54,18 +54,7 @@ watch(leftTimeStart, (v) => {
       redictGameRoom(roomInfo.value.uniDoor)
   }
 })
-function ifOngameCheck() {
-  ifOnGame(deviceId.value).then((data) => {
-    if (data.ifOnGame)
-      redictGameRoom(data.roomId!)
-  })
-}
 
-onMounted(
-  () => {
-    ifOngameCheck()
-  },
-)
 function focus() {
   el.value?.focus()
 }
@@ -407,7 +396,7 @@ const ifInWatchMode = computed(() => {
                 <div i-carbon-two-person-lift mx1 />限时轮猜
               </div>
               <div v-else-if="generalGameMode === TogetherGameMode.COOPERATION" flex="~ row center">
-                <div i-carbon-partnership mx1 />好友协作
+                <div i-carbon-partnership mx1 />默契合猜
               </div>
             </button>
           </div>

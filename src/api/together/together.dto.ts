@@ -102,3 +102,33 @@ export class ifRoomIdAccessibleResponse {
     this.ifAccessible = ifAccessible
   }
 }
+
+export class roomBaseInfoResponse {
+  /**
+   * 房间唯一标识
+   * @example CaiciRoom-3DKBZ40k_GmXy3VorHkS0
+   */
+  roomId?: string
+
+  /**
+   * 房间模式
+   * @example 'COOPERATION'
+   */
+  playMode?: TogetherGameMode | string
+
+  /**
+   * 词语长度
+   * @example 5
+   */
+  wordLength?: number
+
+  constructor(
+    roomId?: string,
+    playMode?: TogetherGameMode | string,
+    wordLength?: number,
+  ) {
+    this.roomId = roomId
+    this.playMode = playMode
+    this.wordLength = wordLength
+  }
+}

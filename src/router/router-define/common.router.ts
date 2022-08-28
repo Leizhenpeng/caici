@@ -64,7 +64,6 @@ export const LeftRoute: RouteRecordRaw = {
   name: 'solo',
   component: () => import('../../page/singlePlayer.vue'),
   meta: {
-
     mode: 'solo',
   },
 }

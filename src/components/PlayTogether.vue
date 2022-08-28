@@ -3,7 +3,6 @@ import { filterNonChineseChars } from '@hankit/tools'
 import {
   answer, breakpoints,
   dayNo,
-  dayNoHanzi,
   isDev,
   isFailed,
   isFinished,
@@ -15,15 +14,33 @@ import {
   showHint,
   useMask,
 } from '~/state'
-import { currentMeta, markStart, nickName, topicNow, tries, useHint, useStrictMode, wordLengthNow } from '~/storage'
+import { TogetherGameMode, currentMeta, markStart, nickName, topicNow, tries, useHint, useStrictMode, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
+
+const props = withDefaults(defineProps <{
+  wordLength?: number
+  topicShort?: string
+  gameMode?: TogetherGameMode
+}>(), {
+  wordLength: wordLengthNow.value,
+  topicShort: nowTopicTitleShort.value,
+  gameMode: TogetherGameMode.COMPETITION,
+})
+const { wordLength } = props
+
+watch(() => {
+  return wordLength
+}, () => {
+  console.log('wordLength', wordLength)
+}, {
+  deep: true,
+})
 const el = ref<HTMLInputElement>()
 const input = ref('')
 const inputValue = ref('')
 const showToast = autoResetRef(false, 1000)
 const shake = autoResetRef(false, 500)
-
 const isFinishedDelay = debouncedRef(isFinished, 800)
 
 function resetInputValue() {
@@ -39,7 +56,7 @@ watch(
   },
 )
 function enter() {
-  if (input.value.length !== wordLengthNow.value)
+  if (input.value.length !== wordLength)
     return
   if (!checkValidIdiom(input.value, useStrictMode.value)) {
     showToast.value = true
@@ -60,7 +77,7 @@ function reset() {
 }
 function handleInput(e: Event) {
   const el = (e.target! as HTMLInputElement)
-  input.value = filterNonChineseChars(el.value).slice(0, wordLengthNow.value)
+  input.value = filterNonChineseChars(el.value).slice(0, wordLength)
   markStart()
 }
 function focus() {
@@ -98,28 +115,40 @@ function magicDelete() {
   resetInputValue()
   focus()
 }
+
+const gameModeTitle = computed(() => {
+  switch (props.gameMode) {
+    case TogetherGameMode.COMPETITION:
+      return '轮猜'
+    case TogetherGameMode.COOPERATION:
+      return '合猜'
+  }
+})
 </script>
 
 <template>
   <div>
     <p text-center w-full font-serif>
-      <b>{{ dayNoHanzi }}·{{ nowTopicTitleShort }}</b>
+      <b>相与来戏·{{ gameModeTitle }}{{ topicShort }}</b>
     </p>
     <div v-show="!showHelp" flex="~ col between" pt4 items-centerl>
-      <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" :show-player="true" @click="focus()" />
+      <WordBlocks
+        v-for="w, i of tries" :key="i" :word="w" :revealed="true" :show-player="true" :word-length="wordLength"
+        @click="focus()"
+      />
 
       <template v-if="currentMeta.answer">
         <div my4>
           <div font-serif p2>
             {{ t('correct-answer') }}
           </div>
-          <WordBlocks :word="answer.word" :show-player="true" />
+          <WordBlocks :word="answer.word" :show-player="true" :word-length="wordLength" />
         </div>
       </template>
 
       <WordBlocks
-        v-if="!isFinished" :show-player="true" :player-nick="nickName" :class="{ shake }" :word="input" :active="true"
-        @click="focus()"
+        v-if="!isFinished" :word-length="wordLength" :show-player="true" :player-nick="nickName" :class="{ shake }" :word="input"
+        :active="true" @click="focus()"
       />
 
       <div mt-1 />
@@ -143,7 +172,7 @@ function magicDelete() {
               <div i-carbon-magic-wand-filled />
             </div>
           </div>
-          <button mt3 btn p="x6 y2" :disabled="input.length !== wordLengthNow" @click="enter">
+          <button mt3 btn p="x6 y2" :disabled="input.length !== wordLength" @click="enter">
             {{ t('ok-spaced') }}
           </button>
           <div v-if="tries.length > 4 && !isFailed" op50>

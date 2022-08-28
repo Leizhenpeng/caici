@@ -1,10 +1,11 @@
 import { http } from '../axios'
-import type { FindRoomRequest, FindRoomResponse, ifOngameResponse, ifRoomIdAccessibleResponse } from './together.dto'
+import type { FindRoomRequest, FindRoomResponse, ifOngameResponse, ifRoomIdAccessibleResponse, roomBaseInfoResponse } from './together.dto'
 
 enum ETogtherApi {
   goRoom = '/Multiplayer',
   onGame = '/Multiplayer/on-game',
   roomAccess = '/Multiplayer/access',
+  roomInfo = '/Multiplayer/room-info',
 }
 
 export const findAndJoinRoom = (payload: FindRoomRequest) => {
@@ -25,9 +26,20 @@ export const ifOnGame = (uuid: string) => {
   })
 }
 
-export const roomAccess = (roomId: string, uuid: string) => {
+export const roomAccess = (roomId: string, uuid: string, socketId: string) => {
   return http.post<ifRoomIdAccessibleResponse>({
     url: ETogtherApi.roomAccess,
+    data: {
+      roomId,
+      uuid,
+      socketId,
+    },
+  })
+}
+
+export const roomInfo = (roomId: string, uuid: string) => {
+  return http.post<roomBaseInfoResponse>({
+    url: ETogtherApi.roomInfo,
     data: {
       roomId,
       uuid,

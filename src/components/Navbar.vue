@@ -16,10 +16,10 @@ const isSinglePlayer = computed(() => {
   return route.meta.mode === 'solo'
 })
 const goSolo = () => {
-  router.push({ name: 'solo' })
+  router.replace({ name: 'solo' })
 }
 const goTogether = () => {
-  router.push({ name: 'together' })
+  router.replace({ path: '/together' })
 }
 </script>
 

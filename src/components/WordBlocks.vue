@@ -4,6 +4,7 @@ import { wordLengthNow } from '~/storage'
 const props = withDefaults(
   defineProps<{
     word: string
+    wordLength?: number
     revealed?: boolean
     answer?: string
     animate?: boolean
@@ -12,10 +13,12 @@ const props = withDefaults(
     showPlayer?: boolean
     playerNick?: string
   }>(), {
+    wordLength: wordLengthNow.value,
     animate: true,
     forceFour: false,
     showPlayer: false,
     playerNick: '无名氏',
+
   },
 )
 
@@ -43,7 +46,7 @@ const wordLength = computed(() => {
   if (props.forceFour)
     return 4
 
-  return wordLengthNow.value
+  return props.wordLength
 })
 const ifMinFont5 = computed(() => {
   if (!props.forceFour)

@@ -133,7 +133,7 @@ export const ifMinFont5 = computed(() => {
   return wordLengthNow.value === 5 && (isMobile || !lg)
 })
 
-// 是否是移动端+五言诗
+// 是否是移动端+⑦言诗
 export const ifMinFont7 = computed(() => {
   const lg = breakpoints.lg
   return wordLengthNow.value === 7 && (isMobile || !lg)
