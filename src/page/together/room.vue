@@ -2,17 +2,20 @@
 <script lang="ts" setup>
 import { useRoute, useRouter } from 'vue-router'
 import { roomAccess, roomInfo } from '~/api'
-import { mySocket } from '~/state'
-import { TogetherGameMode, deviceId } from '~/storage'
+import { CheckRoomInitWhenGameOn } from '~/socket-io'
+import { UserTry, mySocket } from '~/state'
+import { TogetherGameMode, deviceId, nickName } from '~/storage'
 
 const router = useRouter()
 const route = useRoute()
 const roomId = route.query?.id as string
 const ifPass = route.params?.pass as string
 
+const loadReady = ref(false)
 const wordLength = ref(0)
 const playMode = ref(TogetherGameMode.COMPETITION)
 const topicId = ref(2)
+const answer = ref('')
 const redictWaitRoom = () => {
   router.replace({
     name: 'together-wait',
@@ -38,11 +41,13 @@ async function checkRoomIfAccessible(roomId: string, uuid: string) {
 }
 
 async function getRoomInfo(roomId: string, uuid: string) {
-  roomInfo(roomId, uuid).then(
+  roomInfo(roomId, uuid, mySocket.value?.id as string).then(
     (out) => {
       console.log('out', out)
+      answer.value = out.answer!
       topicId.value = out.topicId!
       playMode.value = out.playMode as TogetherGameMode
+      loadReady.value = true
     },
   ).catch(
     (err) => {
@@ -56,11 +61,30 @@ onMounted(async () => {
   await checkRoomIfAccessible(roomId, deviceId.value)
   await getRoomInfo(roomId, deviceId.value)
 })
+
+function formatUserTryFromServer(tryInfo: string) {
+  const [genId, nickName, tryWord, tryTime, ifPass] = tryInfo.split(',')
+  return new UserTry(~~genId, nickName, tryWord, tryTime, ~~ifPass)
+}
+const playerTrysInit = ref<UserTry[]>([])
+mySocket.value?.on(CheckRoomInitWhenGameOn, ({ userTrys, nickName: nickFromServer }) => {
+  playerTrysInit.value = userTrys.map(formatUserTryFromServer)
+  console.log('playerTrysInit', playerTrysInit)
+  nickName.value = nickFromServer
+})
 </script>
 
 <template>
-  <div p="4">
-    <PlayTogether :key="wordLength" :word-length="wordLength" :game-mode="playMode" :topic-id="topicId" />
+  <div>
+    <div v-if="loadReady" p="4">
+      <PlayTogether
+        :key="wordLength" :answer-in-room="answer" :word-length="wordLength" :game-mode="playMode" :topic-id="topicId"
+        :play-init-trys="playerTrysInit"
+      />
+    </div>
+    <div v-else>
+      <loading-one mx-a my-30vh />
+    </div>
   </div>
 </template>
 

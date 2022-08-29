@@ -9,6 +9,9 @@ import { colorblind, deviceId } from '~/storage'
 
 const { height } = useWindowSize()
 
+const ifSignedUpDeviceId = ref(false)
+const ifGetAllTopic = ref(false)
+const checkReady = computed(() => ifSignedUpDeviceId.value && ifGetAllTopic.value)
 // printFinger
 const { getData: get_fp_id } = useVisitorData(
   { extendedResult: true },
@@ -24,17 +27,18 @@ async function checkDeviceId() {
       // })
     })
   }
-  SignUpDeviceId(deviceId.value)
+  SignUpDeviceId(deviceId.value).then(() => {
+    ifSignedUpDeviceId.value = true
+  })
 }
 
-async function checkTopicInit() {
+function checkTopicInit() {
   if (!totalTopics.value) {
-    await getAllTopic().then((res) => {
+    getAllTopic().then((res) => {
       totalTopics.value = res
+      ifGetAllTopic.value = true
     })
   }
-  // TODO: delete this
-  console.log('totalTopics', totalTopics)
 }
 
 onMounted(() => {
@@ -57,7 +61,12 @@ mySocket.value = socket
   <main font-sans text="center gray-700 dark:gray-300" :class="{ colorblind }">
     <NotTodayBanner v-if="dayNo < daySince" />
     <Navbar />
-    <router-view />
+    <div v-if="checkReady">
+      <router-view />
+    </div>
+    <div v-else>
+      <loading-one mx-a my-30vh />
+    </div>
     <ModalsLayer />
     <Confetti />
   </main>

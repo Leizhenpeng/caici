@@ -1,43 +1,45 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
 import { filterNonChineseChars } from '@hankit/tools'
-import {
-  answer, breakpoints,
-  dayNo,
-  isDev,
-  isFailed,
-  isFinished,
-  isMobile,
-  showCheatSheet,
-  showFailed,
-  showHelp,
-  showHint,
-  totalTopics,
-  useMask,
-} from '~/state'
-import { TogetherGameMode, currentMeta, markStart, nickName, topicNow, tries, useHint, useStrictMode } from '~/storage'
 import { t } from '~/i18n'
 import type { Topic } from '~/logic'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
-
-const props = withDefaults(defineProps <{
+import { BroadcastPlayerTrysRefresh, UploadPlayeTry } from '~/socket-io'
+import {
+  UserTry,
+  breakpoints, dayNo,
+  isDev,
+  isFailed,
+  isMobile,
+  mySocket, showCheatSheet,
+  showFailed,
+  showHelp,
+  showHint,
+  startShowConfetti, totalTopics, useMask,
+} from '~/state'
+import { TogetherGameMode, currentMeta, markStart, nickName, topicNow, useHint, useStrictMode } from '~/storage'
+const props = withDefaults(defineProps<{
   topicId?: number
   gameMode?: TogetherGameMode
+  answerInRoom?: string
+  playInitTrys?: UserTry[]
 }>(), {
   topicId: 1,
   gameMode: TogetherGameMode.COMPETITION,
 })
 
+const playerTrys = ref<UserTry[]>(props.playInitTrys || [])
 const chooseTopic = computed(() => {
   return totalTopics.value!.find(
     topic => topic.id === props.topicId)
 })
 
 const wordLength = computed(() => {
-  return chooseTopic.value?.wordLength || 4
+  return chooseTopic.value?.wordLength || 5
 })
 
 watch(() => {
+  console.log('chooseTopic', chooseTopic)
   return chooseTopic
 }, () => {
   topicNow.value = chooseTopic.value?.nameCode as Topic
@@ -50,7 +52,6 @@ const input = ref('')
 const inputValue = ref('')
 const showToast = autoResetRef(false, 1000)
 const shake = autoResetRef(false, 500)
-const isFinishedDelay = debouncedRef(isFinished, 800)
 
 function resetInputValue() {
   inputValue.value = ''
@@ -74,12 +75,16 @@ function enter() {
   }
   if (currentMeta.value.strict == null)
     currentMeta.value.strict = useStrictMode.value
-  tries.value.push(input.value)
+
+  mySocket.value?.emit(UploadPlayeTry,
+    input.value,
+  )
+  // playerTrys.value.push(input.value)
   input.value = ''
   inputValue.value = ''
 }
 function reset() {
-  tries.value = []
+  playerTrys.value = []
   currentMeta.value = {}
   input.value = ''
   inputValue.value = ''
@@ -128,46 +133,73 @@ function magicDelete() {
 const gameModeTitle = computed(() => {
   switch (props.gameMode) {
     case TogetherGameMode.COMPETITION:
-      return '轮猜'
+      return '限时轮猜'
     case TogetherGameMode.COOPERATION:
-      return '合猜'
+      return '默契合猜'
   }
 })
+function formatUserTryFromServer(tryInfo: string) {
+  const [genId, nickName, tryWord, tryTime, ifPass] = tryInfo.split(',')
+  return new UserTry(~~genId, nickName, tryWord, tryTime, ~~ifPass)
+}
+mySocket.value?.on(BroadcastPlayerTrysRefresh, (palyerTrysFromServer: Array<string>) => {
+  const _parsered = palyerTrysFromServer.map(formatUserTryFromServer)
+  console.log('playerTrys', _parsered)
+  playerTrys.value = _parsered
+})
+
+const ifHavePassed = computed(() => {
+  return playerTrys.value.some(tryInfo => tryInfo.ifPass)
+})
+
+watch(ifHavePassed, (ifHavePassed) => {
+  if (ifHavePassed)
+    startShowConfetti()
+}, {
+  immediate: true,
+})
+
+const isHaveFinished = computed(() => {
+  return ifHavePassed.value
+})
+
+const isFinishedDelay = debouncedRef(isHaveFinished, 800)
 </script>
 
 <template>
   <div>
     <p text-center w-full font-serif>
-      <b>相与来戏·{{ gameModeTitle }}{{ chooseTopic?.nameShort }}</b>
+      <b>{{ gameModeTitle }}·{{ chooseTopic?.name }}</b>
     </p>
     <div v-show="!showHelp" flex="~ col between" pt4 items-centerl>
       <WordBlocks
-        v-for="w, i of tries" :key="i" :word="w" :revealed="true" :show-player="true" :word-length="wordLength"
-        @click="focus()"
+        v-for="eachTry, index of playerTrys" :key="index" :word="eachTry.tryWord!" :revealed="true" :show-player="true"
+        :word-length="wordLength" :player-nick="eachTry.nickName" :answer="answerInRoom" @click="focus()"
       />
 
-      <template v-if="currentMeta.answer">
+      <!-- //猜测不出查看正确答案~ -->
+      <!-- <template v-if="currentMeta.answer">
         <div my4>
           <div font-serif p2>
             {{ t('correct-answer') }}
           </div>
           <WordBlocks :word="answer.word" :show-player="true" :word-length="wordLength" />
         </div>
-      </template>
+      </template> -->
 
       <WordBlocks
-        v-if="!isFinished" :word-length="wordLength" :show-player="true" :player-nick="nickName" :class="{ shake }" :word="input"
+        v-if="!isHaveFinished" :word-length="wordLength" :show-player="true" :player-nick="nickName" :class="{ shake }" :word="input"
         :active="true" @click="focus()"
       />
 
       <div mt-1 />
 
       <Transition name="fade-out">
-        <div v-if="!isFinished" flex="~ col gap-2" items-center>
+        <div v-if="!isHaveFinished" flex="~ col gap-2" items-center>
           <div relative border="2 base rounded-0">
             <input
               ref="el" v-model="inputValue" bg-transparent w-86 p3 outline-none text-center type="text" autocomplete="false"
-              :placeholder="t('input-placeholder')" :disabled="isFinished" :class="{ shake }" @input="handleInput" @keydown.enter="enter"
+              :placeholder="t('input-placeholder')" :disabled="isHaveFinished" :class="{ shake }" @input="handleInput" @keydown.enter="enter"
             >
             <div
               absolute top-0 left-0 right-0 bottom-0 flex="~ center" bg-base transition-all duration-300 text-mis pointer-events-none
@@ -184,14 +216,14 @@ const gameModeTitle = computed(() => {
           <button mt3 btn p="x6 y2" :disabled="input.length !== wordLength" @click="enter">
             {{ t('ok-spaced') }}
           </button>
-          <div v-if="tries.length > 4 && !isFailed" op50>
-            {{ t('tries-rest', TRIES_LIMIT - tries.length) }}
+          <div v-if="playerTrys.length > 4 && !isFailed" op50>
+            {{ t('tries-rest', TRIES_LIMIT - playerTrys.length) }}
           </div>
           <button v-if="isFailed" square-btn @click="showFailed = true">
             <div i-mdi-emoticon-devil-outline /> {{ t('view-answer') }}
           </button>
 
-          <div flex="~ between" mt4 w-full flex-row-reverse :class="isFinished ? 'op0! pointer-events-none' : ''">
+          <div flex="~ between" mt4 w-full flex-row-reverse :class="isHaveFinished ? 'op0! pointer-events-none' : ''">
             <button mx2 icon-btn text-base pb2 gap-1 flex="~ center" @click="sheet()">
               <div i-carbon-grid /> {{ t('cheatsheet') }}
             </button>
@@ -202,7 +234,7 @@ const gameModeTitle = computed(() => {
         </div>
       </Transition>
       <Transition name="fade-in">
-        <div v-if="isFinishedDelay && isFinished">
+        <div v-if="isFinishedDelay && isHaveFinished">
           <ResultFooter />
           <Countdown />
         </div>

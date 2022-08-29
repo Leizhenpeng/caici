@@ -37,12 +37,13 @@ export const roomAccess = (roomId: string, uuid: string, socketId: string) => {
   })
 }
 
-export const roomInfo = (roomId: string, uuid: string) => {
+export const roomInfo = (roomId: string, uuid: string, socketId: string) => {
   return http.post<roomBaseInfoResponse>({
     url: ETogtherApi.roomInfo,
     data: {
       roomId,
       uuid,
+      socketId,
     },
   })
 }

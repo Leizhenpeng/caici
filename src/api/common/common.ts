@@ -16,7 +16,7 @@ export const checkHealth = () => {
 }
 
 export const getAllTopic = () => {
-  return http.get<RootResponseModel<AllTopicResponse[]>>(
+  return http.get<AllTopicResponse[]>(
     {
       url: ECommonApi.getAllTopic,
     },

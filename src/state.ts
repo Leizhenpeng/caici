@@ -222,3 +222,30 @@ export enum SocketRole {
   faker = 'faker',
 }
 
+export class UserTry {
+  genId?: number
+  nickName?: string
+  tryWord?: string
+  tryTimestamp?: string
+  ifPass?: number
+
+  constructor(genId: number, nickName: string, tryWord: string, tryTimestamp: string, ifPass: number) {
+    Object.assign(this, {
+      genId,
+      nickName,
+      tryWord,
+      tryTimestamp,
+      ifPass,
+    })
+  }
+}
+
+export const showConfetti = ref(false)
+
+export function startShowConfetti() {
+  showConfetti.value = true
+  setTimeout(() => {
+    showConfetti.value = false
+  }, 5000)
+}
+

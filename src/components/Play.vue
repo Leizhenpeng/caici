@@ -8,11 +8,13 @@ import {
   isFailed,
   isFinished,
   isMobile,
+  isPassed,
   nowTopicTitleShort,
   showCheatSheet,
   showFailed,
   showHelp,
   showHint,
+  startShowConfetti,
   useMask,
 } from '~/state'
 import { currentMeta, markStart, topicNow, tries, useHint, useStrictMode, wordLengthNow } from '~/storage'
@@ -98,6 +100,12 @@ function magicDelete() {
   resetInputValue()
   focus()
 }
+watch(isPassed, () => {
+  if (isPassed.value)
+    startShowConfetti()
+}, {
+  immediate: true,
+})
 </script>
 
 <template>
