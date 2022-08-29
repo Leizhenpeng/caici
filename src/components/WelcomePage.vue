@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LINK_GITHUB } from '../logic/constants'
 import { isDark, nowTopic, nowTopicExample, nowTopicTitleShort, showHelp, showPrivacyNotes, showVariants, useMask } from '~/state'
-import { initialized, inputMode, topicNow } from '~/storage'
+import { initialized, topicNow } from '~/storage'
 import { t } from '~/i18n'
 
 function start() {
