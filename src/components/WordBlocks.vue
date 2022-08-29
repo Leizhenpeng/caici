@@ -1,6 +1,7 @@
+<!-- eslint-disable no-console -->
 <script setup lang="ts">
 import { ifMinFont5 as ifMinFont5_, ifMinFont7 as ifMinFont7_, parseWord, parsedAnswer, testAnswer, answer as todayAnswer } from '~/state'
-import { wordLengthNow } from '~/storage'
+import { topicNow, wordLengthNow } from '~/storage'
 const props = withDefaults(
   defineProps<{
     word: string
@@ -21,7 +22,26 @@ const props = withDefaults(
 
   },
 )
+const wordLengthUse = ref(props.wordLength)
+watch(
+  topicNow,
+  () => {
+    if (props.forceFour)
+      wordLengthUse.value = 4
+    else
+      wordLengthUse.value = wordLengthNow.value
 
+    console.log('wordLength', wordLengthUse)
+  }, {
+    immediate: true,
+  },
+)
+
+watch(wordLengthUse, () => {
+  console.log('wordLength', wordLengthUse)
+}, {
+  immediate: true,
+})
 const result = computed(() => {
   if (props.revealed) {
     return testAnswer(
@@ -42,12 +62,6 @@ watchEffect(() => {
   }
 })
 
-const wordLength = computed(() => {
-  if (props.forceFour)
-    return 4
-
-  return props.wordLength
-})
 const ifMinFont5 = computed(() => {
   if (!props.forceFour)
     return ifMinFont5_.value
@@ -69,7 +83,7 @@ const ifMinFont7 = computed(() => {
       <div i-carbon-circle-filled w-3 pl-3 bg-yellow />
     </div>
     <div
-      v-for="c, i in parseWord(word.padEnd(wordLength, ' '), answer || todayAnswer.word)" :key="i" w-20 h-20 m1 class="tile" :class="[
+      v-for="c, i in parseWord(word.padEnd(wordLengthUse, ' '), answer || todayAnswer.word)" :key="i" w-20 h-20 m1 class="tile" :class="[
         flip ? 'revealed' : '',
         ifMinFont5 ? '!w-16 !h-18' : '',
         ifMinFont7 ? '!w-11 !h-13' : '',
@@ -99,6 +113,7 @@ const ifMinFont7 = computed(() => {
   user-select: none;
   position: relative;
 }
+
 .tile .front,
 .tile .back {
   position: absolute;
@@ -108,12 +123,15 @@ const ifMinFont7 = computed(() => {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
+
 .tile .back {
   transform: rotateY(180deg);
 }
+
 .tile.revealed .front {
   transform: rotateY(180deg);
 }
+
 .tile.revealed .back {
   transform: rotateY(0deg);
 }
