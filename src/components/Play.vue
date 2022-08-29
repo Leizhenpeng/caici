@@ -114,18 +114,18 @@ watch(isPassed, () => {
       <b>{{ dayNoHanzi }}·{{ nowTopicTitleShort }}</b>
     </p>
     <div v-show="!showHelp" flex="~ col between" pt4 items-centerl>
-      <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" @click="focus()" />
+      <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" :word-length="wordLengthNow" @click="focus()" />
 
       <template v-if="currentMeta.answer">
         <div my4>
           <div font-serif p2>
             {{ t('correct-answer') }}
           </div>
-          <WordBlocks :word="answer.word" />
+          <WordBlocks :word="answer.word" :word-length="wordLengthNow" />
         </div>
       </template>
 
-      <WordBlocks v-if="!isFinished" :class="{ shake }" :word="input" :active="true" @click="focus()" />
+      <WordBlocks v-if="!isFinished" :word-length="wordLengthNow" :class="{ shake }" :word="input" :active="true" @click="focus()" />
 
       <div mt-1 />
 
@@ -133,13 +133,12 @@ watch(isPassed, () => {
         <div v-if="!isFinished" flex="~ col gap-2" items-center>
           <div relative border="2 base rounded-0">
             <input
-              ref="el" v-model="inputValue" bg-transparent w-86 p3 outline-none text-center type="text"
-              autocomplete="false" :placeholder="t('input-placeholder')" :disabled="isFinished" :class="{ shake }"
-              @input="handleInput" @keydown.enter="enter"
+              ref="el" v-model="inputValue" bg-transparent w-86 p3 outline-none text-center type="text" autocomplete="false"
+              :placeholder="t('input-placeholder')" :disabled="isFinished" :class="{ shake }" @input="handleInput" @keydown.enter="enter"
             >
             <div
-              absolute top-0 left-0 right-0 bottom-0 flex="~ center" bg-base transition-all duration-300 text-mis
-              pointer-events-none :class="showToast ? '' : 'op0 translate-y--1'"
+              absolute top-0 left-0 right-0 bottom-0 flex="~ center" bg-base transition-all duration-300 text-mis pointer-events-none
+              :class="showToast ? '' : 'op0 translate-y--1'"
             >
               <span tracking-1 pl1>
                 {{ t('invalid-idiom') }}

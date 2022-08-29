@@ -1,7 +1,7 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
 import { ifMinFont5 as ifMinFont5_, ifMinFont7 as ifMinFont7_, parseWord, parsedAnswer, testAnswer, answer as todayAnswer } from '~/state'
-import { topicNow, wordLengthNow } from '~/storage'
+import { wordLengthNow } from '~/storage'
 const props = withDefaults(
   defineProps<{
     word: string
@@ -22,26 +22,15 @@ const props = withDefaults(
 
   },
 )
-const wordLengthUse = ref(props.wordLength)
-watch(
-  topicNow,
-  () => {
-    if (props.forceFour)
-      wordLengthUse.value = 4
-    else
-      wordLengthUse.value = wordLengthNow.value
-
-    console.log('wordLength', wordLengthUse)
-  }, {
-    immediate: true,
-  },
-)
-
-watch(wordLengthUse, () => {
-  console.log('wordLength', wordLengthUse)
-}, {
-  immediate: true,
+const wordLengthUse = computed(() => {
+  return props.forceFour ? 4 : props.wordLength
 })
+
+// watch(wordLengthUse, () => {
+//   console.log('wordLength', wordLengthUse)
+// }, {
+//   immediate: true,
+// })
 const result = computed(() => {
   if (props.revealed) {
     return testAnswer(
