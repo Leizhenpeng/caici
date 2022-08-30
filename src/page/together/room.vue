@@ -3,7 +3,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { roomAccess, roomInfo } from '~/api'
 import { CheckRoomInitWhenGameOn } from '~/socket-io'
-import { UserTry, mySocket } from '~/state'
+import { UserTry, answerTogther, mySocket } from '~/state'
 import { TogetherGameMode, deviceId, nickName } from '~/storage'
 
 const router = useRouter()
@@ -45,9 +45,11 @@ async function getRoomInfo(roomId: string, uuid: string) {
     (out) => {
       console.log('out', out)
       answer.value = out.answer!
+      answerTogther.value = { word: out.answer!, hint: out.hintWord! }
       topicId.value = out.topicId!
       playMode.value = out.playMode as TogetherGameMode
       loadReady.value = true
+      console.log('answerTogther', answerTogther)
     },
   ).catch(
     (err) => {

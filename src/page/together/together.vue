@@ -22,6 +22,7 @@ onBeforeUnmount(() => {
   <div>
     <div v-if="loadRouter">
       <router-view />
+      <ModalsLayerTogether />
     </div>
     <div v-else>
       <loading-one mx-a my-30vh />

@@ -6,16 +6,13 @@ import type { Topic } from '~/logic'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 import { BroadcastPlayerTrysRefresh, UploadPlayeTry } from '~/socket-io'
 import {
-  UserTry,
-  breakpoints, dayNo,
-  isDev,
+  UserTry, breakpoints,
   isFailed,
-  isMobile,
-  mySocket, showCheatSheet,
+  isMobile, mySocket,
+  showCheatSheet,
   showFailed,
   showHelp,
-  showHint,
-  startShowConfetti, totalTopics, useMask,
+  showHint, startShowConfetti, togetherUserTrysWords, totalTopics, useMask,
 } from '~/state'
 import { TogetherGameMode, currentMeta, markStart, nickName, topicNow, useHint, useStrictMode } from '~/storage'
 const props = withDefaults(defineProps<{
@@ -83,12 +80,12 @@ function enter() {
   input.value = ''
   inputValue.value = ''
 }
-function reset() {
-  playerTrys.value = []
-  currentMeta.value = {}
-  input.value = ''
-  inputValue.value = ''
-}
+// function reset() {
+//   playerTrys.value = []
+//   currentMeta.value = {}
+//   input.value = ''
+//   inputValue.value = ''
+// }
 function handleInput(e: Event) {
   const el = (e.target! as HTMLInputElement)
   input.value = filterNonChineseChars(el.value).slice(0, wordLength.value)
@@ -150,6 +147,12 @@ mySocket.value?.on(BroadcastPlayerTrysRefresh, (palyerTrysFromServer: Array<stri
 
 const ifHavePassed = computed(() => {
   return playerTrys.value.some(tryInfo => tryInfo.ifPass)
+})
+watch(playerTrys, () => {
+  togetherUserTrysWords.value = playerTrys.value.map(tryInfo => tryInfo.tryWord as string)
+}, {
+  deep: true,
+  immediate: true,
 })
 
 watch(ifHavePassed, (ifHavePassed) => {
@@ -240,7 +243,7 @@ const isFinishedDelay = debouncedRef(isHaveFinished, 800)
         </div>
       </Transition>
 
-      <template v-if="isDev">
+      <!-- <template v-if="isDev">
         <div h-20 />
         <div op50 mb-2>
           测试用
@@ -256,7 +259,7 @@ const isFinishedDelay = debouncedRef(isHaveFinished, 800)
             下一天
           </a>
         </div>
-      </template>
+      </template> -->
     </div>
   </div>
 </template>

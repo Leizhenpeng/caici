@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { nanoid } from 'nanoid'
-import { answer, hint, parseWord, showHint } from '~/state'
-import { currentMeta } from '~/storage'
 import { t } from '~/i18n'
 import { getRandomHint } from '~/logic/hints'
+import { answer, hint, parseWord, showHint } from '~/state'
+import { currentMeta } from '~/storage'
 
 const parsed = computed(() => parseWord(hint.value, answer.value.word)[0])
 const masked = computed(() => ({
@@ -38,7 +38,7 @@ watch(showHint, (newVal) => {
     <div v-if="currentMeta.hintLevel === 0" flex="~ col gap-6 center" w-full>
       <!-- <div>{{ t('hint-tip') }}</div> -->
       <!-- new line for hint tip -->
-      <div :key="hintTipKey" v-html="getRandomHint().replace(/NL/g, ' <br> ')" />
+      <div :key="hintTipKey" v-html="getRandomHint.replace(/NL/g, ' <br> ')" />
 
       <div flex="~ row between space-x-1" w-50>
         <button class="btn bg-mis" @click="close">

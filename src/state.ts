@@ -37,9 +37,9 @@ export const showCheatSheet = ref(false)
 export const showPrivacyNotes = ref(false)
 export const showShareDialog = ref(false)
 export const useMask = ref(false)
-export const showMultiplayer = ref(true) // TODO:change false
 export const totalTopics = ref<AllTopicResponse[]>()
 export const togetherWords = ref('')
+export const togetherUserTrysWords = ref<string[]>([])
 
 export const useNumberTone = computed(() => {
   if (inputMode.value === 'sp')
@@ -69,10 +69,18 @@ export const answer = computed(() =>
       }
     : getAnswerOfDay(dayNo.value),
 )
-
+export const answerTogther = ref<{
+  word: string
+  hint: string
+}>({
+  word: '',
+  hint: '',
+})
 export const hint = computed(() => answer.value.hint)
 export const parsedAnswer = computed(() => parseWord(answer.value.word))
-
+export const parserAnswerTogther = computed(() => {
+  parseWord(answerTogther.value.word)
+})
 export const isPassed = computed(() => currentMeta.value.passed || (tries.value.length && checkPass(testAnswer(parseWord(tries.value[tries.value.length - 1])))))
 export const isFailed = computed(() => !isPassed.value && tries.value.length >= TRIES_LIMIT)
 export const isFinished = computed(() => isPassed.value || currentMeta.value.answer)
@@ -85,19 +93,24 @@ export function testAnswer(word: ParsedChar[], ans = parsedAnswer.value) {
   return _testAnswer(word, ans)
 }
 
-export const parsedTries = computed(() => tries.value.map((i) => {
-  const word = parseWord(i)
-  const result = testAnswer(word)
-  return {
-    word,
-    result,
-  }
-}))
+// 提取方法,方便 sole 和 together 两个页面使用
+function parseWordCommon(words: string[], ans: string) {
+  return words.map((i) => {
+    const word = parseWord(i, ans)
+    const result = testAnswer(word, parseWord(ans))
+    return {
+      word,
+      result,
+    }
+  })
+}
+export const parsedTriesSolo = computed(() => parseWordCommon(tries.value, answer.value.word))
+export const parsedTriesTogether = computed(() => parseWordCommon(togetherUserTrysWords.value, answerTogther.value.word))
 
-export function getSymbolState(symbol?: string | number, key?: '_1' | '_2' | 'tone') {
+function getSymbolStateCommon(parsedTriesNow: any[], wordLength: number, symbol?: string | number, key?: '_1' | '_2' | 'tone') {
   const results: MatchType[] = []
-  for (const t of parsedTries.value) {
-    for (let i = 0; i < wordLengthNow.value; i++) {
+  for (const t of parsedTriesNow) {
+    for (let i = 0; i < wordLength; i++) {
       const w = t.word[i]
       const r = t.result[i]
       if (key) {
@@ -127,7 +140,12 @@ export function getSymbolState(symbol?: string | number, key?: '_1' | '_2' | 'to
 
   return null
 }
-
+export function getSymbolStateSolo(symbol?: string | number, key?: '_1' | '_2' | 'tone') {
+  return getSymbolStateCommon(parsedTriesSolo.value, wordLengthNow.value, symbol, key)
+}
+export function getSymbolStateTogether(symbol?: string | number, key?: '_1' | '_2' | 'tone') {
+  return getSymbolStateCommon(parsedTriesTogether.value, wordLengthNow.value, symbol, key)
+}
 // 是否是移动端+五言诗
 export const ifMinFont5 = computed(() => {
   const lg = breakpoints.lg

@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import type { MatchResult, MatchType, ParsedChar } from '~/logic/types'
 import { inputMode, useCheckAssist } from '~/storage'
-import { getSymbolState, ifMinFont5 as ifMinFont5_, ifMinFont7 as ifMinFont7_, useMask, useNumberTone } from '~/state'
+import { getSymbolStateSolo, ifMinFont5 as ifMinFont5_, ifMinFont7 as ifMinFont7_, useMask, useNumberTone } from '~/state'
 
 const props = withDefaults(defineProps<{
   char?: ParsedChar
@@ -23,10 +23,10 @@ const parsed = computed(() => {
 
   // Assist coloring
   return {
-    _1: getSymbolState(props.char._1, inputMode.value === 'sp' ? '_1' : undefined) === 'none' ? 'deleted' : undefined,
-    _2: getSymbolState(props.char._2, inputMode.value === 'sp' ? '_2' : undefined) === 'none' ? 'deleted' : undefined,
-    _3: getSymbolState(props.char._3) === 'none' ? 'deleted' : undefined,
-    tone: getSymbolState(props.char.tone, 'tone') === 'none' ? 'deleted' : undefined,
+    _1: getSymbolStateSolo(props.char._1, inputMode.value === 'sp' ? '_1' : undefined) === 'none' ? 'deleted' : undefined,
+    _2: getSymbolStateSolo(props.char._2, inputMode.value === 'sp' ? '_2' : undefined) === 'none' ? 'deleted' : undefined,
+    _3: getSymbolStateSolo(props.char._3) === 'none' ? 'deleted' : undefined,
+    tone: getSymbolStateSolo(props.char.tone, 'tone') === 'none' ? 'deleted' : undefined,
   } as MatchResult
 })
 

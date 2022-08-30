@@ -27,7 +27,7 @@ watch((locale), () => {
 
 <template>
   <Modal v-model="showCheatSheet" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
-    <CheatSheet />
+    <CheatSheet :if-sole="false" />
   </Modal>
   <Modal v-model="showSettings" :direction="lg ? 'top' : 'bottom'">
     <Settings v-if="lg" my6 />
@@ -42,7 +42,6 @@ watch((locale), () => {
   <Modal v-model="showDashboard" :direction="lg ? 'top' : 'bottom'">
     <Dashboard />
   </Modal>
-
   <Modal v-model="showTogetherShare" :direction="lg ? 'top' : 'bottom'">
     <InviteDialog />
   </Modal>

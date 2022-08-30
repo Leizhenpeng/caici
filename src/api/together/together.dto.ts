@@ -125,15 +125,23 @@ export class roomBaseInfoResponse {
   /** answer
    */
   answer?: string
+
+  /**
+   * 提醒单词
+   */
+  hintWord?: string
+
   constructor(
     roomId?: string,
     playMode?: TogetherGameMode | string,
     topicId?: number,
     answer?: string,
+    hintWord?: string,
   ) {
     this.roomId = roomId
     this.playMode = playMode
     this.topicId = topicId
     this.answer = answer
+    this.hintWord = hintWord
   }
 }

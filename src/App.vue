@@ -67,7 +67,6 @@ mySocket.value = socket
     <div v-else>
       <loading-one mx-a my-30vh />
     </div>
-    <ModalsLayer />
     <Confetti />
   </main>
 </template>

@@ -2,10 +2,14 @@
 import { getShuangpinConstants, pinyinFinals, pinyinInitials, zhuyinSymbols } from '@hankit/tools'
 import { inputMode, spMode } from '~/storage'
 import { t } from '~/i18n'
-import { getSymbolState, showCheatSheet } from '~/state'
-
+import { getSymbolStateSolo, getSymbolStateTogether, showCheatSheet } from '~/state'
+const props = withDefaults(defineProps <{
+  ifSole?: boolean
+}>(), {
+  ifSole: true,
+})
 function getSymbolClass(symbol: string, key?: '_1' | '_2') {
-  const state = getSymbolState(symbol, key)
+  const state = props.ifSole ? getSymbolStateSolo(symbol, key) : getSymbolStateTogether(symbol, key)
   if (!state)
     return ''
   return ({
