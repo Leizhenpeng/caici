@@ -36,6 +36,8 @@ export const showVariants = ref(false)
 export const showCheatSheet = ref(false)
 export const showPrivacyNotes = ref(false)
 export const showShareDialog = ref(false)
+
+export const showHintLevelTip = ref(false)
 export const useMask = ref(false)
 export const totalTopics = ref<AllTopicResponse[]>()
 export const togetherWords = ref('')
@@ -275,3 +277,8 @@ export function startShowConfetti() {
 // 多人模式下, 每个用户的提醒等级
 
 export const hintLevelInRoom = ref(0)
+export const hintColorPools = [
+  'bg-#5bae23',
+  'bg-#f1ca17',
+  'bg-#c21f30',
+]

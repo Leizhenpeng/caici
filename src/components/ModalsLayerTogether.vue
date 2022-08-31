@@ -8,6 +8,7 @@ import {
   showFailed,
   showHelp,
   showHint,
+  showHintLevelTip,
   showPrivacyNotes,
   showSettings,
   showShareDialog,
@@ -28,6 +29,9 @@ watch((locale), () => {
 <template>
   <Modal v-model="showCheatSheet" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
     <CheatSheet :if-sole="false" />
+  </Modal>
+  <Modal v-model="showHintLevelTip" :direction="lg ? 'top' : 'bottom'">
+    <HintLevelTip />
   </Modal>
   <Modal v-model="showSettings" :direction="lg ? 'top' : 'bottom'">
     <Settings v-if="lg" my6 />

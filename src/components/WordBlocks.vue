@@ -1,6 +1,6 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
-import { ifMinFont5 as ifMinFont5_, ifMinFont7 as ifMinFont7_, parseWord, parsedAnswer, testAnswer, answer as todayAnswer } from '~/state'
+import { hintColorPools, ifMinFont5 as ifMinFont5_, ifMinFont7 as ifMinFont7_, parseWord, parsedAnswer, showHintLevelTip, testAnswer, answer as todayAnswer } from '~/state'
 import { wordLengthNow } from '~/storage'
 const props = withDefaults(
   defineProps<{
@@ -63,19 +63,17 @@ const ifMinFont7 = computed(() => {
   return false
 })
 
-const colorPool = [
-  'bg-#5bae23',
-  'bg-#f1ca17',
-  'bg-#c21f30',
-]
 const transHintToColor = computed(() => {
-  return colorPool[props.hintLevel]
+  return hintColorPools[props.hintLevel]
 })
+function openHintLevlTip() {
+  showHintLevelTip.value = true
+}
 </script>
 
 <template>
   <div flex>
-    <div v-if="showPlayer" op70 mt1 m1 max-w-3 text-sm scale-90 leading-4 font-serif flex="~ col center">
+    <div v-if="showPlayer" op70 mt1 m1 max-w-3 text-sm scale-90 leading-4 font-serif flex="~ col center" @click="openHintLevlTip">
       <div v-for="item, index in playerNick" :key="index">
         {{ item }}
       </div>
