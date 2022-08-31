@@ -4,33 +4,41 @@ import { filterNonChineseChars } from '@hankit/tools'
 import { t } from '~/i18n'
 import type { Topic } from '~/logic'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
-import { BroadcastPlayerTrysRefresh, UploadPlayeTry } from '~/socket-io'
+import { BroadcastPlayerTrysRefresh, BroadcastUserOnGameInfoRefresh, UploadPlayerTry } from '~/socket-io'
 import {
   UserTry, breakpoints,
-  isFailed,
-  isMobile, mySocket,
+  hintLevelInRoom,
+  isFailed, isMobile,
+  mySocket,
   showCheatSheet,
   showFailed,
-  showHelp,
-  showHint, startShowConfetti, togetherUserTrysWords, totalTopics, useMask,
+  showHelp, showHint, startShowConfetti, togetherUserTrysWords, totalTopics, useMask,
 } from '~/state'
 import { TogetherGameMode, currentMeta, markStart, nickName, topicNow, useHint, useStrictMode } from '~/storage'
+import type { PlayerInfo } from '~/type'
 const props = withDefaults(defineProps<{
   topicId?: number
   gameMode?: TogetherGameMode
   answerInRoom?: string
   playInitTrys?: UserTry[]
+  baseUserInfo?: PlayerInfo[]
+  initHintLevel?: number
 }>(), {
   topicId: 1,
   gameMode: TogetherGameMode.COMPETITION,
 })
 
+hintLevelInRoom.value = props.initHintLevel || 0
 const playerTrys = ref<UserTry[]>(props.playInitTrys || [])
+const PlayerInfos = ref<PlayerInfo[]>(props.baseUserInfo || [])
 const chooseTopic = computed(() => {
   return totalTopics.value!.find(
     topic => topic.id === props.topicId)
 })
 
+const userHintLevel = (userGenId: number | undefined) => {
+  return PlayerInfos.value.find(user => user.userGenId === userGenId)?.hintLevel || 0
+}
 const wordLength = computed(() => {
   return chooseTopic.value?.wordLength || 5
 })
@@ -73,7 +81,7 @@ function enter() {
   if (currentMeta.value.strict == null)
     currentMeta.value.strict = useStrictMode.value
 
-  mySocket.value?.emit(UploadPlayeTry,
+  mySocket.value?.emit(UploadPlayerTry,
     input.value,
   )
   // playerTrys.value.push(input.value)
@@ -167,6 +175,23 @@ const isHaveFinished = computed(() => {
 })
 
 const isFinishedDelay = debouncedRef(isHaveFinished, 800)
+
+watch(PlayerInfos, () => {
+  console.log('PlayerInfos', PlayerInfos)
+}, {
+  deep: true,
+  immediate: true,
+})
+mySocket.value?.on(BroadcastUserOnGameInfoRefresh, (hintLevels: Record<number, string>) => {
+  console.log('hintLevels', hintLevels)
+  // update playerInfo by hintLevel
+  PlayerInfos.value = PlayerInfos.value.map((playerInfo) => {
+    const hintLevel = hintLevels[playerInfo.userGenId]
+    if (hintLevel)
+      playerInfo.hintLevel = ~~hintLevel
+    return playerInfo
+  })
+})
 </script>
 
 <template>
@@ -176,8 +201,8 @@ const isFinishedDelay = debouncedRef(isHaveFinished, 800)
     </p>
     <div v-show="!showHelp" flex="~ col between" pt4 items-centerl>
       <WordBlocks
-        v-for="eachTry, index of playerTrys" :key="index" :word="eachTry.tryWord!" :revealed="true" :show-player="true"
-        :word-length="wordLength" :player-nick="eachTry.nickName" :answer="answerInRoom" @click="focus()"
+        v-for="eachTry, index of playerTrys" :key="index" :hint-level="userHintLevel(eachTry.genId)" :word="eachTry.tryWord!" :revealed="true"
+        :show-player="true" :word-length="wordLength" :player-nick="eachTry.nickName" :answer="answerInRoom" @click="focus()"
       />
 
       <!-- //猜测不出查看正确答案~ -->
@@ -191,8 +216,8 @@ const isFinishedDelay = debouncedRef(isHaveFinished, 800)
       </template> -->
 
       <WordBlocks
-        v-if="!isHaveFinished" :word-length="wordLength" :show-player="true" :player-nick="nickName" :class="{ shake }" :word="input"
-        :active="true" @click="focus()"
+        v-if="!isHaveFinished" :hint-level="hintLevelInRoom" :word-length="wordLength" :show-player="true" :player-nick="nickName"
+        :class="{ shake }" :word="input" :active="true" @click="focus()"
       />
 
       <div mt-1 />
@@ -202,7 +227,8 @@ const isFinishedDelay = debouncedRef(isHaveFinished, 800)
           <div relative border="2 base rounded-0">
             <input
               ref="el" v-model="inputValue" bg-transparent w-86 p3 outline-none text-center type="text" autocomplete="false"
-              :placeholder="t('input-placeholder')" :disabled="isHaveFinished" :class="{ shake }" @input="handleInput" @keydown.enter="enter"
+              :placeholder="t('input-placeholder')" :disabled="isHaveFinished" :class="{ shake }" @input="handleInput"
+              @keydown.enter="enter"
             >
             <div
               absolute top-0 left-0 right-0 bottom-0 flex="~ center" bg-base transition-all duration-300 text-mis pointer-events-none

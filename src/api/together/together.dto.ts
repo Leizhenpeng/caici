@@ -103,6 +103,15 @@ export class ifRoomIdAccessibleResponse {
   }
 }
 
+export class playerInfo {
+  userGenId: number
+  nickName?: string
+
+  constructor(genId: number, nickName?: string) {
+    this.userGenId = genId
+    this.nickName = nickName
+  }
+}
 export class roomBaseInfoResponse {
   /**
    * 房间唯一标识
@@ -130,6 +139,9 @@ export class roomBaseInfoResponse {
    * 提醒单词
    */
   hintWord?: string
+
+  /** player info */
+  playerInfos?: playerInfo[]
 
   constructor(
     roomId?: string,

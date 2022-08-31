@@ -4,6 +4,7 @@ import type { DeviceIdResponse } from './user.dto'
 enum EUserApi {
   DeviceSignUp = '/users/device',
   GenRandomNickname = '/users/nickname',
+  GenRandomTip = '/users/tip',
 }
 
 export const SignUpDeviceId = (fingerprint: string) => {
@@ -16,6 +17,12 @@ export const SignUpDeviceId = (fingerprint: string) => {
 export const genRandomNickname = () => {
   return http.get<string>({
     url: EUserApi.GenRandomNickname,
+  })
+}
+
+export const getRandomTip = () => {
+  return http.get<string>({
+    url: EUserApi.GenRandomTip,
   })
 }
 

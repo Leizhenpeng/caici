@@ -77,6 +77,11 @@ export const answerTogther = ref<{
   hint: '',
 })
 export const hint = computed(() => answer.value.hint)
+export const hintTogether = computed(() => {
+  if (answerTogther.value.hint)
+    return answerTogther.value.hint
+  return getHint(answerTogther.value.word)
+})
 export const parsedAnswer = computed(() => parseWord(answer.value.word))
 export const parserAnswerTogther = computed(() => {
   parseWord(answerTogther.value.word)
@@ -267,3 +272,6 @@ export function startShowConfetti() {
   }, 5000)
 }
 
+// 多人模式下, 每个用户的提醒等级
+
+export const hintLevelInRoom = ref(0)

@@ -12,7 +12,8 @@ export const PlayerChangeInfo = 'pci'
 export const RoomGameModeChange = 'rgmc'
 export const RoomGameTopicChange = 'rgtc'
 export const RoomGameStart = 'rgs'
-export const UploadPlayeTry = 'upt'
+export const UploadPlayerTry = 'upt'
+export const UploadPlayerHinterLevel = 'uphl'
 
 // 服务端发送给客户端的事件
 // p 对个人发送 r 对房间广播
@@ -25,3 +26,4 @@ export const BroadcastChangeName = 'r:bcn' // 修改昵称
 export const BroadcastChangeMaster = 'r:bcm' // 修改房主
 export const BroadcashStartGame = 'r:bsg' // 开始游戏
 export const BroadcastPlayerTrysRefresh = 'r:bptr' // 更新当前房间用户尝试信息
+export const BroadcastUserOnGameInfoRefresh = 'r:buoir' // 更新当前房间用户游戏中的配置信息

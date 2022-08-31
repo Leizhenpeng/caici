@@ -34,7 +34,7 @@ watch((locale), () => {
     <SettingsMobile v-else :key="localeId" my6 />
   </Modal>
   <Modal v-model="showHint" :direction="lg ? 'top' : 'bottom'">
-    <Hint />
+    <HintInRoom />
   </Modal>
   <Modal v-model="showFailed" :direction="lg ? 'top' : 'bottom'">
     <FailedPage />

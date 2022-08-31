@@ -13,13 +13,14 @@ const props = withDefaults(
     forceFour?: boolean // 强制 4字, 用在多人成语口令中
     showPlayer?: boolean
     playerNick?: string
+    hintLevel?: number
   }>(), {
     wordLength: wordLengthNow.value,
     animate: true,
     forceFour: false,
     showPlayer: false,
     playerNick: '无名氏',
-
+    hintLevel: 0,
   },
 )
 const wordLengthUse = computed(() => {
@@ -61,15 +62,26 @@ const ifMinFont7 = computed(() => {
     return ifMinFont7_.value
   return false
 })
+
+const colorPool = [
+  'bg-#5bae23',
+  'bg-#f1ca17',
+  'bg-#c21f30',
+]
+const transHintToColor = computed(() => {
+  return colorPool[props.hintLevel]
+})
 </script>
 
 <template>
   <div flex>
-    <div v-if="showPlayer" op50 mt1 m1 max-w-3 text-sm scale-90 leading-4 font-serif flex="~ col center">
+    <div v-if="showPlayer" op70 mt1 m1 max-w-3 text-sm scale-90 leading-4 font-serif flex="~ col center">
       <div v-for="item, index in playerNick" :key="index">
         {{ item }}
       </div>
-      <div i-carbon-circle-filled w-3 pl-3 bg-yellow />
+      <div id="breathing-button">
+        <div i-carbon-circle-filled w-3 pl-3 :class="transHintToColor" />
+      </div>
     </div>
     <div
       v-for="c, i in parseWord(word.padEnd(wordLengthUse, ' '), answer || todayAnswer.word)" :key="i" w-20 h-20 m1 class="tile" :class="[
@@ -108,7 +120,7 @@ const ifMinFont7 = computed(() => {
   position: absolute;
   top: 0;
   left: 0;
-  transition: transform 0.6s;
+  transition: transform 0.8s;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
@@ -123,5 +135,62 @@ const ifMinFont7 = computed(() => {
 
 .tile.revealed .back {
   transform: rotateY(0deg);
+}
+
+#breathing-button {
+  -webkit-animation: breathing 5s ease-out infinite normal;
+  animation: breathing 5s ease-out infinite normal;
+}
+
+@-webkit-keyframes breathing {
+  0% {
+      -webkit-transform: scale(0.8);
+      -ms-transform: scale(0.8);
+      transform: scale(0.8);
+    }
+
+    25% {
+      -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+      transform: scale(1);
+    }
+
+    70% {
+      -webkit-transform: scale(0.8);
+      -ms-transform: scale(0.8);
+      transform: scale(0.8);
+    }
+
+    100% {
+      -webkit-transform: scale(0.8);
+      -ms-transform: scale(0.8);
+      transform: scale(0.8);
+    }
+  }
+
+@keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+
+  70% {
+    -webkit-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+
+  100% {
+    -webkit-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
+  }
 }
 </style>
