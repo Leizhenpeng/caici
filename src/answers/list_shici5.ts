@@ -126,7 +126,7 @@ export const _2022_SEP = prepare(30, [
     ['家书抵万金', '家'],
     ['花落知多少', '花'],
     ['大雪满弓刀', '雪'],
-  ])],
+  ], '2022-09-30')],
 )
 export const answers_shici5: string[][] = [
   ..._PRE,
