@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { tr } from 'date-fns/locale'
 import { useRoute, useRouter } from 'vue-router'
-import { isDark, showDashboard, showDoubleCheckExit, showHelp, showSettings, useMask } from '~/state'
+import { ifMultipleOnGame, ifMultipleOnWait, isDark, showDashboard, showDoubleCheckExit, showHelp, showSettings, useMask } from '~/state'
 import { gamesCount } from '~/storage'
 
 const toggleDark = useToggle(isDark)
@@ -26,6 +26,14 @@ const goTogether = () => {
 const doubleCheckGoSolo = () => {
   showDoubleCheckExit.value = true
 }
+
+function exit() {
+  if (ifMultipleOnWait.value || ifMultipleOnGame.value)
+    doubleCheckGoSolo()
+
+  else
+    goSolo()
+}
 </script>
 
 <template>
@@ -46,7 +54,7 @@ const doubleCheckGoSolo = () => {
         <button v-if="isSinglePlayer" icon-btn mx2 @click="goTogether">
           <div i-carbon-collaborate />
         </button>
-        <button v-else icon-btn mx2 @click="doubleCheckGoSolo">
+        <button v-else icon-btn mx2 @click="exit">
           <div i-carbon-user-activity />
         </button>
 
