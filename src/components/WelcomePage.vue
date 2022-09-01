@@ -146,19 +146,22 @@ const nowTopicExampleS4 = computed(
         {{ t('intro-21') }}
       </p>
     </div>
-    <WordBlocks :word-length="wordLengthNow" my1 :word="nowTopicExampleS1" :revealed="true" :answer="nowTopicExample" />
+    <WordBlocks :word-length="wordLengthNow" my1 :word="nowTopicExampleS1" :revealed="true" :animate="false" :answer="nowTopicExample" />
     <p>{{ t('intro-4') }} <b text-ok>{{ nowTopicExampleS1_font }}</b> {{ t('intro-6') }}</p>
 
-    <WordBlocks my2 :word-length="wordLengthNow" :word="nowTopicExampleS2" :revealed="true" :answer="nowTopicExample" />
+    <WordBlocks my2 :word-length="wordLengthNow" :word="nowTopicExampleS2" :revealed="true" :animate="false" :answer="nowTopicExample" />
     <p>{{ t('intro-4') }} <b text-mis>{{ nowTopicExampleS2_font }}</b> {{ t('intro-9') }}</p>
 
-    <WordBlocks my2 :word-length="wordLengthNow" :word="nowTopicExampleS3" :revealed="true" :answer="nowTopicExample" />
+    <WordBlocks my2 :word-length="wordLengthNow" :word="nowTopicExampleS3" :revealed="true" :animate="false" :answer="nowTopicExample" />
     <p max-w-130>
       {{ t('intro-4') }} <b op50>{{ nowTopicExampleS3_font }}</b> {{ t('intro-15') }}
       {{ t('intro-19') }}
     </p>
 
-    <WordBlocks my2 :word-length="wordLengthNow" :word="nowTopicExampleS4" :revealed="true" :answer="nowTopicExample" />
+    <WordBlocks
+      my2 :word-length="wordLengthNow" :word="nowTopicExampleS4" :revealed="true" :animate="false"
+      :answer="nowTopicExample"
+    />
     <p>{{ t('intro-20') }}</p>
 
     <div h-1px w-10 border="b base" m4 />

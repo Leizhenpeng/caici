@@ -265,7 +265,7 @@ mySocket.value?.on(BroadcastUserOnGameInfoRefresh, (hintLevels: Record<number, s
       <Transition name="fade-in">
         <div v-if="isFinishedDelay && isHaveFinished">
           <ResultFooter />
-          <Countdown />
+          <!-- <Countdown /> -->
         </div>
       </Transition>
 
