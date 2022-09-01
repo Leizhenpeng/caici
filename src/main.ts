@@ -9,7 +9,6 @@ import './styles/main.css'
 import 'uno.css'
 import { customMotion } from './motion'
 import SocketIO from './plugins/io'
-import { isDevPro } from './state'
 import { setupRouter } from './router'
 
 const app = createApp(App)
@@ -19,6 +18,7 @@ app.use(
   SocketIO, {
     connection: import.meta.env.VITE_SOCKET_URL,
     options: {
+      path: '/socket.io',
       autoConnect: false,
     },
   },
