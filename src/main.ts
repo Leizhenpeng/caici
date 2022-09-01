@@ -15,16 +15,14 @@ import { setupRouter } from './router'
 const app = createApp(App)
 
 // socket.io
-if (isDevPro) {
-  app.use(
-    SocketIO, {
-      connection: import.meta.env.VITE_SOCKET_URL,
-      options: {
-        autoConnect: false,
-      },
+app.use(
+  SocketIO, {
+    connection: import.meta.env.VITE_SOCKET_URL,
+    options: {
+      autoConnect: false,
     },
-  )
-}
+  },
+)
 
 // motion plugin
 app.use(MotionPlugin, {
