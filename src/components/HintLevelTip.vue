@@ -24,7 +24,7 @@ const hintColor = computed(() => {
       </button>
     </div>
 
-    <p text-xl font-serif mb2>
+    <p text-xl ml1 font-serif mb2>
       <b>颜色的含义</b>
     </p>
     <div my-4 flex="center ~ col gap-1" font-serif>

@@ -78,7 +78,7 @@ function openHintLevlTip() {
 
 <template>
   <div flex>
-    <div v-if="showPlayer" op70 mt1 m1 max-w-3 text-sm scale-90 leading-4 font-serif flex="~ col center" cursor-pointer @click="openHintLevlTip">
+    <div v-if="showPlayer" op70 mt1 m1 max-w-3 text-sm scale-90 leading-4 font-serif flex="~ col center" cursor-pointer @click.stop="openHintLevlTip">
       <div v-for="item, index in playerNick" :key="index">
         {{ item }}
       </div>

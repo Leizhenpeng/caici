@@ -278,5 +278,5 @@ export function startShowConfetti() {
 
 export const hintLevelInRoom = ref(0)
 export const showDoubleCheckExit = ref(false)
-export const ifMultipleOnGame = ref(false)// 游戏的房间中是否有多人
+export const ifMultipleOnGame = ref(false)// 是否正处于游戏中
 export const ifMultipleOnWait = ref(false)// 等候的房间中是否有多人
