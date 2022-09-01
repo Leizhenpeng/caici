@@ -199,10 +199,12 @@ mySocket.value?.on(BroadcastUserOnGameInfoRefresh, (hintLevels: Record<number, s
     <p text-center w-full font-serif>
       <b>{{ gameModeTitle }}·{{ chooseTopic?.name }}</b>
     </p>
+
     <div v-show="!showHelp" flex="~ col between" pt4 items-centerl>
       <WordBlocks
-        v-for="eachTry, index of playerTrys" :key="index" :hint-level="userHintLevel(eachTry.genId)" :word="eachTry.tryWord!" :revealed="true"
-        :show-player="true" :word-length="wordLength" :player-nick="eachTry.nickName" :answer="answerInRoom" @click="focus()"
+        v-for="eachTry, index of playerTrys" :key="index" :hint-level="userHintLevel(eachTry.genId)" :word="eachTry.tryWord!"
+        :revealed="true" :show-player="true" :word-length="wordLength" :player-nick="eachTry.nickName" :answer="answerInRoom"
+        @click="focus()"
       />
 
       <!-- //猜测不出查看正确答案~ -->
@@ -245,6 +247,9 @@ mySocket.value?.on(BroadcastUserOnGameInfoRefresh, (hintLevels: Record<number, s
           <button mt3 btn p="x6 y2" :disabled="input.length !== wordLength" @click="enter">
             {{ t('ok-spaced') }}
           </button>
+          <p text-center w-full text-sm op50>
+            * 当前在线 3 / 4
+          </p>
           <div v-if="playerTrys.length > 4 && !isFailed" op50>
             {{ t('tries-rest', TRIES_LIMIT - playerTrys.length) }}
           </div>

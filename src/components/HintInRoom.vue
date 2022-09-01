@@ -48,7 +48,9 @@ function changeHintLevel(level: number) {
       </button>
     </div>
     <p text-xl font-serif mb4>
-      <b v-if="hintLevelInRoom === 0">{{ t('hint-ecourage') }}</b>
+      <b v-if="hintLevelInRoom === 0">
+        <div i-mdi-sticker-emoji text-5xl op50 m1 />
+      </b>
       <b v-else>{{ t('hint') }}</b>
     </p>
     <div v-if="hintLevelInRoom === 0" flex="~ col gap-6 center" w-full>
