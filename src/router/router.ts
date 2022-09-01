@@ -1,10 +1,10 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import type { App } from 'vue'
 import { LeftRoute, RootRoute, SingleRoute, TogetherRoute } from './router-define'
 
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [RootRoute, SingleRoute, TogetherRoute, LeftRoute] as unknown as RouteRecordRaw[],
 })
 

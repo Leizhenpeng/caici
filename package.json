@@ -5,7 +5,7 @@
     "dev": "vite --port 4000 --mode development",
     "netlify": "netlify dev --port 3333 --targetPort 4444 --mode production",
     "build": "vite build --mode production",
-    "preview": "vite preview --mode development",
+    "preview": "vite preview --mode production",
     "lint": "eslint . --ext=.ts,.vue",
     "update": "TEST=true vite-node tools/update.ts",
     "test": "vitest"
