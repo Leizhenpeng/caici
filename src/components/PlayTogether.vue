@@ -167,7 +167,7 @@ watch(ifHavePassed, (ifHavePassed) => {
   if (ifHavePassed)
     startShowConfetti()
 }, {
-  immediate: true,
+  // immediate: true,
 })
 
 const isHaveFinished = computed(() => {

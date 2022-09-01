@@ -12,13 +12,14 @@ function goSolo() {
   close()
   router.replace({ name: 'solo' })
 }
+const seeyouTip = ref('浮云一别后,流水十年间')
 </script>
 
 <template>
   <div p5 flex="~ col center">
     <div i-mdi-emoticon-wink-outline text-5xl op50 m4 />
     <div text-sm>
-      朋友们托我向你道别~<br>
+      {{ seeyouTip }}<br>
     </div>
     <div py6 flex="~ gap-5 center">
       <button btn @click="close">

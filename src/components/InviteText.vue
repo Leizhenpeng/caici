@@ -18,7 +18,7 @@ const lines = computed(() => {
     '',
     `雅令：${togetherWords.value}`,
     '',
-    'https://caici.forkway.cn/together',
+    'https://caici.forkway.cn/#/together',
   ]
 })
 
