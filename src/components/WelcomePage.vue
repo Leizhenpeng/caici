@@ -4,6 +4,11 @@ import { isDark, nowTopic, nowTopicExample, nowTopicTitleShort, showHelp, showPr
 import { initialized, topicNow, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
 
+const props = withDefaults(defineProps <{
+  ifSolo?: boolean
+}>(), {
+  ifSolo: true,
+})
 function start() {
   showHelp.value = false
   useMask.value = false
@@ -158,10 +163,7 @@ const nowTopicExampleS4 = computed(
       {{ t('intro-19') }}
     </p>
 
-    <WordBlocks
-      my2 :word-length="wordLengthNow" :word="nowTopicExampleS4" :revealed="true" :animate="false"
-      :answer="nowTopicExample"
-    />
+    <WordBlocks my2 :word-length="wordLengthNow" :word="nowTopicExampleS4" :revealed="true" :animate="false" :answer="nowTopicExample" />
     <p>{{ t('intro-20') }}</p>
 
     <div h-1px w-10 border="b base" m4 />
@@ -173,9 +175,9 @@ const nowTopicExampleS4 = computed(
       {{ t('update-tip') }}
     </div>
 
-    <div h-1px w-10 border="b base" m4 />
+    <div v-if="ifSolo" h-1px w-10 border="b base" m4 />
 
-    <ChooseTopic :lite="true" />
+    <ChooseTopic v-if="ifSolo" :lite="true" />
 
     <div h-1px w-10 border="b base" m4 />
 

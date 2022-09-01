@@ -57,7 +57,7 @@ watch((locale), () => {
     <ShareDialog />
   </Modal>
   <Modal v-model="showHelp" direction="top">
-    <WelcomePage />
+    <WelcomePage :if-solo="false" />
   </Modal>
   <Modal v-model="showVariants" :direction="lg ? 'top' : 'bottom'">
     <VariantLinks />
