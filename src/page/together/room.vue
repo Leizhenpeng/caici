@@ -3,7 +3,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { roomAccess, roomInfo } from '~/api'
 import { CheckRoomInitWhenGameOn } from '~/socket-io'
-import { UserTry, answerTogther, hintLevelInRoom, mySocket } from '~/state'
+import { UserTry, answerTogther, mySocket } from '~/state'
 import { TogetherGameMode, deviceId, nickName } from '~/storage'
 
 const router = useRouter()

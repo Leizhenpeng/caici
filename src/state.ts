@@ -277,8 +277,4 @@ export function startShowConfetti() {
 // 多人模式下, 每个用户的提醒等级
 
 export const hintLevelInRoom = ref(0)
-export const hintColorPools = ref([
-  'bg-#5bae23',
-  'bg-#f1ca17',
-  'bg-#c21f30',
-])
+export const showDoubleCheckExit = ref(false)

@@ -5,6 +5,7 @@ import {
   breakpoints,
   showCheatSheet,
   showDashboard,
+  showDoubleCheckExit,
   showFailed,
   showHelp,
   showHint,
@@ -32,6 +33,9 @@ watch((locale), () => {
   </Modal>
   <Modal v-model="showHintLevelTip" :direction="lg ? 'top' : 'bottom'">
     <HintLevelTip />
+  </Modal>
+  <Modal v-model="showDoubleCheckExit" :direction="lg ? 'top' : 'bottom'">
+    <DoubleCheckChangeMode />
   </Modal>
   <Modal v-model="showSettings" :direction="lg ? 'top' : 'bottom'">
     <Settings v-if="lg" my6 />
