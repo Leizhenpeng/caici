@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { hintColorPools, showHintLevelTip } from '~/state'
+import { showHintLevelTip } from '~/state'
 
 function close() {
   showHintLevelTip.value = false
 }
+const hintColorPools = ref([
+  'bg-#5bae23',
+  'bg-#f1ca17',
+  'bg-#c21f30',
+])
 const hintColor = computed(() => {
   return (hintLevel: number) => {
-    return hintColorPools[hintLevel]
+    return hintColorPools.value[hintLevel]
   }
 })
 </script>
