@@ -8,10 +8,11 @@ import {
   showFailed,
   showHelp,
   showHint,
-  showMultiplayer,
+  showHintLevelTip,
   showPrivacyNotes,
   showSettings,
   showShareDialog,
+  showTogetherShare,
   showVariants,
 } from '~/state'
 
@@ -26,24 +27,27 @@ watch((locale), () => {
 </script>
 
 <template>
-  <!-- <Modal v-model="showMultiplayer" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
-    <Multiplayer />
-  </Modal> -->
   <Modal v-model="showCheatSheet" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
-    <CheatSheet />
+    <CheatSheet :if-sole="false" />
+  </Modal>
+  <Modal v-model="showHintLevelTip" :direction="lg ? 'top' : 'bottom'">
+    <HintLevelTip />
   </Modal>
   <Modal v-model="showSettings" :direction="lg ? 'top' : 'bottom'">
     <Settings v-if="lg" my6 />
     <SettingsMobile v-else :key="localeId" my6 />
   </Modal>
   <Modal v-model="showHint" :direction="lg ? 'top' : 'bottom'">
-    <Hint />
+    <HintInRoom />
   </Modal>
   <Modal v-model="showFailed" :direction="lg ? 'top' : 'bottom'">
     <FailedPage />
   </Modal>
   <Modal v-model="showDashboard" :direction="lg ? 'top' : 'bottom'">
     <Dashboard />
+  </Modal>
+  <Modal v-model="showTogetherShare" :direction="lg ? 'top' : 'bottom'">
+    <InviteDialog />
   </Modal>
   <Modal v-model="showShareDialog" :direction="lg ? 'top' : 'bottom'">
     <ShareDialog />

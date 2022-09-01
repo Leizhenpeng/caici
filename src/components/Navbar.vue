@@ -16,10 +16,10 @@ const isSinglePlayer = computed(() => {
   return route.meta.mode === 'solo'
 })
 const goSolo = () => {
-  router.push({ name: 'solo' })
+  router.replace({ name: 'solo' })
 }
 const goTogether = () => {
-  router.push({ name: 'together' })
+  router.replace({ path: '/together' })
 }
 </script>
 
@@ -39,10 +39,10 @@ const goTogether = () => {
       </div>
       <div flex items-center>
         <button v-if="isSinglePlayer" icon-btn mx2 @click="goTogether">
-          <div i-carbon-partnership />
+          <div i-carbon-collaborate />
         </button>
         <button v-else icon-btn mx2 @click="goSolo">
-          <div i-carbon-user-military />
+          <div i-carbon-user-activity />
         </button>
 
         <button v-if="gamesCount" icon-btn mx2 @click="toggleDashboard()">

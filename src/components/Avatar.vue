@@ -1,18 +1,27 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
 import { useMotion } from '@vueuse/motion'
+import { SocketRole } from '~/state'
 
 const props = withDefaults(defineProps<{
   name: string
   ifWait: boolean
+  type?: SocketRole | null
 }>(), {
   ifWait: false,
+  type: SocketRole.Player,
 })
 const { ifWait } = props
 
 const waitBorder = ref<HTMLElement>()
 const avatar = ref<HTMLElement>()
-
+const playerIconPool = [
+  'i-mdi-seat-legroom-normal',
+  'i-mdi-seat-legroom-reduced',
+  'i-mdi-seat-legroom-extra',
+]
+// random get one from playerIconPool
+const playerIcon = ref(playerIconPool[Math.floor(Math.random() * playerIconPool.length)])
 const { variant } = useMotion(waitBorder, {
   initial: { x: -50, opacity: 0 },
   enter: {
@@ -46,7 +55,7 @@ const { variant } = useMotion(waitBorder, {
     },
   },
 })
-const { variant: avatarVar } = useMotion(avatar, {
+useMotion(avatar, {
   initial: {
     opacity: 0,
     scale: 0.5,
@@ -83,7 +92,9 @@ const { variant: avatarVar } = useMotion(avatar, {
           backgroundColor: 'gray',
         }"
       >
-        {{ props.name.slice(0, 1) }}
+        <div v-if="type === SocketRole.Master" i-ic-sharp-event-seat btn-icon scale-112 disabled />
+        <div v-else-if="type === SocketRole.Player " :class="playerIcon" btn-icon disabled />
+        <div v-else i-mdi-ghost-outline btn-icon disabled />
       </n-avatar>
       <p text-xs op-80 truncate max-w-48px>
         {{ props.name }}

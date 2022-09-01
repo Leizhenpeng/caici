@@ -51,7 +51,7 @@ export interface RequestParams {
 export type ErrorMessageMode = 'none' | 'modal' | 'message' | undefined
 
 /*
- * 基本的 response 结果
+ * 基本的 response 结果, 需要后端对应!
  */
 export interface RootResponseModel<T = any> {
   code: number

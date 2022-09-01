@@ -1,12 +1,14 @@
 <!-- eslint-disable no-console -->
 <script lang="ts" setup>
-import { nanoid } from 'nanoid'
 import { mySocket } from '~/state'
-
+const loadRouter = ref(false)
 onMounted(() => {
   mySocket.value?.connect()
   mySocket.value?.on('connect', () => {
-    console.log(mySocket.value?.id, nanoid())
+    console.log(mySocket.value?.id, 'socketId')
+    setTimeout(() => {
+      loadRouter.value = true
+    }, 1000)
   })
 })
 
@@ -17,8 +19,14 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div p="4">
-    <Multiplayer />
+  <div>
+    <div v-if="loadRouter">
+      <router-view />
+      <ModalsLayerTogether />
+    </div>
+    <div v-else>
+      <loading-one mx-a my-30vh />
+    </div>
   </div>
 </template>
 

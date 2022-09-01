@@ -2,16 +2,15 @@
 import { nanoid } from 'nanoid'
 import { getRandomTip } from '~/api'
 import { t } from '~/i18n'
-import { answer, hint, parseWord, showHint } from '~/state'
-import { currentMeta } from '~/storage'
+import { UploadPlayerHinterLevel } from '~/socket-io'
+import { answerTogther, hintLevelInRoom, hintTogether, mySocket, parseWord, showHint } from '~/state'
 
-const parsed = computed(() => parseWord(hint.value, answer.value.word)[0])
+const parsed = computed(() => parseWord(hintTogether.value, answerTogther.value.word)[0])
 const masked = computed(() => ({
   ...parsed.value,
   char: '?',
 }))
 const hintTipKey = ref(nanoid())
-
 function close() {
   showHint.value = false
 }
@@ -28,6 +27,17 @@ onMounted(() => {
     tip.value = res
   })
 })
+
+function uploadLevelInfo() {
+  mySocket.value?.emit(UploadPlayerHinterLevel,
+    hintLevelInRoom.value,
+  )
+}
+
+function changeHintLevel(level: number) {
+  hintLevelInRoom.value = level
+  uploadLevelInfo()
+}
 </script>
 
 <template>
@@ -38,10 +48,10 @@ onMounted(() => {
       </button>
     </div>
     <p text-xl font-serif mb4>
-      <b v-if="currentMeta.hintLevel === 0">{{ t('hint-ecourage') }}</b>
+      <b v-if="hintLevelInRoom === 0">{{ t('hint-ecourage') }}</b>
       <b v-else>{{ t('hint') }}</b>
     </p>
-    <div v-if="currentMeta.hintLevel === 0" flex="~ col gap-6 center" w-full>
+    <div v-if="hintLevelInRoom === 0" flex="~ col gap-6 center" w-full>
       <!-- <div>{{ t('hint-tip') }}</div> -->
       <!-- new line for hint tip -->
       <div :key="hintTipKey" style="white-space: pre-wrap;">
@@ -52,20 +62,20 @@ onMounted(() => {
         <button class="btn bg-mis" @click="close">
           {{ t('check-back') }}
         </button>
-        <button class="btn   bg-gray-600 op-80" @click="currentMeta.hintLevel = 1">
+        <button class="btn   bg-gray-600 op-80" @click="changeHintLevel(1)">
           {{ t('check-hint') }}
         </button>
       </div>
     </div>
     <div v-else flex="~ col center gap-4">
       <div>
-        {{ t('hint-note') }} <b>{{ currentMeta.hintLevel === 2 ? t('hanzi') : t('ziyin') }}</b>
+        {{ t('hint-note') }} <b>{{ hintLevelInRoom === 2 ? t('hanzi') : t('ziyin') }}</b>
       </div>
-      <CharBlock :char="currentMeta.hintLevel === 2 ? parsed : masked" />
-      <button v-if="currentMeta.hintLevel === 1" class="btn bg-mis" @click="currentMeta.hintLevel = 2">
+      <CharBlock :char="hintLevelInRoom === 2 ? parsed : masked" />
+      <button v-if="hintLevelInRoom === 1" class="btn bg-mis" @click="changeHintLevel(2)">
         {{ t('more-hint') }}
       </button>
-      <button v-if="currentMeta.hintLevel === 2" class="btn bg-ok" @click="close">
+      <button v-if="hintLevelInRoom === 2" class="btn bg-ok" @click="close">
         {{ t('hint-sure') }}
       </button>
     </div>

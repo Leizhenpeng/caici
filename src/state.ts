@@ -1,29 +1,23 @@
-/* eslint-disable no-console */
 import { breakpointsTailwind } from '@vueuse/core'
 import type { Socket } from 'socket.io-client'
+import { getAnswerOfDay } from './answers'
+import type { AllTopicResponse } from './api'
+import { t } from './i18n'
 import type { MatchType, ParsedChar } from './logic'
 import {
   START_DATE,
   TRIES_LIMIT,
   parseWord as _parseWord,
-  testAnswer as _testAnswer,
-  checkPass,
-  getHint,
-  isDstObserved,
-  numberToHanzi,
+  testAnswer as _testAnswer, checkPass, getHint, isDstObserved, numberToHanzi,
 } from './logic'
 import {
   useNumberTone as _useNumberTone,
   currentMeta,
   inputMode,
   spMode,
-  topicNow,
-  tries,
-  useStrictMode,
+  topicNow, tries, useStrictMode,
   wordLengthNow,
 } from './storage'
-import { getAnswerOfDay } from './answers'
-import { t } from './i18n'
 
 export const isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 export const isMobile = isIOS || /iPad|iPhone|iPod|Android|Phone|webOS/i.test(navigator.userAgent)
@@ -35,14 +29,19 @@ export const showHint = ref(false)
 export const showSettings = ref(false)
 export const showHelp = ref(false)
 export const showShare = ref(false)
+export const showTogetherShare = ref(false)
 export const showFailed = ref(false)
 export const showDashboard = ref(false)
 export const showVariants = ref(false)
 export const showCheatSheet = ref(false)
 export const showPrivacyNotes = ref(false)
 export const showShareDialog = ref(false)
+
+export const showHintLevelTip = ref(false)
 export const useMask = ref(false)
-export const showMultiplayer = ref(true) // TODO:change false
+export const totalTopics = ref<AllTopicResponse[]>()
+export const togetherWords = ref('')
+export const togetherUserTrysWords = ref<string[]>([])
 
 export const useNumberTone = computed(() => {
   if (inputMode.value === 'sp')
@@ -72,10 +71,23 @@ export const answer = computed(() =>
       }
     : getAnswerOfDay(dayNo.value),
 )
-
+export const answerTogther = ref<{
+  word: string
+  hint: string
+}>({
+  word: '',
+  hint: '',
+})
 export const hint = computed(() => answer.value.hint)
+export const hintTogether = computed(() => {
+  if (answerTogther.value.hint)
+    return answerTogther.value.hint
+  return getHint(answerTogther.value.word)
+})
 export const parsedAnswer = computed(() => parseWord(answer.value.word))
-
+export const parserAnswerTogther = computed(() => {
+  parseWord(answerTogther.value.word)
+})
 export const isPassed = computed(() => currentMeta.value.passed || (tries.value.length && checkPass(testAnswer(parseWord(tries.value[tries.value.length - 1])))))
 export const isFailed = computed(() => !isPassed.value && tries.value.length >= TRIES_LIMIT)
 export const isFinished = computed(() => isPassed.value || currentMeta.value.answer)
@@ -88,19 +100,24 @@ export function testAnswer(word: ParsedChar[], ans = parsedAnswer.value) {
   return _testAnswer(word, ans)
 }
 
-export const parsedTries = computed(() => tries.value.map((i) => {
-  const word = parseWord(i)
-  const result = testAnswer(word)
-  return {
-    word,
-    result,
-  }
-}))
+// 提取方法,方便 sole 和 together 两个页面使用
+function parseWordCommon(words: string[], ans: string) {
+  return words.map((i) => {
+    const word = parseWord(i, ans)
+    const result = testAnswer(word, parseWord(ans))
+    return {
+      word,
+      result,
+    }
+  })
+}
+export const parsedTriesSolo = computed(() => parseWordCommon(tries.value, answer.value.word))
+export const parsedTriesTogether = computed(() => parseWordCommon(togetherUserTrysWords.value, answerTogther.value.word))
 
-export function getSymbolState(symbol?: string | number, key?: '_1' | '_2' | 'tone') {
+function getSymbolStateCommon(parsedTriesNow: any[], wordLength: number, symbol?: string | number, key?: '_1' | '_2' | 'tone') {
   const results: MatchType[] = []
-  for (const t of parsedTries.value) {
-    for (let i = 0; i < wordLengthNow.value; i++) {
+  for (const t of parsedTriesNow) {
+    for (let i = 0; i < wordLength; i++) {
       const w = t.word[i]
       const r = t.result[i]
       if (key) {
@@ -130,14 +147,19 @@ export function getSymbolState(symbol?: string | number, key?: '_1' | '_2' | 'to
 
   return null
 }
-
+export function getSymbolStateSolo(symbol?: string | number, key?: '_1' | '_2' | 'tone') {
+  return getSymbolStateCommon(parsedTriesSolo.value, wordLengthNow.value, symbol, key)
+}
+export function getSymbolStateTogether(symbol?: string | number, key?: '_1' | '_2' | 'tone') {
+  return getSymbolStateCommon(parsedTriesTogether.value, wordLengthNow.value, symbol, key)
+}
 // 是否是移动端+五言诗
 export const ifMinFont5 = computed(() => {
   const lg = breakpoints.lg
   return wordLengthNow.value === 5 && (isMobile || !lg)
 })
 
-// 是否是移动端+五言诗
+// 是否是移动端+⑦言诗
 export const ifMinFont7 = computed(() => {
   const lg = breakpoints.lg
   return wordLengthNow.value === 7 && (isMobile || !lg)
@@ -217,3 +239,46 @@ export const mySocket = ref<Socket>()
 //     immediate: true,
 //   },
 // )
+
+export enum SocketRole {
+  Master = 'master',
+  Player = 'player',
+  watcher = 'watcher',
+  faker = 'faker',
+}
+
+export class UserTry {
+  genId?: number
+  nickName?: string
+  tryWord?: string
+  tryTimestamp?: string
+  ifPass?: number
+
+  constructor(genId: number, nickName: string, tryWord: string, tryTimestamp: string, ifPass: number) {
+    Object.assign(this, {
+      genId,
+      nickName,
+      tryWord,
+      tryTimestamp,
+      ifPass,
+    })
+  }
+}
+
+export const showConfetti = ref(false)
+
+export function startShowConfetti() {
+  showConfetti.value = true
+  setTimeout(() => {
+    showConfetti.value = false
+  }, 5000)
+}
+
+// 多人模式下, 每个用户的提醒等级
+
+export const hintLevelInRoom = ref(0)
+export const hintColorPools = [
+  'bg-#5bae23',
+  'bg-#f1ca17',
+  'bg-#c21f30',
+]

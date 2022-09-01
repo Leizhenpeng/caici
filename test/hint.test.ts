@@ -4,7 +4,7 @@ import { HintList, getRandomHint } from './../src/logic/hints'
 it(
   'getRandomHint',
   () => {
-    expect(getRandomHint()).toBeDefined()
+    expect(getRandomHint).toBeDefined()
   },
 )
 

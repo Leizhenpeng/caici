@@ -7,6 +7,7 @@ export const RootRoute: RouteRecordRaw = {
   redirect: EPagePath.SinglePlayer,
   meta: {
     mode: 'solo',
+    step: 'play',
   },
 }
 
@@ -16,16 +17,48 @@ export const SingleRoute: RouteRecordRaw = {
   component: () => import('../../page/singlePlayer.vue'),
   meta: {
     mode: 'solo',
+    step: 'play',
   },
 }
 export const TogetherRoute: RouteRecordRaw = {
   path: EPagePath.MultiPlayer,
   name: 'together',
-  component: () => import('../../page/multiPlayer.vue'),
-  meta: {
-    mode: 'together',
-  },
+  component: () => import('../../page/together/together.vue'),
+  children: [
+    {
+      path: '',
+      name: 'together-wait',
+      component: () => import('../../page/together/wait.vue'),
+      meta: {
+        mode: 'together',
+        step: 'wait',
+      },
+    },
+    {
+      path: 'room',
+      name: 'room',
+      component: () => import('../../page/together/room.vue'),
+      meta: {
+        mode: 'together',
+        step: 'play',
+      },
+    },
+    {
+      path: ':pathMatch(.*)*',
+      name: 'together-left',
+      redirect: EPagePath.MultiPlayer,
+    },
+  ],
 }
+// export const RoomRoute: RouteRecordRaw = {
+//   path: EPagePath.RoomGame,
+//   name: 'room',
+//   component: () => import('../../page/roomGame.vue'),
+//   meta: {
+//     mode: 'together',
+//     step: 'play',
+//   },
+// }
 export const LeftRoute: RouteRecordRaw = {
   path: '/:pathMatch(.*)*',
   name: 'solo',

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { LINK_GITHUB } from '../logic/constants'
 import { isDark, nowTopic, nowTopicExample, nowTopicTitleShort, showHelp, showPrivacyNotes, showVariants, useMask } from '~/state'
-import { initialized, inputMode, topicNow } from '~/storage'
+import { initialized, topicNow, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
 
 function start() {
@@ -146,19 +146,19 @@ const nowTopicExampleS4 = computed(
         {{ t('intro-21') }}
       </p>
     </div>
-    <WordBlocks my1 :word="nowTopicExampleS1" :revealed="true" :answer="nowTopicExample" />
+    <WordBlocks :word-length="wordLengthNow" my1 :word="nowTopicExampleS1" :revealed="true" :answer="nowTopicExample" />
     <p>{{ t('intro-4') }} <b text-ok>{{ nowTopicExampleS1_font }}</b> {{ t('intro-6') }}</p>
 
-    <WordBlocks my2 :word="nowTopicExampleS2" :revealed="true" :answer="nowTopicExample" />
+    <WordBlocks my2 :word-length="wordLengthNow" :word="nowTopicExampleS2" :revealed="true" :answer="nowTopicExample" />
     <p>{{ t('intro-4') }} <b text-mis>{{ nowTopicExampleS2_font }}</b> {{ t('intro-9') }}</p>
 
-    <WordBlocks my2 :word="nowTopicExampleS3" :revealed="true" :answer="nowTopicExample" />
+    <WordBlocks my2 :word-length="wordLengthNow" :word="nowTopicExampleS3" :revealed="true" :answer="nowTopicExample" />
     <p max-w-130>
       {{ t('intro-4') }} <b op50>{{ nowTopicExampleS3_font }}</b> {{ t('intro-15') }}
       {{ t('intro-19') }}
     </p>
 
-    <WordBlocks my2 :word="nowTopicExampleS4" :revealed="true" :answer="nowTopicExample" />
+    <WordBlocks my2 :word-length="wordLengthNow" :word="nowTopicExampleS4" :revealed="true" :answer="nowTopicExample" />
     <p>{{ t('intro-20') }}</p>
 
     <div h-1px w-10 border="b base" m4 />
