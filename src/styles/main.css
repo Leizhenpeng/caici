@@ -23,15 +23,15 @@ a {
   --c-primary: #a93333;
   --c-primary-deep: #92130a;
   --c-ok: #a93333;
-  --c-mis: #1B813E;
-  --c-warn: #de7525
+  --c-mis: #ff9900;
+  --c-warn: #de7525;
 }
 .dark {
   --c-primary: #C23A3A;
   --c-primary-deep: #92130a;
   --c-ok: #C23A3A;
-  --c-mis: #0C8A43;
-  --c-warn: #de7525
+  --c-mis: #ff9900;
+  --c-warn: #de7525;
 }
 
 p {
