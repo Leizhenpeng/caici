@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { getRandomTip } from '~/api'
 import { t } from '~/i18n'
 import { showDoubleCheckExit } from '~/state'
 const router = useRouter()
@@ -12,7 +13,23 @@ function goSolo() {
   close()
   router.replace({ name: 'solo' })
 }
-const seeyouTip = ref('浮云一别后,流水十年间')
+const seeyouTip = ref('')
+function getRandomSeeUTip() {
+  getRandomTip('SEEYOU').then(
+    (content) => {
+      seeyouTip.value = content
+    },
+  ).catch(
+    (err) => {
+      console.error(err)
+    },
+  )
+}
+
+onMounted(
+  () => {
+    getRandomSeeUTip()
+  })
 </script>
 
 <template>

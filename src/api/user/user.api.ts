@@ -1,3 +1,4 @@
+import { tr } from 'date-fns/locale'
 import { http } from '../axios'
 import type { DeviceIdResponse } from './user.dto'
 
@@ -20,9 +21,11 @@ export const genRandomNickname = () => {
   })
 }
 
-export const getRandomTip = () => {
+export const getRandomTip = (type = 'HINT') => {
   return http.get<string>({
     url: EUserApi.GenRandomTip,
+    params: { type },
+    headers: { ignoreCancelToken: false },
   })
 }
 
