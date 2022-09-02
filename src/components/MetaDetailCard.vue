@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import type { MetaBase } from '~/api'
 import { showMetaDetail } from '~/state'
-const nowCardMeta = ref()
+const nowCardMeta = ref<MetaBase>()
 const result = {
   authorName: '王羲之',
   kindCN: '文',
@@ -67,6 +68,7 @@ const test1 = {
   kind: 'wen',
   layout: 'indent',
   baiduWiki: 'http://baike.baidu.com/subview/6850/17409556.htm',
+  authorDesc: '王羲之，东晋书法家，字逸少，号澹斋，汉族，原籍山东琅琊（今山东临沂），后迁居会稽（绍兴），写下《兰亭集序》，晚年隐居会稽下辖剡县金庭，中国东晋书法家，有书圣之称。历任秘书郞、宁远将军、江州刺史。后为会稽内史，领右将军，人称“王右军”、“王会稽”。其子王献之书法亦佳，世人合称为“二王”。此后历代王氏家族书法人才辈出。东晋升平五年卒，葬于金庭瀑布山（又称紫藤山），其五世孙衡舍宅为金庭观，遗址犹存。',
   content: '永和九年，岁在癸丑，暮春之初，会于会稽山阴之兰亭，修禊事也。群贤毕至，少长咸集。此地有崇山峻岭，茂林修竹，又有清流激湍，映带左右，引以为流觞曲水，列坐其次。虽无丝竹管弦之盛，一觞一咏，亦足以畅叙幽情。\r\n是日也，天朗气清，惠风和畅。仰观宇宙之大，俯察品类之盛，所以游目骋怀，足以极视听之娱，信可乐也。\r\n夫人之相与，俯仰一世。或取诸怀抱，悟言一室之内；或因寄所托，放浪形骸之外。虽趣舍万殊，静躁不同，当其欣于所遇，暂得于己，怏然自足，不知老之将至。及其所之既倦，情随事迁，感慨系之矣。向之所欣，俯仰之间，以为陈迹，犹不能不以之兴怀，况修短随化，终期于尽！古人云：“死生亦大矣。”岂不痛哉！\r\n每揽昔人兴感之由，若合一契，未尝不临文嗟悼，不能喻之于怀。固知一死生为虚诞，齐彭殇为妄作。后之视今，亦由今之视昔，悲夫！故列叙时人，录其所述。虽世殊事异，所以兴怀，其致一也。后之揽者，亦将有感于斯文。',
   translation: '永和九年，时在癸丑之年，三月上旬，我们会集在会稽郡山阴城的兰亭，为了做禊事。众多贤才都汇聚到这里，年龄大的小的都聚集在这里。兰亭这个地方有高峻的山峰，茂盛的树林，高高的竹子。又有清澈湍急的溪流，辉映环绕在亭子的四周，我们引溪水作为流觞的曲水，排列坐在曲水旁边，虽然没有演奏音乐的盛况，但喝点酒，作点诗，也足够来畅快叙述幽深内藏的感情了。\r\n这一天，天气晴朗，空气清新，和风温暖，仰首观览到宇宙的浩大，俯看观察大地上众多的万物，用来舒展眼力，开阔胸怀，足够来极尽视听的欢娱，实在很快乐。\r\n人与人相互交往，很快便度过一生。有的人在室内畅谈自己的胸怀抱负；有的人就着自己所爱好的事物，寄托情怀，放纵无羁地生活。虽然各有各的爱好，安静与躁动各不相同，但当他们对所接触的事物感到高兴时，一时感到自得和满足，竟然不知道衰老将要到来。等到对得到或喜爱的东西已经厌倦，感情随着事物的变化而变化，感慨随之产生。过去所喜欢的东西，转瞬间，已经成为旧迹，尚且不能不因为它引发心中的感触，况且寿命长短，听凭造化，最后归结于消灭。古人说：“死生毕竟是件大事啊。”怎么能不让人悲痛呢？\r\n每当看到前人所发感慨的原因，其缘由像一张符契那样相和，总难免要在读前人文章时叹息哀伤，不能明白于心。本来知道把生死等同的说法是不真实的，把长寿和短命等同起来的说法是妄造的。后人看待今人，也就像今人看待前人，可悲呀。所以一个一个记下当时与会的人，录下他们所作的诗篇。纵使时代变了，事情不同了，但触发人们情怀的原因，他们的思想情趣是一样的。后世的读者，也将对这次集会的诗文有所感慨。',
   intro: '《兰亭集序》又名《兰亭宴集序》、《兰亭序》。东晋穆帝永和九年（公元353年）三月三日，王羲之与谢安、孙绰等四十一位军政高官，在山阴（今浙江绍兴）兰亭「修禊」，会上各人做诗，《兰亭集序》即为王羲之为众人所作之诗写的序文手稿。文中记叙了兰亭山水之美和聚会的畅快之情，抒发作者对生死无常的感慨。\r\n王羲之手书之真迹已随唐太宗葬于墓中，后人只得由临本中窥见此作。而其临本中又以「神龙本」《兰亭集序》最为称道，因该卷画心前上有唐中宗「神龙」年号小印左半印迹而得名，被认定为是由冯承素奉圣旨于兰亭真迹上双钩所摹，所以应是与真迹最为接近的摹本。本文内容即以《兰亭集序》「神龙摹本」为准。',
@@ -75,27 +77,91 @@ const test1 = {
   appreciation: '文描绘了兰亭的景致和王羲之等人集会的乐趣，抒发了作者盛事不常、“修短随化，终期于尽”的感叹。作者时喜时悲，喜极而悲，文章也随其感情的变化由平静而激荡，再由激荡而平静，极尽波澜起伏、抑扬顿挫之美，所以《兰亭集序》才成为名篇佳作。全文共三段。\r\n文章首段记叙兰亭聚会盛况，并写出与会者的深切感受。先点明聚会的时间、地点、缘由，后介绍与会的人数之多，范围之广，“群贤毕至，少长咸集”。接着写兰亭周围优美的环境。先写高远处：“崇山峻岭，茂林修竹”；再写近低处“清流激湍”；然后总写一笔：“映带左右”。用语简洁。富有诗情画意。在写景的基础上，由此顺笔引出临流赋诗，点出盛会的内容为“一觞一咏”，“畅叙幽情”，“虽无丝竹管弦之盛”，这是反面衬托之笔，以加强表达赏心悦目之情。最后指出盛会之日正逢爽心怡人的天时，“天朗气清”为下文的“仰观”、“俯察”提供了有利条件；“惠风和畅”又与“暮春之初”相呼应。此时此地良辰美景，使“仰观”、“俯察”，“游目骋怀”、“视听之娱”完全可以摆脱世俗的苦恼，尽情地享受自然美景，抒发自己的胸臆。至此，作者把与会者的感受归结到“乐”字上面。笔势疏朗简净，毫无斧凿痕迹。\r\n文章第二段，阐明作者对人生的看法，感慨人生短哲，盛事不常，紧承上文的“乐”字，引发出种种感慨。先用两个“或”字，从正反对比分别评说“人之相与，俯仰一世”的两种不同的具体表现，一是“取诸怀抱，晤言一室之内”，一是“因寄所托，放浪形骸之外”。然后指出这两种表现尽管不同，但心情却是一样的。那就是“当其欣于所遇”时，都会“快然自足”，却“不知老之将至”。这种感受，正是针对正文“游目骋怀，足以极视听之娱”的聚会之乐而发，侧重写出乐而忘悲。接着由“欣于其所遇”的乐引出“情随事迁”的忧，写出乐而生忧，发出“修短随化，终期于尽”的慨叹、文章至此，推进到生死的大问题。最后引用孔子所说的“死生亦大矣”一句话来总结全段，道出了作者心中的“痛”之所在。\r\n最后一段说明作序的缘由。文章紧承上文“死生亦大矣”感发议论，从亲身感受谈起，指出每每发现“昔人兴感之由”和自己的兴感之由完全一样，所以“未尝不临文嗟悼”，可是又说不清其中原因。接着把笔锋转向了对老庄关于“一生死”，“齐彭殇”论调的批判，认为那完全是“虚诞”和“妄作”。东晋时代的文人士大夫崇尚老庄，喜好虚无土义的清谈，庄子认为自然万物“方生方死，方死方生”（《庄子·齐物论》），且把长寿的彭祖和夭折的儿童等同看待，认为“莫寿于殇子，而彭祖为夭”。作者能与时风为悖。对老庄这种思想的大胆否定，是难能可贵的，然后作者从由古到今的事实中做了进一步的推断：“后之视今，亦由今之视昔”。基于这种认识，所以才“列叙时人，录其所述”，留于后人去阅读。尽管将来“事殊事异”，但“所以兴怀。其一致也”。这就从理论上说清了所以要编《兰亭诗集》的原因。最后一句，交代了写序的目的，引起后人的感怀。文字收束得直截了当，开发的情思却绵绵不绝。\r\n这篇序言疏朗简净而韵味深长，突出地代表了王羲之的散文风格。且其造语玲珑剔透，琅琅上口。是古代骈文的精品。《兰亭集序》在骈文的几个方面都有所长。在句法上，对仗整齐，句意排比，如“群贤毕至，少长咸集”，“仰观宇庙之大。俯察品类之盛”，“或取诸怀抱，晤言一室之内；或因寄所托，放浪形骸之外”，两两相对，音韵和谐，无斧凿之痕，语言清新、朴素自然。属于议论部分的文字也非常简沽，富有表现力，在用典上也只用“齐彭殇”和“修楔事”这样浅显易储的典故，这样朴素的行文与东晋对代雕章琢句，华而不实的文风形成鲜明对照。\r\n这篇文章体现了王羲之积极入世的人生观，和老庄学说主张的无为形成了鲜明的对比。',
 }
 nowCardMeta.value = {
-  ...test1,
+  ...test2,
 }
 function close() {
   showMetaDetail.value = false
 }
+
+const authorTitle = computed(() => {
+  return `[${nowCardMeta.value?.dynasty}]${nowCardMeta.value?.authorName}`
+})
+
+function seperateByLine(content: string | undefined) {
+  if (!content)
+    return []
+  return content.split('\n')
+}
+const mainContentStyle = computed(() => {
+  if (nowCardMeta.value?.layout === 'indent')
+    return 'intent-style'
+  return 'center-style'
+})
 </script>
 
 <template>
-  <div p5 flex="~ col center" relative>
+  <div p5 flex="~ col center" relative font-serif>
     <div absolute top-4 right-4 flex="~ gap-3">
       <button icon-btn @click="close">
         <div i-carbon-close />
       </button>
     </div>
 
-    <p text-xl ml1 font-serif mb2>
-      <b>颜色的含义</b>
+    <p text-xl ml1 font-serif>
+      <b>{{ nowCardMeta?.title }}</b>
     </p>
+
+    <p text-md my2>
+      {{ authorTitle }}
+    </p>
+
+    <p v-for="(eachP, index) in seperateByLine(nowCardMeta?.content)" :key="index" :class="[mainContentStyle]">
+      {{ eachP }}
+    </p>
+
+    <div bg-base p2 flex="~ center" text-base mt-2>
+      <n-tabs type="segment" animated justify-content="center" max-w-370px>
+        <n-tab-pane name="author" tab="作者">
+          <card-tab :content="nowCardMeta?.authorDesc" />
+        </n-tab-pane>
+        <n-tab-pane name="annotation" tab="注释">
+          <card-tab :content="nowCardMeta?.annotation" :if-need-strong="true" />
+        </n-tab-pane>
+        <n-tab-pane name="translation" tab="白话">
+          <card-tab :content="nowCardMeta?.translation" :if-need-indent="nowCardMeta?.layout === 'indent'" />
+        </n-tab-pane>
+        <n-tab-pane name="commentShort" tab="短评">
+          <card-tab :content="nowCardMeta?.masterComment" :if-need-strong="true" />
+        </n-tab-pane>
+        <n-tab-pane name="commentLang" tab="长评">
+          <card-tab :content="nowCardMeta?.appreciation" />
+        </n-tab-pane>
+      </n-tabs>
+    </div>
 
     <button btn mt-2 mb-4 @click="close">
       知道了
     </button>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.pre-wrap {
+  white-space: pre-wrap
+}
+
+.intent-style {
+  @extend.pre-wrap;
+  max-width: 340px;
+  line-height: 1.9;
+  text-indent: 1.5em;
+}
+
+.center-style {
+  @extend.pre-wrap;
+  max-width: 100vw;
+  line-height: 1.9;
+  text-align: center;
+  margin-left: 0.6rem;
+}
+</style>

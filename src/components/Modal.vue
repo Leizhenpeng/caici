@@ -1,4 +1,6 @@
 <script setup lang='ts'>
+import { modelMaxHeight } from '~/state'
+
 const props = withDefaults(defineProps<{
   modelValue?: boolean
   direction?: 'top' | 'right' | 'bottom' | 'left'
@@ -62,22 +64,22 @@ const transform = computed(() => {
 </script>
 
 <template>
-  <div
-    fixed z-40
-    :class="[containerPositionClass, modelValue ? '' : 'pointer-events-none']"
-  >
+  <div fixed z-40 :class="[containerPositionClass, modelValue ? '' : 'pointer-events-none']">
     <div
-      v-if="mask"
-      class="bg-base left-0 right-0 top-0 bottom-0 absolute transition-opacity duration-500 ease-out"
-      :class="modelValue ? 'opacity-50' : 'opacity-0'"
-      @click="$emit('update:modelValue', false)"
+      v-if="mask" class="bg-base left-0 right-0 top-0 bottom-0 absolute transition-opacity duration-500 ease-out"
+      :class="modelValue ? 'opacity-50' : 'opacity-0'" @click="$emit('update:modelValue', false)"
     />
     <div
       class="bg-base border-base absolute transition-all duration-200 ease-out max-w-screen max-h-screen overflow-auto scrolls"
-      :class="[positionClass]"
-      :style="modelValue ? {} : { transform }"
+      :class="[positionClass]" :style="modelValue ? {} : { transform }"
     >
-      <slot />
+      <n-scrollbar
+        :style="{
+          maxHeight: `${modelMaxHeight}px`,
+        }"
+      >
+        <slot />
+      </n-scrollbar>
     </div>
   </div>
 </template>

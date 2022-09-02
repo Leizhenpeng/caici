@@ -3,8 +3,11 @@
 import type { Socket } from 'socket.io-client'
 import '~/init'
 import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-vue-v3'
+import type { GlobalThemeOverrides } from 'naive-ui'
+import { NConfigProvider, darkTheme } from 'naive-ui'
+import { useCssVar } from '@vueuse/core'
 import { SignUpDeviceId, getAllTopic } from './api'
-import { dayNo, daySince, mySocket, totalTopics } from '~/state'
+import { dayNo, daySince, isDark, modelMaxHeight, mySocket, totalTopics } from '~/state'
 import { colorblind, deviceId } from '~/storage'
 
 const { height } = useWindowSize()
@@ -52,21 +55,49 @@ watchEffect(() => {
 
 const socket = inject('socket') as Socket
 mySocket.value = socket
+
+const el = ref(null)
+const mainColor = useCssVar('--c-primary', el)
+const themeOverrides: GlobalThemeOverrides = {
+  common: {
+    primaryColor: mainColor.value,
+  },
+}
+const ifUseDarkTheme = computed(() => {
+  if (isDark.value)
+    return darkTheme
+
+  return undefined
+})
+
+const navbarEl = ref(null)
+const { height: MainH } = useElementSize(navbarEl)
+const { height: windMaxH } = useWindowSize()
+
+watch(
+  MainH,
+  () => {
+    modelMaxHeight.value = windMaxH.value - MainH.value - 10
+    console.log('modelMaxHeight', modelMaxHeight)
+  },
+)
 </script>
 
 <script lang="ts">
 </script>
 
 <template>
-  <main font-sans text="center gray-700 dark:gray-300" :class="{ colorblind }">
-    <NotTodayBanner v-if="dayNo < daySince" />
-    <Navbar />
-    <div v-if="checkReady">
-      <router-view />
-    </div>
-    <div v-else>
-      <loading-one mx-a my-30vh />
-    </div>
-    <Confetti />
-  </main>
+  <n-config-provider :theme-overrides="themeOverrides" :theme="ifUseDarkTheme">
+    <main ref="el" font-sans text="center gray-700 dark:gray-300" :class="{ colorblind }">
+      <NotTodayBanner v-if="dayNo < daySince" />
+      <Navbar ref="navbarEl" />
+      <div v-if="checkReady">
+        <router-view />
+      </div>
+      <div v-else>
+        <loading-one mx-a my-30vh />
+      </div>
+      <Confetti />
+    </main>
+  </n-config-provider>
 </template>

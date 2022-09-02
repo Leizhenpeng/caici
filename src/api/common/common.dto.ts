@@ -15,3 +15,22 @@ export class AllTopicResponse {
     this.wordLength = wordLength
   }
 }
+
+export class MetaBase {
+  objectId?: string
+  title?: string
+  dynasty?: string
+  authorName?: string
+  authorId?: string
+  kindCN?: string
+  kind?: string
+  layout?: string
+  baiduWiki?: string
+  content?: string
+  translation?: string
+  authorDesc?: string
+  intro?: string
+  annotation?: string
+  masterComment?: string
+  appreciation?: string
+}
