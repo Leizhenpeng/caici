@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { nanoid } from 'nanoid'
+import MetaDetailCard1 from './MetaDetailCard.vue'
 import { locale } from '~/i18n'
 import {
   breakpoints,
@@ -10,6 +11,7 @@ import {
   showHelp,
   showHint,
   showHintLevelTip,
+  showMetaDetail,
   showPrivacyNotes,
   showSettings,
   showShareDialog,
@@ -30,6 +32,9 @@ watch((locale), () => {
 <template>
   <Modal v-model="showCheatSheet" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
     <CheatSheet :if-sole="false" />
+  </Modal>
+  <Modal v-model="showMetaDetail" :direction="lg ? 'top' : 'bottom'">
+    <MetaDetailCard />
   </Modal>
   <Modal v-model="showHintLevelTip" :direction="lg ? 'top' : 'bottom'">
     <HintLevelTip />
