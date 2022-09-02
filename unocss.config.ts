@@ -38,6 +38,7 @@ export default defineConfig({
       'primary': 'var(--c-primary)',
       'primary-deep': 'var(--c-primary-deep)',
       'mis': 'var(--c-mis)',
+      'warn': 'var(--c-warn)',
     },
   },
   presets: [

@@ -269,8 +269,10 @@ mySocket.value?.on(BroadcastUserOnGameInfoRefresh, (hintLevels: Record<number, s
       </Transition>
       <Transition name="fade-in">
         <div v-if="isFinishedDelay && isHaveFinished">
-          <ResultFooter />
+          <!-- <ResultFooter /> -->
           <!-- <Countdown /> -->
+          <div h-1px w-10 border="t base" mt4 mb6 mxa />
+          <CardMini mt-2 />
         </div>
       </Transition>
 

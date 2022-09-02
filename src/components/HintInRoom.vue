@@ -61,7 +61,7 @@ function changeHintLevel(level: number) {
       </div>
 
       <div flex="~ row between space-x-1" w-50>
-        <button class="btn bg-mis" @click="close">
+        <button class="btn bg-primary" @click="close">
           {{ t('check-back') }}
         </button>
         <button class="btn   bg-gray-600 op-80" @click="changeHintLevel(1)">
@@ -74,7 +74,7 @@ function changeHintLevel(level: number) {
         {{ t('hint-note') }} <b>{{ hintLevelInRoom === 2 ? t('hanzi') : t('ziyin') }}</b>
       </div>
       <CharBlock :char="hintLevelInRoom === 2 ? parsed : masked" />
-      <button v-if="hintLevelInRoom === 1" class="btn bg-mis" @click="changeHintLevel(2)">
+      <button v-if="hintLevelInRoom === 1" class="btn bg-primary" @click="changeHintLevel(2)">
         {{ t('more-hint') }}
       </button>
       <button v-if="hintLevelInRoom === 2" class="btn bg-ok" @click="close">

@@ -42,7 +42,7 @@ onMounted(
       <button btn @click="close">
         {{ t('continue') }}
       </button>
-      <button icon-btn flex="inline gap-1 center" text="base mis!" @click="goSolo">
+      <button icon-btn flex="inline gap-1 center" text="base warn!" @click="goSolo">
         <div i-mdi-emoticon-confused-outline /> {{ t('check_exit') }}
       </button>
     </div>
