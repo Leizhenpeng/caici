@@ -31,9 +31,7 @@ function addStrongTagAfterColon(content: string | undefined) {
     >
       <div v-if="!ifNeedStrong">
         <p
-          v-for="(itemP, index) in seperateByLine(content)" :key="index"
-          mb-1 leading-relaxed text-sm px-2
-
+          v-for="(itemP, index) in seperateByLine(content)" :key="index" mb-1 leading-relaxed text-sm px-2
           :class="[ifNeedIndent ? 'indent-md' : '']"
         >
           {{ itemP }}

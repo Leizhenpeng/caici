@@ -119,8 +119,8 @@ const mainContentStyle = computed(() => {
       {{ eachP }}
     </p>
 
-    <div bg-base p2 flex="~ center" text-base mt-2>
-      <n-tabs type="segment" animated justify-content="center" w-364px>
+    <div bg-base p2 flex="~ center col" text-base mt-2>
+      <n-tabs type="bar" animated justify-content="center" w-364px pane-class="pane-style">
         <n-tab-pane name="author" tab="作者">
           <card-tab :content="nowCardMeta?.authorDesc" />
         </n-tab-pane>
@@ -163,5 +163,12 @@ const mainContentStyle = computed(() => {
   line-height: 1.9;
   text-align: center;
   margin-left: 0.6rem;
+}
+
+.pane-style{
+  margin-top: 4px;
+  border-top: 1px dashed #cccccc30;
+  border-bottom: 1px dashed #cccccc30;
+  padding: 3px;
 }
 </style>

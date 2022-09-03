@@ -280,5 +280,5 @@ export const hintLevelInRoom = ref(0)
 export const showDoubleCheckExit = ref(false)
 export const ifMultipleOnGame = ref(false)// 是否正处于游戏中
 export const ifMultipleOnWait = ref(false)// 等候的房间中是否有多人
-export const showMetaDetail = ref(false)// 是否显示元数据详情
+export const showMetaDetail = ref(true)// 是否显示元数据详情
 
