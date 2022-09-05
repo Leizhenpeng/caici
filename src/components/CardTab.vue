@@ -26,13 +26,14 @@ function addStrongTagAfterColon(content: string | undefined) {
   <div>
     <n-scrollbar
       :style="{
+        minHeight: `${height}px`,
         maxHeight: `${height}px`,
       }"
     >
       <div v-if="!ifNeedStrong">
         <p
           v-for="(itemP, index) in seperateByLine(content)" :key="index" mb-1 leading-relaxed text-sm px-2
-          :class="[ifNeedIndent ? 'indent-md' : '']"
+          :class="[ifNeedIndent ? 'indent-md text-left' : 'text-center']"
         >
           {{ itemP }}
         </p>

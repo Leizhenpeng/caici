@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { filterNonChineseChars } from '@hankit/tools'
+import { t } from '~/i18n'
+import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 import {
-  answer, breakpoints,
-  dayNo,
-  dayNoHanzi,
+  answer, breakpoints, dayNo, dayNoHanzi,
   isDev,
   isFailed,
   isFinished,
   isMobile,
   isPassed,
   nowTopicTitleShort,
+  nowWorkDetail,
   showCheatSheet,
   showFailed,
   showHelp,
@@ -18,8 +19,6 @@ import {
   useMask,
 } from '~/state'
 import { currentMeta, markStart, topicNow, tries, useHint, useStrictMode, wordLengthNow } from '~/storage'
-import { t } from '~/i18n'
-import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 const el = ref<HTMLInputElement>()
 const input = ref('')
 const inputValue = ref('')
@@ -170,6 +169,10 @@ watch(isPassed, () => {
       </Transition>
       <Transition name="fade-in">
         <div v-if="isFinishedDelay && isFinished">
+          <CardMini
+            v-if="nowWorkDetail?.objectId" :key="nowWorkDetail?.objectId" my-4 :title="nowWorkDetail?.title" :answer="answer.word"
+            :content="nowWorkDetail?.content" :layout="nowWorkDetail?.layout"
+          />
           <ResultFooter />
           <Countdown />
         </div>

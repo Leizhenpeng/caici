@@ -53,6 +53,7 @@ export interface TriesMeta {
   topic?: Topic // 话题
   dayNo?: number // 第几天
   mode?: ETriesMode // 模式
+  workId?: string // 当前作品的 id
 }
 
 export interface EPlayer {

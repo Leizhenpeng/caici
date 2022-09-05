@@ -77,7 +77,7 @@ const { height: windMaxH } = useWindowSize()
 watch(
   MainH,
   () => {
-    modelMaxHeight.value = windMaxH.value - MainH.value - 10
+    modelMaxHeight.value = windMaxH.value - MainH.value - 20
     console.log('modelMaxHeight', modelMaxHeight)
   },
 )

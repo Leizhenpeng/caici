@@ -17,6 +17,7 @@ importers:
       '@supabase/supabase-js': ^1.35.4
       '@types/canvas-confetti': ^1.4.2
       '@types/file-saver': ^2.0.5
+      '@types/mark.js': ^8.11.8
       '@types/node': ^18.0.3
       '@types/pinyin': ^2.10.0
       '@types/qs': ^6.9.7
@@ -36,6 +37,7 @@ importers:
       jsdom: ^20.0.0
       lodash: ^4.17.21
       lru-cache: ^7.12.0
+      mark.js: ^8.11.1
       naive-ui: ^2.32.1
       nanoid: ^3.3.3
       ohmyfetch: ^0.4.18
@@ -73,6 +75,7 @@ importers:
       html-to-image: 1.9.0
       lodash: 4.17.21
       lru-cache: 7.12.0
+      mark.js: 8.11.1
       naive-ui: 2.32.1_vue@3.2.37
       nanoid: 3.3.3
       pinyin: 2.11.2
@@ -91,6 +94,7 @@ importers:
       '@netlify/functions': 1.0.0
       '@types/canvas-confetti': 1.4.2
       '@types/file-saver': 2.0.5
+      '@types/mark.js': 8.11.8
       '@types/node': 18.0.3
       '@types/pinyin': 2.10.0
       '@types/seedrandom': 3.0.2
@@ -823,6 +827,12 @@ packages:
     resolution: {integrity: sha512-zv9kNf3keYegP5oThGLaPk8E081DFDuwfqjtiTzm6PoxChdJ1raSuADf2YGCVIyrSynLrgc8JWv296s7Q7pQSQ==}
     dev: true
 
+  /@types/jquery/3.5.14:
+    resolution: {integrity: sha512-X1gtMRMbziVQkErhTQmSe2jFwwENA/Zr+PprCkF63vFq+Yt5PZ4AlKqgmeNlwgn7dhsXEK888eIW2520EpC+xg==}
+    dependencies:
+      '@types/sizzle': 2.3.3
+    dev: true
+
   /@types/json-schema/7.0.9:
     resolution: {integrity: sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==}
     dev: true
@@ -840,6 +850,12 @@ packages:
   /@types/lodash/4.14.182:
     resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==}
     dev: false
+
+  /@types/mark.js/8.11.8:
+    resolution: {integrity: sha512-BoWCd9ydi1hZxDfu/lF0v1hHMsNUjuxZEDJsdHlmm6GlKk4qxlLya7D3FS81QmabwFbYPpoDOh9603JESUkHbA==}
+    dependencies:
+      '@types/jquery': 3.5.14
+    dev: true
 
   /@types/mdast/3.0.10:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
@@ -879,6 +895,10 @@ packages:
 
   /@types/seedrandom/3.0.2:
     resolution: {integrity: sha512-YPLqEOo0/X8JU3rdiq+RgUKtQhQtrppE766y7vMTu8dGML7TVtZNiiiaC/hhU9Zqw9UYopXxhuWWENclMVBwKQ==}
+    dev: true
+
+  /@types/sizzle/2.3.3:
+    resolution: {integrity: sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==}
     dev: true
 
   /@types/unist/2.0.6:
@@ -3947,6 +3967,10 @@ packages:
     dependencies:
       semver: 6.3.0
     optional: true
+
+  /mark.js/8.11.1:
+    resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
+    dev: false
 
   /mdast-util-from-markdown/0.8.5:
     resolution: {integrity: sha512-2hkTXtYYnr+NubD/g6KGBS/0mFmBcifAsI0yIWRiRo0PjVs6SSOSOdtzbp6kSGnShDN6G5aWZpKQ2lWRy27mWQ==}

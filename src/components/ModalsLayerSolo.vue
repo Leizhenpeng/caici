@@ -3,11 +3,13 @@ import { nanoid } from 'nanoid'
 import { locale } from '~/i18n'
 import {
   breakpoints,
+  nowWorkDetail,
   showCheatSheet,
   showDashboard,
   showFailed,
   showHelp,
   showHint,
+  showMetaDetail,
   showPrivacyNotes,
   showSettings,
   showShareDialog,
@@ -28,6 +30,9 @@ watch((locale), () => {
 <template>
   <Modal v-model="showCheatSheet" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
     <CheatSheet />
+  </Modal>
+  <Modal v-model="showMetaDetail" :direction="lg ? 'bottom' : 'bottom'">
+    <MetaDetailCard v-if="!!nowWorkDetail" :key="nowWorkDetail.objectId" :base-info="nowWorkDetail!" />
   </Modal>
   <Modal v-model="showSettings" :direction="lg ? 'top' : 'bottom'">
     <Settings v-if="lg" my6 />

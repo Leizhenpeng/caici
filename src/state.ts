@@ -1,7 +1,7 @@
 import { breakpointsTailwind } from '@vueuse/core'
 import type { Socket } from 'socket.io-client'
 import { getAnswerOfDay } from './answers'
-import type { AllTopicResponse } from './api'
+import type { AllTopicResponse, FindShiciInfoReponse } from './api'
 import { t } from './i18n'
 import type { MatchType, ParsedChar } from './logic'
 import {
@@ -206,6 +206,7 @@ export const nowTopicExample = computed(
   },
 )
 
+export const ifShici = computed(() => topicNow.value === 'shici5' || topicNow.value === 'shici7')
 watch(
   topicNow,
   (topic) => {
@@ -280,5 +281,7 @@ export const hintLevelInRoom = ref(0)
 export const showDoubleCheckExit = ref(false)
 export const ifMultipleOnGame = ref(false)// 是否正处于游戏中
 export const ifMultipleOnWait = ref(false)// 等候的房间中是否有多人
-export const showMetaDetail = ref(true)// 是否显示元数据详情
+export const showMetaDetail = ref(false)// 是否显示元数据详情
 
+export const nowWorkId = ref()
+export const nowWorkDetail = ref<FindShiciInfoReponse>()

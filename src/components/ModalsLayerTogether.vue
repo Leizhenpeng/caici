@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { nanoid } from 'nanoid'
-import MetaDetailCard1 from './MetaDetailCard.vue'
 import { locale } from '~/i18n'
 import {
   breakpoints,

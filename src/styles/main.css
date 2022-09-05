@@ -95,3 +95,21 @@ ul {
 }
 
 
+
+.highlighted {
+  /* border-bottom: 3px solid var(--c-primary); */
+  position: relative;
+}
+
+.highlighted::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  width: 102%;
+  height: 4px;
+  border-radius: 4px;
+  opacity: 0.6;
+  background-color: var(--c-primary);
+}
