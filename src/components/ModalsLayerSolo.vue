@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { nanoid } from 'nanoid'
+import Modal from './Modal.vue'
 import { locale } from '~/i18n'
 import {
   breakpoints,
@@ -25,9 +26,9 @@ watch((locale), () => {
 }, {
   immediate: true,
 })
-const welcomeRef = ref()
+const welcomeRef = ref<InstanceType<typeof Modal>>()
 watch(showHelp, (newValue) => {
-  newValue && welcomeRef.value.scrollTopModel()
+  newValue && welcomeRef.value?.scrollTopModel()
 }, {
 })
 </script>
