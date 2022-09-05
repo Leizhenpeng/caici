@@ -58,16 +58,19 @@ mySocket.value = socket
 
 const el = ref(null)
 const mainColor = useCssVar('--c-primary', el)
-const themeOverrides: GlobalThemeOverrides = {
-  common: {
-    primaryColor: mainColor.value,
-  },
-}
+
 const ifUseDarkTheme = computed(() => {
   if (isDark.value)
     return darkTheme
 
   return undefined
+})
+const themeOverrides = computed(() => {
+  return {
+    common: {
+      primaryColor: mainColor.value,
+    },
+  }
 })
 
 const navbarEl = ref(null)
