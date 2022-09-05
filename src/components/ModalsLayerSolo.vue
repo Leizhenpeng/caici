@@ -53,7 +53,7 @@ watch((locale), () => {
   <Modal v-model="showShareDialog" :direction="lg ? 'top' : 'bottom'">
     <ShareDialog />
   </Modal>
-  <Modal v-model="showHelp" direction="top">
+  <Modal v-model="showHelp" :direction="lg ? 'top' : 'bottom'">
     <WelcomePage />
   </Modal>
   <Modal v-model="showVariants" :direction="lg ? 'top' : 'bottom'">

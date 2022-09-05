@@ -33,7 +33,7 @@ watch((locale), () => {
     <CheatSheet :if-sole="false" />
   </Modal>
   <Modal v-model="showMetaDetail" :direction="lg ? 'top' : 'bottom'">
-    <MetaDetailCard />
+    <!-- <MetaDetailCard /> -->
   </Modal>
   <Modal v-model="showHintLevelTip" :direction="lg ? 'top' : 'bottom'">
     <HintLevelTip />
@@ -60,7 +60,7 @@ watch((locale), () => {
   <Modal v-model="showShareDialog" :direction="lg ? 'top' : 'bottom'">
     <ShareDialog />
   </Modal>
-  <Modal v-model="showHelp" direction="top">
+  <Modal v-model="showHelp" :direction="lg ? 'top' : 'bottom'">
     <WelcomePage :if-solo="false" />
   </Modal>
   <Modal v-model="showVariants" :direction="lg ? 'top' : 'bottom'">

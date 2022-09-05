@@ -78,7 +78,7 @@ watch(
   MainH,
   () => {
     modelMaxHeight.value = windMaxH.value - MainH.value - 20
-    console.log('modelMaxHeight', modelMaxHeight)
+    // console.log('modelMaxHeight', modelMaxHeight)
   },
 )
 </script>
@@ -92,7 +92,9 @@ watch(
       <NotTodayBanner v-if="dayNo < daySince" />
       <Navbar ref="navbarEl" />
       <div v-if="checkReady">
-        <router-view />
+        <n-scrollbar :style="{ maxHeight: `${modelMaxHeight}px` }">
+          <router-view />
+        </n-scrollbar>
       </div>
       <div v-else>
         <loading-one mx-a my-30vh />
