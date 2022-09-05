@@ -61,6 +61,17 @@ const transform = computed(() => {
       return ''
   }
 })
+const contentRef = ref()
+onMounted(() => {
+  // contentRef.value?.scrollTo({ left: 12000, behavior: 'smooth' })
+})
+
+function scrollTopModel() {
+  contentRef.value?.scrollTo({ top: 0, behavior: 'smooth' })
+}
+defineExpose({
+  scrollTopModel,
+})
 </script>
 
 <template>
@@ -74,6 +85,7 @@ const transform = computed(() => {
       :class="[positionClass]" :style="modelValue ? {} : { transform }"
     >
       <n-scrollbar
+        ref="contentRef"
         :style="{
           maxHeight: `${modelMaxHeight}px`,
         }"

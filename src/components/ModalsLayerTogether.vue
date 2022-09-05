@@ -32,6 +32,7 @@ watch((locale), () => {
   <Modal v-model="showCheatSheet" :direction="lg ? 'right' : 'bottom'" :mask="!lg">
     <CheatSheet :if-sole="false" />
   </Modal>
+  <!-- //TODO://change backe -->
   <Modal v-model="showMetaDetail" :direction="lg ? 'top' : 'bottom'">
     <!-- <MetaDetailCard /> -->
   </Modal>
