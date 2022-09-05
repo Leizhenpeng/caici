@@ -4,6 +4,7 @@ import { t } from '~/i18n'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 import {
   answer, breakpoints, dayNo, dayNoHanzi,
+  ifShici,
   isDev,
   isFailed,
   isFinished,
@@ -170,13 +171,16 @@ watch(isPassed, () => {
       <Transition name="fade-in">
         <div v-if="isFinishedDelay && isFinished">
           <CardMini
-            v-if="nowWorkDetail?.objectId" :key="nowWorkDetail?.objectId" my-4 :title="nowWorkDetail?.title" :answer="answer.word"
-            :content="nowWorkDetail?.content" :layout="nowWorkDetail?.layout"
+            v-if="nowWorkDetail?.objectId && ifShici" :key="nowWorkDetail?.objectId" my-4 :title="nowWorkDetail?.title"
+            :answer="answer.word" :content="nowWorkDetail?.content" :layout="nowWorkDetail?.layout"
           />
           <ResultFooter />
           <Countdown />
         </div>
       </Transition>
+
+      <div h-1px w-10 border="t base" mt20 mb6 mxa />
+      <ChooseTopic :lite="true" />
 
       <template v-if="isDev">
         <div h-20 />
