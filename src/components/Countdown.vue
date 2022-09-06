@@ -13,11 +13,6 @@ const formatted = computed(() => {
 
 <template>
   <div pt12 pb2>
-    <div flex="~ col" items-center>
-      <ShareButton m4 />
-      <ToggleMask :hint="true" />
-    </div>
-
     <div h-1px w-10 border="t base" mt12 mb6 mxa />
     <ChooseTopic :lite="true" />
 

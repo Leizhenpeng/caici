@@ -15,7 +15,7 @@ const dataUrlMasked = ref('')
 
 const dataUrl = computed(() => useMask.value ? dataUrlMasked.value : dataUrlUnmasked.value)
 
-// TODO: web his mode need to change .
+// TODO: web his mode need to change
 const textUrl = ref(`${WHOLE_URL}/#/together?q=${togetherWords.value}`)
 const qrcode = useQRCode(textUrl, {
   errorCorrectionLevel: 'H',

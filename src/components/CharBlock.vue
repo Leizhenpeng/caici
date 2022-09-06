@@ -109,9 +109,9 @@ const ifMinFont7 = computed(() => {
           absolute text-3xl leading-1em flex items-center text-center top-0 bottom-0 :class="[
             getColor(parsed?.char, true),
             forceFour ? 'text-4xl !top-0 op-80 font-400' : '',
-            useMask ? 'top-0' : 'top-0 right-8',
-            ifMinFont5 ? useMask ? 'top-0' : '!text-3xl !top-0 !right-6 !leading-30px' : '',
-            ifMinFont7 ? useMask ? '!text-xl !top-0  !leading-20px' : '!text-xl !top-0 !leading-20px !right-5' : '',
+            useMask ? 'top-0 !text-4xl  right-8 !leading-10px' : 'top-0 right-8',
+            ifMinFont5 ? useMask ? 'top-0 right-7! text-2xl!' : '!text-3xl !top-0 !right-6 leading-30px' : '',
+            ifMinFont7 ? useMask ? '!text-xl !top-0  !leading-10px right-22px!' : '!text-xl !top-0 leading-20px !right-5' : '',
           ]"
         >
           {{ char.char }}
@@ -120,7 +120,7 @@ const ifMinFont7 = computed(() => {
           v-if="!forceFour" absolute flex items-center text-center top-0 bottom-0 right="2.5" w="5" :class="[
             useMask ? 'top-0' : 'top-0 right-2',
             ifMinFont5 ? '!text-14px !leading-16px !right-1' : '',
-            ifMinFont7 ? useMask ? '!top-11px !leading-11px !text-8px' : '!text-12px !top-0  !leading-18px !right-2px' : '',
+            ifMinFont7 ? useMask ? '!top-0 !leading-10px !text-8px right-0!' : '!text-12px !top-0  !leading-18px !right-2px' : '',
           ]"
         >
           <div flex="~ center" text-xs style="writing-mode: vertical-rl">
