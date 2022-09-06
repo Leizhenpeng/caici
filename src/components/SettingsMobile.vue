@@ -289,7 +289,7 @@ function delayTap(func: () => void) {
         <div v-if="funcCheckedNow" i-carbon-undo />
         <p text-base font-serif>
           <b v-show="!funcCheckedNow" class="font-base-color!"> {{ t('setting-func') }} </b>
-          <b v-if="changeLevel[0] === '1-0'"> {{ t('setting-change-dot') }}{{ t('zhuyin') }}</b>
+          <b v-if="changeLevel[0] === '1-0'"> {{ t('setting-change-dot') }}{{ t('yinbiao') }}</b>
           <b v-if="changeLevel[0] === '1-1'"> {{ t('setting-change-dot') }}{{ t('pinfa') }} </b>
           <b v-if="changeLevel[0] === '1-2'"> {{ t('setting-change-dot') }}{{ t('shenxing') }}</b>
         </p>
