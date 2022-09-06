@@ -46,7 +46,7 @@ const spConstants = computed(() => getShuangpinConstants(spMode.value))
     <!-- Zhuyin -->
     <div
       v-if="inputMode === 'zy'"
-      grid="~ cols-6 center"
+      grid="~ cols-6 center" font-bold
     >
       <div v-for="s of zhuyinSymbols" :key="s" text-2xl font-serif w-12 h-12 :class="getSymbolClass(s)">
         {{ s }}
@@ -56,12 +56,12 @@ const spConstants = computed(() => getShuangpinConstants(spMode.value))
     <div
       v-else-if="inputMode === 'sp'"
       grid="~ cols-[1fr_1fr] gap-x-10 gap-y-4"
-      font-mono font-light
+      font-mono font-bold
     >
       <div text-center>
         {{ t('initials') }}
       </div>
-      <div text-center>
+      <div text-centerd>
         {{ t('finals') }}
       </div>
       <div grid="~ cols-4 gap-4" h-min>
@@ -79,7 +79,7 @@ const spConstants = computed(() => getShuangpinConstants(spMode.value))
     <div
       v-else
       grid="~ cols-[1fr_2fr] gap-x-10 gap-y-4"
-      font-mono font-light
+      font-mono font-bold
     >
       <div text-center>
         {{ t('initials') }}
@@ -88,12 +88,12 @@ const spConstants = computed(() => getShuangpinConstants(spMode.value))
         {{ t('finals') }}
       </div>
       <div grid="~ cols-2 gap-3" h-min>
-        <div v-for="s of pinyinInitials" :key="s" font-700 :class="getSymbolClass(s)">
+        <div v-for="s of pinyinInitials" :key="s" :class="getSymbolClass(s)">
           {{ s }}
         </div>
       </div>
       <div grid="~ cols-3 gap-3" h-min>
-        <div v-for="s of pinyinFinals" :key="s" font-700 :class="getSymbolClass(s)">
+        <div v-for="s of pinyinFinals" :key="s" :class="getSymbolClass(s)">
           {{ s.replace('v', 'ü') }}
         </div>
       </div>

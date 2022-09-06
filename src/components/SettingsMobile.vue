@@ -308,8 +308,8 @@ function delayTap(func: () => void) {
               changeLevel[0] = '1-1')"
         />
         <SettingMeta
-          v-show="inputMode !== 'sp'" :key-name="t('shengxing')" :key-description="t('shengxing-des')"
-          :key-value="currentToneValue" :if-disabled="inputMode === 'sp'"
+          v-show="inputMode === 'py'" :key-name="t('shengxing')" :key-description="t('shengxing-des')"
+          :key-value="currentToneValue"
           @click-all="
             delayTap(() =>
               changeLevel[0] = '1-2')"

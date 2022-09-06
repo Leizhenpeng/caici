@@ -35,6 +35,8 @@ const railStyle = ({
 
 const { keyType } = props
 function clickAllTrigger() {
+  if (props.ifDisabled)
+    return
   emit('clickAll')
   if (keyType === 'btn')
     emit('update:modelValue', !props.modelValue)

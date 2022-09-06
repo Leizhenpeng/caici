@@ -123,7 +123,7 @@ const ifMinFont7 = computed(() => {
             ifMinFont7 ? useMask ? '!top-0 !leading-10px !text-8px right-0!' : '!text-12px !top-0  !leading-18px !right-2px' : '',
           ]"
         >
-          <div flex="~ center" text-xs style="writing-mode: vertical-rl">
+          <div flex="~ center" text-xs style="writing-mode: vertical-rl" font-600>
             <span v-if="char._1" :class="getColor(parsed?._1)">
               {{ char._1 }}
             </span>
