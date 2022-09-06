@@ -11,11 +11,11 @@ const props = withDefaults(defineProps <{
 function getSymbolClass(symbol: string, key?: '_1' | '_2') {
   const state = props.ifSole ? getSymbolStateSolo(symbol, key) : getSymbolStateTogether(symbol, key)
   if (!state)
-    return ''
+    return 'op70'
   return ({
     exact: 'text-ok',
     misplaced: 'text-mis',
-    none: 'op30',
+    none: 'op20',
   })[state]
 }
 
@@ -88,12 +88,12 @@ const spConstants = computed(() => getShuangpinConstants(spMode.value))
         {{ t('finals') }}
       </div>
       <div grid="~ cols-2 gap-3" h-min>
-        <div v-for="s of pinyinInitials" :key="s" :class="getSymbolClass(s)">
+        <div v-for="s of pinyinInitials" :key="s" font-700 :class="getSymbolClass(s)">
           {{ s }}
         </div>
       </div>
       <div grid="~ cols-3 gap-3" h-min>
-        <div v-for="s of pinyinFinals" :key="s" :class="getSymbolClass(s)">
+        <div v-for="s of pinyinFinals" :key="s" font-700 :class="getSymbolClass(s)">
           {{ s.replace('v', 'ü') }}
         </div>
       </div>
