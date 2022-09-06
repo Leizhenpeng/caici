@@ -41,7 +41,7 @@ function getColor(result?: MatchType, isChar = false) {
   const colors = {
     exact: 'text-ok',
     misplaced: 'text-mis',
-    none: isChar ? 'op80' : 'op35',
+    none: isChar ? 'op80' : 'op25',
     deleted: inputMode.value === 'zy' ? 'op30' : 'line-through op30',
   }
   return `${pre} ${colors[result]}`

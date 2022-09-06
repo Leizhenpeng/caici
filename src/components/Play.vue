@@ -179,7 +179,7 @@ watch(isPassed, () => {
         </div>
       </Transition>
 
-      <template v-if="isDev">
+      <!-- <template v-if="isDev">
         <div h-20 />
         <div op50 mb-2>
           测试用
@@ -195,7 +195,7 @@ watch(isPassed, () => {
             下一天
           </a>
         </div>
-      </template>
+      </template> -->
     </div>
   </div>
 </template>

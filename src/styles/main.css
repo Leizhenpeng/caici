@@ -20,17 +20,17 @@ a {
 }
 
 :root {
-  --c-primary: #a93333;
+  --c-primary: #af231c;
   --c-primary-deep: #92130a;
-  --c-ok: #a93333;
-  --c-mis: #ff9900;
+  --c-ok: #af231c;
+  --c-mis: #1c734b;
   --c-warn: #de7525;
 }
 .dark {
   --c-primary: #C23A3A;
   --c-primary-deep: #92130a;
   --c-ok: #C23A3A;
-  --c-mis: #ff9900;
+  --c-mis: #2E948F;
   --c-warn: #de7525;
 }
 
