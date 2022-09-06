@@ -31,7 +31,7 @@ const parsed = computed(() => {
 })
 
 function getColor(result?: MatchType, isChar = false) {
-  const pre = useMask.value
+  const pre = useMask.value && !props.forceFour
     ? `bg-current ${isChar ? ' !op70' : '!op40'} border border-current`
     : ''
 
