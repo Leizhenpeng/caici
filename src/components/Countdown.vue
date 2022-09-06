@@ -13,7 +13,7 @@ const formatted = computed(() => {
 
 <template>
   <div pt12 pb2>
-    <div h-1px w-10 border="t base" mt12 mb6 mxa />
+    <div h-1px w-10 border="t base" mt6 mb6 mxa />
     <ChooseTopic :lite="true" />
 
     <div h-1px w-10 border="t base" mt4 mb6 mxa />

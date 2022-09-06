@@ -176,15 +176,16 @@ watch(isPassed, () => {
             <ShareButton m4 />
             <ToggleMask :hint="true" />
           </div>
-
-          <div h-1px w-10 border="t base" mt4 mb6 mxa />
-          <div pb2 op50>
-            {{ t('shiciFromTitle') }}
+          <div v-if="nowWorkDetail?.objectId && ifShici">
+            <div h-1px w-10 border="t base" mt4 mb6 mxa />
+            <div pb2 op50>
+              {{ t('shiciFromTitle') }}
+            </div>
+            <CardMini
+              :key="nowWorkDetail?.objectId" my-4 :title="nowWorkDetail?.title" :answer="answer.word"
+              :content="nowWorkDetail?.content" :layout="nowWorkDetail?.layout"
+            />
           </div>
-          <CardMini
-            v-if="nowWorkDetail?.objectId && ifShici" :key="nowWorkDetail?.objectId" my-4 :title="nowWorkDetail?.title"
-            :answer="answer.word" :content="nowWorkDetail?.content" :layout="nowWorkDetail?.layout"
-          />
           <Countdown />
         </div>
       </Transition>
