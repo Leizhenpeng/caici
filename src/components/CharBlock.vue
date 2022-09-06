@@ -108,12 +108,21 @@ const ifMinFont7 = computed(() => {
         <div
           absolute text-3xl leading-1em flex items-center text-center top-0 bottom-0 :class="[
             getColor(parsed?.char, true),
-            useMask ? 'left-3' : 'left-4',
+            forceFour ? 'text-4xl !top-0 op-80 font-400' : '',
+            useMask ? 'top-0' : 'top-0 right-8',
+            ifMinFont5 ? useMask ? 'top-0' : '!text-3xl !top-0 !right-6 !leading-30px' : '',
+            ifMinFont7 ? useMask ? '!text-xl !top-0  !leading-20px' : '!text-xl !top-0 !leading-20px !right-5' : '',
           ]"
         >
           {{ char.char }}
         </div>
-        <div v-if="!forceFour" absolute flex items-center text-center top-0 bottom-0 right="2.5" w="5">
+        <div
+          v-if="!forceFour" absolute flex items-center text-center top-0 bottom-0 right="2.5" w="5" :class="[
+            useMask ? 'top-0' : 'top-0 right-2',
+            ifMinFont5 ? '!text-14px !leading-16px !right-1' : '',
+            ifMinFont7 ? useMask ? '!top-11px !leading-11px !text-8px' : '!text-12px !top-0  !leading-18px !right-2px' : '',
+          ]"
+        >
           <div flex="~ center" text-xs style="writing-mode: vertical-rl">
             <span v-if="char._1" :class="getColor(parsed?._1)">
               {{ char._1 }}
