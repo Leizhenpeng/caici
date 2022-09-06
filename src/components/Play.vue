@@ -179,9 +179,6 @@ watch(isPassed, () => {
         </div>
       </Transition>
 
-      <div h-1px w-10 border="t base" mt20 mb6 mxa />
-      <ChooseTopic :lite="true" />
-
       <template v-if="isDev">
         <div h-20 />
         <div op50 mb-2>

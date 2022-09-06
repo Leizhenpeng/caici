@@ -18,6 +18,9 @@ const formatted = computed(() => {
       <ToggleMask :hint="true" />
     </div>
 
+    <div h-1px w-10 border="t base" mt20 mb6 mxa />
+    <ChooseTopic :lite="true" />
+
     <div h-1px w-10 border="t base" mt4 mb6 mxa />
 
     <div flex="~ col center" relative>
