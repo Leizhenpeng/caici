@@ -179,7 +179,7 @@ watch(isPassed, () => {
 
           <div h-1px w-10 border="t base" mt4 mb6 mxa />
           <div pb2 op50>
-            诗词出处
+            {{ t('shiciFromTitle') }}
           </div>
           <CardMini
             v-if="nowWorkDetail?.objectId && ifShici" :key="nowWorkDetail?.objectId" my-4 :title="nowWorkDetail?.title"

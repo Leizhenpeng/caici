@@ -10,17 +10,17 @@ const lines = computed(() => {
     return testAnswer(parsed)
       .map((i, idx) => {
         if (i.char === 'exact')
-          return '🟩'
+          return '🟥'
         if (i.char === 'misplaced')
-          return '🟧'
+          return '🟩'
         if (parsed[idx]._1 && i._1 === 'exact')
-          return '🟠'
+          return '🔴'
         if (parsed[idx]._2 && i._2 === 'exact')
-          return '🟠'
+          return '🔴'
         if (parsed[idx]._3 && i._3 === 'exact')
-          return '🟠'
+          return '🔴'
         if (i._1 === 'misplaced' || i._2 === 'misplaced' || i._3 === 'misplaced')
-          return '🟡'
+          return '🟢'
         return '⬜️'
       })
       .join('')
@@ -73,8 +73,10 @@ onMounted(async () => {
   <p text-center mb4>
     {{ copied ? t('share-copied') : t('share-not-copied') }}
   </p>
-  <textarea bg-gray-500:5 rounded p5 select-text resize-none outline-none w-90 text-center
-    style="line-height: 19px;letter-spacing: 1px;" :rows="lines.length" :value="text" readonly />
+  <textarea
+    bg-gray-500:5 rounded p5 select-text resize-none outline-none w-90 text-center
+    style="line-height: 19px;letter-spacing: 1px;" :rows="lines.length" :value="text" readonly
+  />
   <button v-if="share.isSupported" my4 square-btn @click="shareSystem()">
     <div i-carbon-share />
     {{ t('share-with-system-api') }}
