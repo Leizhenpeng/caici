@@ -83,7 +83,7 @@ mySocket.value?.on(CheckRoomInitWhenGameOn, ({ userTrys, nickName: nickFromServe
 
 <template>
   <div>
-    <div v-if="loadReady" p="4">
+    <div v-if="loadReady" p4>
       <PlayTogether
         :key="wordLength"
         :init-hint-level="initHintLevel" :base-user-info="baseUserInfo" :answer-in-room="answer" :word-length="wordLength" :game-mode="playMode"

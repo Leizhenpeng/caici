@@ -43,7 +43,7 @@ onMounted(
 </script>
 
 <template>
-  <div p="4">
+  <div>
     <Multiplayer v-if="showWait" :pre-put-word="wordFromUrl" />
   </div>
 </template>
