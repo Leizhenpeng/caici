@@ -10,7 +10,7 @@ import { t } from '~/i18n'
 import type { EPlayer } from '~/logic'
 import { filterNonChineseChars } from '~/logic'
 import { BroadcashStartGame, BroadcastChangeMaster, BroadcastChangeName, ByeOldPlayer, CheckRoomInit, CheckRoomUpdate, NicknameChange, RoomGameModeChange, RoomGameStart, RoomGameTopicChange, RoomLeaveOut, WelcomeNewPlayer } from '~/socket-io'
-import { SocketRole, ifMultipleOnWait, isDevPro, mySocket, showTogetherShare, togetherWords } from '~/state'
+import { SocketRole, ifJoinWaitRoom, isDevPro, mySocket, showTogetherShare, togetherWords } from '~/state'
 import { TogetherGameMode, deviceId, nickName, togetherRecentGameMode, togetherRecentTopic } from '~/storage'
 
 const props = withDefaults(defineProps<{
@@ -176,8 +176,8 @@ const playersInRoom = computed<EPlayer[]>(() => {
 watchDebounced(playersInRoom,
   () => {
     const totalWaitedNum = playersInRoom.value.length
-    ifMultipleOnWait.value = totalWaitedNum > 1
-  }, { debounce: 600, maxWait: 1000, immediate: true },
+    ifJoinWaitRoom.value = totalWaitedNum >= 1
+  }, { debounce: 400, maxWait: 1000, immediate: true },
 )
 const PlayersLastInsertOne = computed<EPlayer[]>(() => {
   // deepclone array

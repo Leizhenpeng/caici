@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { tr } from 'date-fns/locale'
 import { useRoute, useRouter } from 'vue-router'
-import { ifMultipleOnGame, ifMultipleOnWait, isDark, showDashboard, showDoubleCheckExit, showHelp, showSettings, useMask } from '~/state'
+import { ifJoinWaitRoom, ifMultipleOnGame, isDark, showDashboard, showDoubleCheckExit, showHelp, showSettings, useMask } from '~/state'
 import { gamesCount } from '~/storage'
 
 const toggleDark = useToggle(isDark)
@@ -27,10 +27,10 @@ const doubleCheckGoSolo = () => {
   showDoubleCheckExit.value = true
 }
 
+// 只要进入房间,就需要二次确认退出!!
 function exit() {
-  if (ifMultipleOnWait.value || ifMultipleOnGame.value)
+  if (ifJoinWaitRoom.value || ifMultipleOnGame.value)
     doubleCheckGoSolo()
-
   else
     goSolo()
 }
