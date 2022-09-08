@@ -11,7 +11,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@fingerprintjs/fingerprintjs-pro-vue-v3": "^1.1.0",
+    "@fingerprintjs/fingerprintjs": "^3.3.5",
     "@iconify-json/ic": "^1.1.9",
     "@iconify-json/ph": "^1.1.2",
     "@iconify-json/ri": "^1.1.3",

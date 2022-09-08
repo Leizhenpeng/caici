@@ -6,7 +6,6 @@
  * @description：axios 接口导出文件
  */
 
-import { tr } from 'date-fns/locale'
 import { netConfig } from './config.axios'
 import { customTransform } from './hook.axios'
 import HttpClient from './httpClient.axios'

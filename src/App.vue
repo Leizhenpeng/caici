@@ -2,33 +2,47 @@
 <script setup lang="ts">
 import type { Socket } from 'socket.io-client'
 import '~/init'
-import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-vue-v3'
 import { NConfigProvider, darkTheme } from 'naive-ui'
 import { useCssVar } from '@vueuse/core'
+import FingerprintJS from '@fingerprintjs/fingerprintjs'
 import { SignUpDeviceId, getAllTopic } from './api'
 import { dayNo, daySince, isDark, modelMaxHeight, mySocket, totalTopics } from '~/state'
-import { colorblind, deviceId } from '~/storage'
+import { colorblind, deviceId, deviceIdRegister } from '~/storage'
 
 const { height } = useWindowSize()
 
-const ifSignedUpDeviceId = ref(false)
 const ifGetAllTopic = ref(false)
-const checkReady = computed(() => ifSignedUpDeviceId.value && ifGetAllTopic.value)
-// printFinger
-const { getData: get_fp_id } = useVisitorData(
-  { extendedResult: true },
-  { immediate: false },
-)
+const checkReady = computed(() => deviceId.value && deviceIdRegister.value && ifGetAllTopic.value)
+async function get_fp_id(): Promise<{
+  visitorId: string
+}> {
+  return new Promise(
+    (resolve, reject) => {
+      FingerprintJS.load().then((fp) => {
+        fp.get().then((result) => {
+          const visitorId = result.visitorId
+          console.log('visitorId', visitorId)
+          resolve({
+            visitorId,
+          })
+        })
+      })
+    })
+}
 async function checkDeviceId() {
   if (!deviceId.value) {
     await get_fp_id().then((res) => {
       const { visitorId } = res!
       deviceId.value = `FP_${visitorId}`
+      // 更新 deviceId 需要重新注册
+      deviceIdRegister.value = false
     })
   }
-  SignUpDeviceId(deviceId.value).then(() => {
-    ifSignedUpDeviceId.value = true
-  })
+  if (!deviceIdRegister.value) {
+    await SignUpDeviceId(deviceId.value).then((res) => {
+      deviceIdRegister.value = true
+    })
+  }
 }
 
 function checkTopicInit() {
@@ -143,6 +157,6 @@ watch(
 }
 
 .base-bg-work-dark::after {
-  background-image:radial-gradient(circle, rgba(18, 18, 18, 0.3) 0%, rgba(18, 18, 18, 0.7) 60%, rgba(18, 18, 18, 0.8) 98%);
+  background-image: radial-gradient(circle, rgba(18, 18, 18, 0.3) 0%, rgba(18, 18, 18, 0.7) 60%, rgba(18, 18, 18, 0.8) 98%);
 }
 </style>
