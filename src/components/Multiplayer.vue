@@ -299,9 +299,11 @@ const ifInWatchMode = computed(() => {
         <div i-carbon-close />
       </button>
     </div> -->
-    <p pt8 text-xl font-serif mb2>
-      <b>{{ t('play-together') }}-🏗正在施工</b>
+    <p pt8 text-xl font-serif mb2 text-center>
+      <b>{{ t('play-together') }}</b><br>
+      <b text-sm text-center>🏗此模块正在快速施工中🏗</b>
     </p>
+
     <transition :css="false">
       <div
         v-if="!ifInWaitMode" v-motion="'multiTip'" mt-1 op50 text-md w-full :initial="{
@@ -474,4 +476,5 @@ const ifInWatchMode = computed(() => {
 </template>
 
 <style scoped>
+
 </style>
