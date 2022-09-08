@@ -109,6 +109,10 @@ export interface RequestOptions {
   msgTip?: boolean | string
   // 是否在请求前根据上一次请求的时间,自动取 refresh token
   ifAutoRefresh?: boolean
+  // 是否开启get 接口缓存
+  ifCache?: boolean
+  // 全局缓存的时间, 单位毫秒, ifcache 为true时生效
+  cacheTime?: number
 }
 
 /*

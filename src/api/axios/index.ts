@@ -49,6 +49,8 @@ function httpClient() {
       log: false, // false 就不会打印很多调试内容
       msgTip: false, // 不填就是不会给 msg tip 信息,false
       ifAutoRefresh: true, // 账户 login 的接口就不能先 refresh
+      ifCache: true, // 是否缓存get请求 该接口不能携带时间戳!
+      cacheTime: netConfig.cacheTime, // 如果开启缓存, 默认的缓存时间
     },
   })
 }

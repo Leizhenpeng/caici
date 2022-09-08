@@ -9,6 +9,9 @@ import axios from 'axios'
 import qs from 'qs'
 import startsWith from 'lodash/startsWith'
 import cloneDeep from 'lodash/cloneDeep'
+import type { ISetupCache } from 'axios-cache-adapter'
+import { setupCache } from 'axios-cache-adapter'
+import localforage from 'localforage'
 import {
   ContentType,
   RequestMethod,
@@ -23,12 +26,47 @@ import type {
 import { Convert, isFunction } from './tool.axios'
 import { AxiosCanceler } from './cancel.axios'
 
+// Create `localforage` instance
+const forageStore = localforage.createInstance({
+  // List of drivers used
+  driver: [
+    localforage.INDEXEDDB,
+    localforage.LOCALSTORAGE,
+  ],
+  // Prefix all storage keys to prevent conflicts
+  name: 'api-cache',
+})
 export default class HttpClient {
   public readonly defaultConfig: HttpClientConfig
   private httpClient: AxiosInstance
 
+  private cache?: ISetupCache
+
   constructor(options: HttpClientConfig = {}) {
-    this.httpClient = axios.create(options)
+    const ifCache = options.requestOptions?.ifCache
+    if (ifCache) {
+      this.cache = setupCache({
+        maxAge: options.requestOptions?.cacheTime,
+        debug: false,
+        store: forageStore,
+        exclude: {
+          query: false,
+          filter: (req: any) => {
+            // 如果有时间戳,则不缓存
+            if ('_t' in req.params)
+              return true
+          },
+        },
+      })
+      this.httpClient = axios.create({
+        ...options,
+        adapter: this.cache.adapter,
+      })
+    }
+    else {
+      this.httpClient = axios.create(options)
+    }
+
     this.defaultConfig = options
     this.setupInterceptors()
   }

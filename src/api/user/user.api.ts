@@ -1,4 +1,3 @@
-import { tr } from 'date-fns/locale'
 import { http } from '../axios'
 import type { DeviceIdResponse } from './user.dto'
 
@@ -26,6 +25,8 @@ export const getRandomTip = (type = 'HINT') => {
     url: EUserApi.GenRandomTip,
     params: { type },
     headers: { ignoreCancelToken: false },
+  }, {
+    joinTime: false,
   })
 }
 
