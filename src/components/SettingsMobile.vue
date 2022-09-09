@@ -316,7 +316,7 @@ function delayTap(func: () => void) {
         />
         <SettingMeta
           v-model="useStrictMode" :key-name="t('yueshu')" :key-description="t('yueshu-des')" key-type="btn"
-          :if-disabled="!!currentMeta.tries?.length || topicNow !== 'chengyu4'"
+          :if-disabled="topicNow !== 'chengyu4'"
         />
       </div>
       <Transition :css="false" @leave="(el: Element, done: any) => motions.metaCheck1.leave(done)">

@@ -83,7 +83,7 @@ function close() {
       <button
         square-btn m2 :class="[
           useStrictMode ? 'text-primary' : 'op80',
-          (!!currentMeta.tries?.length || topicNow !== 'chengyu4') ? 'op50 pointer-events-none' : '',
+          (topicNow !== 'chengyu4') ? 'op50 pointer-events-none' : '',
         ]" @click="useStrictMode = !useStrictMode"
       >
         {{ t('strict-mode') }}

@@ -1,6 +1,7 @@
 <!-- eslint-disable no-console -->
 <script setup lang="ts">
 import { filterNonChineseChars } from '@hankit/tools'
+import { useMessage } from 'naive-ui'
 import { t } from '~/i18n'
 import type { Topic } from '~/logic'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
@@ -12,7 +13,7 @@ import {
   mySocket,
   showCheatSheet,
   showFailed,
-  showHelp, showHint, startShowConfetti, togetherUserTrysWords, totalTopics, useMask,
+  showHelp, showHint, startShowConfetti, sumRejectByStrictMode, togetherUserTrysWords, totalTopics, useMask,
 } from '~/state'
 import { TogetherGameMode, currentMeta, markStart, nickName, topicNow, useHint, useStrictMode } from '~/storage'
 import type { PlayerInfo } from '~/type'
@@ -76,6 +77,7 @@ function enter() {
   if (!checkValidIdiom(input.value, useStrictMode.value)) {
     showToast.value = true
     shake.value = true
+    sumRejectByStrictMode.value++
     return false
   }
   if (currentMeta.value.strict == null)
@@ -192,6 +194,16 @@ mySocket.value?.on(BroadcastUserOnGameInfoRefresh, (hintLevels: Record<number, s
     return playerInfo
   })
 })
+const message = useMessage()
+whenever(
+  () => {
+    return sumRejectByStrictMode.value > 1
+  },
+  () => {
+    message.warning('设置面版中，允许关闭对输入词语的语法约束', { duration: 5000 })
+    sumRejectByStrictMode.value = 0
+  },
+)
 </script>
 
 <template>
@@ -233,7 +245,7 @@ mySocket.value?.on(BroadcastUserOnGameInfoRefresh, (hintLevels: Record<number, s
               @keydown.enter="enter"
             >
             <div
-              absolute top-0 left-0 right-0 bottom-0 flex="~ center" bg-base transition-all duration-300 text-mis pointer-events-none
+              absolute top-0 left-0 right-0 bottom-0 flex="~ center" bg-base transition-all duration-300 text-warn pointer-events-none
               :class="showToast ? '' : 'op0 translate-y--1'"
             >
               <span tracking-1 pl1>

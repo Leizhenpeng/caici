@@ -112,9 +112,16 @@ watch(
       <NotTodayBanner v-if="dayNo < daySince" />
       <Navbar ref="navbarEl" />
       <div v-if="checkReady">
-        <n-scrollbar :style="{ maxHeight: `${modelMaxHeight}px` }">
-          <router-view :class="[isDark ? 'base-bg-work-dark' : 'base-bg-work']" />
-        </n-scrollbar>
+        <n-message-provider
+          :max="1"
+          placement="top" :container-style="{
+            marginTop: '44px',
+          }"
+        >
+          <n-scrollbar :style="{ maxHeight: `${modelMaxHeight}px` }">
+            <router-view class="router-core" :class="[isDark ? 'base-bg-work-dark' : 'base-bg-work']" />
+          </n-scrollbar>
+        </n-message-provider>
       </div>
       <div v-else>
         <loading-one mx-a my-30vh />

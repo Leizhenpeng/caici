@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { filterNonChineseChars } from '@hankit/tools'
+import { sum } from 'lodash'
+import { useMessage } from 'naive-ui'
 import { t } from '~/i18n'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
 import {
@@ -17,6 +19,7 @@ import {
   showHelp,
   showHint,
   startShowConfetti,
+  sumRejectByStrictMode,
   useMask,
 } from '~/state'
 import { currentMeta, markStart, topicNow, tries, useHint, useStrictMode, wordLengthNow } from '~/storage'
@@ -25,7 +28,6 @@ const input = ref('')
 const inputValue = ref('')
 const showToast = autoResetRef(false, 1000)
 const shake = autoResetRef(false, 500)
-
 const isFinishedDelay = debouncedRef(isFinished, 800)
 
 function resetInputValue() {
@@ -40,12 +42,23 @@ watch(
     useMask.value = false
   },
 )
+const message = useMessage()
+whenever(
+  () => {
+    return sumRejectByStrictMode.value > 1
+  },
+  () => {
+    message.warning('设置面版中，允许关闭对输入词语的语法约束', { duration: 5000 })
+    sumRejectByStrictMode.value = 0
+  },
+)
 function enter() {
   if (input.value.length !== wordLengthNow.value)
     return
   if (!checkValidIdiom(input.value, useStrictMode.value)) {
     showToast.value = true
     shake.value = true
+    sumRejectByStrictMode.value++
     return false
   }
   if (currentMeta.value.strict == null)
@@ -110,10 +123,11 @@ watch(isPassed, () => {
 
 <template>
   <div>
-    <p text-center w-full font-serif>
+    <p text-center w-full font-serif mb4>
       <b>{{ dayNoHanzi }}·{{ nowTopicTitleShort }}</b>
     </p>
-    <div v-show="!showHelp" flex="~ col between" pt4 items-centerl>
+
+    <div v-show="!showHelp" flex="~ col between" items-centerl>
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" :word-length="wordLengthNow" @click="focus()" />
 
       <template v-if="currentMeta.answer">
@@ -137,7 +151,7 @@ watch(isPassed, () => {
               :placeholder="t('input-placeholder')" :disabled="isFinished" :class="{ shake }" @input="handleInput" @keydown.enter="enter"
             >
             <div
-              absolute top-0 left-0 right-0 bottom-0 flex="~ center" bg-base transition-all duration-300 text-mis pointer-events-none
+              absolute top-0 left-0 right-0 bottom-0 flex="~ center" bg-base transition-all duration-300 text-warn pointer-events-none
               :class="showToast ? '' : 'op0 translate-y--1'"
             >
               <span tracking-1 pl1>

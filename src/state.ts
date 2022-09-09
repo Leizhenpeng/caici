@@ -285,3 +285,4 @@ export const showMetaDetail = ref(false)// 是否显示元数据详情
 
 export const nowWorkId = ref()
 export const nowWorkDetail = ref<FindShiciInfoReponse>()
+export const sumRejectByStrictMode = ref(0) // 输入不符合规范的次数 , 当达到一定数量时, 弹出提示
