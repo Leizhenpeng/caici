@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { filterNonChineseChars } from '@hankit/tools'
-import { sum } from 'lodash'
 import { useMessage } from 'naive-ui'
 import { t } from '~/i18n'
 import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
