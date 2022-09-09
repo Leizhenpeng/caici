@@ -14,7 +14,7 @@ export const RootRoute: RouteRecordRaw = {
 export const SingleRoute: RouteRecordRaw = {
   path: EPagePath.SinglePlayer,
   name: 'solo',
-  component: () => import('../../page/singlePlayer.vue'),
+  component: () => import('../../page/single/single.vue'),
   meta: {
     mode: 'solo',
     step: 'play',
@@ -62,7 +62,7 @@ export const TogetherRoute: RouteRecordRaw = {
 export const LeftRoute: RouteRecordRaw = {
   path: '/:pathMatch(.*)*',
   name: 'solo',
-  component: () => import('../../page/singlePlayer.vue'),
+  component: () => import('../../page/single/single.vue'),
   meta: {
     mode: 'solo',
   },

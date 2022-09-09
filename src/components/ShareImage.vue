@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import console from 'console'
 import { toPng } from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
@@ -17,7 +16,7 @@ const dataUrlMasked = ref('')
 
 const dataUrl = computed(() => useMask.value ? dataUrlMasked.value : dataUrlUnmasked.value)
 
-const text = ref(WHOLE_URL)
+const text = window.location.href
 const qrcode = useQRCode(text, {
   errorCorrectionLevel: 'H',
   quality: 0.3,

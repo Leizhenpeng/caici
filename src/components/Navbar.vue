@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { tr } from 'date-fns/locale'
 import { useRoute, useRouter } from 'vue-router'
 import { ifJoinWaitRoom, ifMultipleOnGame, isDark, showDashboard, showDoubleCheckExit, showHelp, showSettings, useMask } from '~/state'
 import { gamesCount } from '~/storage'

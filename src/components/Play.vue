@@ -176,7 +176,7 @@ watch(isPassed, () => {
             <ShareButton m4 />
             <ToggleMask :hint="true" />
           </div>
-          <div v-if="nowWorkDetail?.objectId && ifShici">
+          <div v-if="nowWorkDetail?.objectId && ifShici && currentMeta?.workId">
             <div h-1px w-10 border="t base" mt4 mb6 mxa />
             <div pb2 op50>
               {{ t('shiciFromTitle') }}
