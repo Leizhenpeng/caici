@@ -90,3 +90,40 @@ export class FindShiciInfoReponse {
   appreciation?: string
 }
 
+export class JudegeIfShiciReponse {
+  /**
+   * 是否是古诗词
+   * @example true
+   */
+  isShici?: boolean
+
+  /**
+   * more info
+   * @example
+   */
+  reason?: string
+
+  /**
+   * shici title
+   */
+  title?: string
+
+  /**
+   * author name
+   */
+  author?: string
+
+  /**
+   * shici content
+   */
+  content?: string
+
+  /**
+   * objectId 内部使用
+   */
+  objectId?: string
+
+  constructor(params: JudegeIfShiciReponse) {
+    Object.assign(this, params)
+  }
+}

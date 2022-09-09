@@ -197,10 +197,10 @@ mySocket.value?.on(BroadcastUserOnGameInfoRefresh, (hintLevels: Record<number, s
 const message = useMessage()
 whenever(
   () => {
-    return sumRejectByStrictMode.value > 1
+    return sumRejectByStrictMode.value > 2
   },
   () => {
-    message.warning('设置面版中，允许关闭对输入词语的语法约束', { duration: 5000 })
+    message.warning('设置面版中，允许关闭对输入词语的语法约束', { duration: 3000 })
     sumRejectByStrictMode.value = 0
   },
 )
@@ -259,6 +259,7 @@ whenever(
           <button mt3 btn p="x6 y2" :disabled="input.length !== wordLength" @click="enter">
             {{ t('ok-spaced') }}
           </button>
+
           <p text-center w-full text-sm op50>
             * 当前在线 3 / 4
           </p>

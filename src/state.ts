@@ -207,22 +207,6 @@ export const nowTopicExample = computed(
 )
 
 export const ifShici = computed(() => topicNow.value === 'shici5' || topicNow.value === 'shici7')
-watch(
-  topicNow,
-  (topic) => {
-    if (topic === 'chengyu4')
-      return
-    if (topic === 'shici5')
-      useStrictMode.value = false
-    if (topic === 'shici7')
-      useStrictMode.value = false
-    else
-      useStrictMode.value = false
-  },
-  {
-    immediate: true,
-  },
-)
 
 export const mySocket = ref<Socket>()
 // console.log('this.$socket', this.$socket)

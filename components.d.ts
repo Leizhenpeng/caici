@@ -38,6 +38,7 @@ declare module '@vue/runtime-core' {
     NAlert: typeof import('naive-ui')['NAlert']
     NAvatar: typeof import('naive-ui')['NAvatar']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
+    NButton: typeof import('naive-ui')['NButton']
     NMessageProvider: typeof import('naive-ui')['NMessageProvider']
     NoFuturePlay: typeof import('./src/components/NoFuturePlay.vue')['default']
     NoPastPlay: typeof import('./src/components/NoPastPlay.vue')['default']

@@ -2,7 +2,7 @@
 import { filterNonChineseChars } from '@hankit/tools'
 import { useMessage } from 'naive-ui'
 import { t } from '~/i18n'
-import { TRIES_LIMIT, checkValidIdiom } from '~/logic'
+import { TRIES_LIMIT, checkDoor, checkValidIdiom } from '~/logic'
 import {
   answer, breakpoints, dayNo, dayNoHanzi,
   ifShici,
@@ -28,7 +28,7 @@ const inputValue = ref('')
 const showToast = autoResetRef(false, 1000)
 const shake = autoResetRef(false, 500)
 const isFinishedDelay = debouncedRef(isFinished, 800)
-
+const ifBtnOnLoading = ref(false)
 function resetInputValue() {
   inputValue.value = ''
   input.value = ''
@@ -44,27 +44,39 @@ watch(
 const message = useMessage()
 whenever(
   () => {
-    return sumRejectByStrictMode.value > 1
+    return sumRejectByStrictMode.value > 2
   },
   () => {
-    message.warning('设置面版中，允许关闭对输入词语的语法约束', { duration: 5000 })
+    message.warning('设置面版中，允许关闭对输入词语的语法约束', { duration: 3000 })
     sumRejectByStrictMode.value = 0
   },
 )
-function enter() {
+async function enter() {
+  if (ifBtnOnLoading.value)
+    return
   if (input.value.length !== wordLengthNow.value)
     return
-  if (!checkValidIdiom(input.value, useStrictMode.value)) {
-    showToast.value = true
-    shake.value = true
-    sumRejectByStrictMode.value++
-    return false
-  }
-  if (currentMeta.value.strict == null)
-    currentMeta.value.strict = useStrictMode.value
-  tries.value.push(input.value)
-  input.value = ''
-  inputValue.value = ''
+  ifBtnOnLoading.value = true
+  checkDoor(topicNow.value, input.value, useStrictMode.value).then(
+    (out) => {
+      const isValid = out
+      if (!isValid) {
+        showToast.value = true
+        shake.value = true
+        sumRejectByStrictMode.value++
+        return
+      }
+      if (currentMeta.value.strict == null)
+        currentMeta.value.strict = useStrictMode.value
+      tries.value.push(input.value)
+      input.value = ''
+      inputValue.value = ''
+    },
+  ).finally(
+    () => {
+      ifBtnOnLoading.value = false
+    },
+  )
 }
 function reset() {
   tries.value = []
@@ -125,7 +137,6 @@ watch(isPassed, () => {
     <p text-center w-full font-serif mb4>
       <b>{{ dayNoHanzi }}·{{ nowTopicTitleShort }}</b>
     </p>
-
     <div v-show="!showHelp" flex="~ col between" items-centerl>
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" :word-length="wordLengthNow" @click="focus()" />
 
@@ -153,17 +164,24 @@ watch(isPassed, () => {
               absolute top-0 left-0 right-0 bottom-0 flex="~ center" bg-base transition-all duration-300 text-warn pointer-events-none
               :class="showToast ? '' : 'op0 translate-y--1'"
             >
-              <span tracking-1 pl1>
+              <span v-if="ifShici" tracking-1 pl1>
+                {{ t('invalid-shici') }}
+              </span>
+              <span v-else tracking-1 pl1>
                 {{ t('invalid-idiom') }}
+
               </span>
             </div>
             <div absolute top-0 right-0 bottom-0 mya px3 flex="~ center" icon-btn op-60 @click="magicDelete">
               <div i-carbon-magic-wand-filled />
             </div>
           </div>
-          <button mt3 btn p="x6 y2" :disabled="input.length !== wordLengthNow" @click="enter">
+
+          <button mt3 btn p="x6 y2" relative flex="~ row center" :disabled="input.length !== wordLengthNow" @click="enter">
+            <div v-show="ifBtnOnLoading" class="loading" mr-1 />
             {{ t('ok-spaced') }}
           </button>
+
           <div v-if="tries.length > 4 && !isFailed" op50>
             {{ t('tries-rest', TRIES_LIMIT - tries.length) }}
           </div>
@@ -223,3 +241,28 @@ watch(isPassed, () => {
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.loading {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-top-color: #00000010;
+  border-right-color: #00000010;
+  border-bottom-color: #00000010;
+  border-radius: 100%;
+  animation: circle infinite 0.75s linear;
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
+
