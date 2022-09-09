@@ -53,7 +53,7 @@ const hintText = computed(() => {
     <div v-if="day" font-serif op-80>
       {{ dayNoHanzi }} · {{ nowTopicTitleShort }}
     </div>
-    <p text-sm op-50>
+    <p text-sm op-50 font-serif>
       {{ hintText }} ·
       <template v-if="currentMeta.strict">
         {{ t('strict-mode') }} ·
