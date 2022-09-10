@@ -55,9 +55,9 @@ const hintText = computed(() => {
     </div>
     <p text-sm op-50 font-serif>
       {{ hintText }} ·
-      <template v-if="currentMeta.strict">
+      <!-- <template v-if="currentMeta.strict">
         {{ t('strict-mode') }} ·
-      </template>
+      </template> -->
       {{ formatDuration(currentMeta.duration || 0) }}
     </p>
   </div>
