@@ -34,6 +34,7 @@ importers:
       cheerio: ^1.0.0-rc.12
       eslint: ^8.19.0
       file-saver: ^2.0.5
+      gsap: ^3.11.1
       html-to-image: ^1.9.0
       jsdom: ^20.0.0
       localforage: ^1.10.0
@@ -76,6 +77,7 @@ importers:
       axios: 0.27.2
       axios-cache-adapter: 2.7.3_axios@0.27.2
       canvas-confetti: 1.5.1
+      gsap: 3.11.1
       html-to-image: 1.9.0
       localforage: 1.10.0
       lodash: 4.17.21
@@ -3345,6 +3347,10 @@ packages:
   /graceful-fs/4.2.9:
     resolution: {integrity: sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==}
     dev: true
+
+  /gsap/3.11.1:
+    resolution: {integrity: sha512-UKuJ0UPhntFHMwT6URFQ4cTQv88xc7Kd9Dhxt7qX9IPhC+d+/a5wKW5E5Vn33hZ53nBI1JfApcEbzKgXkcuPZw==}
+    dev: false
 
   /gzip-size/6.0.0:
     resolution: {integrity: sha512-ax7ZYomf6jqPTQ4+XCpUGyXKHk5WweS+e05MBO4/y3WJ5RkmPXNKvX+bx1behVILVwr6JSQvZAku021CHPXG3Q==}
