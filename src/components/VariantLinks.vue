@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { t } from '~/i18n'
+import { showVariants } from '~/state'
+function close() {
+  showVariants.value = false
+}
 </script>
 
 <template>
-  <div p5 flex="~ col center" class="variant-links">
-    <p text-xl font-serif mb4>
+  <div p5 flex="~ col center" class="variant-links" relative>
+    <div absolute top-4 right-4 flex="~ gap-3">
+      <button icon-btn @click="close()">
+        <div i-carbon-close />
+      </button>
+    </div>
+    <p text-xl font-serif mb4 mt4>
       <b>{{ t('other-variants') }}</b>
     </p>
     <ul flex="~ col gap-3" text-left w-60 m2 list-disc>

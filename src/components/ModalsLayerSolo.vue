@@ -40,32 +40,32 @@ watch(showHelp, (newValue) => {
   <Modal v-model="showMetaDetail" :direction="lg ? 'bottom' : 'bottom'">
     <MetaDetailCard v-if="!!nowWorkDetail" :key="nowWorkDetail.objectId" :base-info="nowWorkDetail!" />
   </Modal>
-  <Modal v-model="showSettings" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showSettings" :direction="lg ? 'bottom' : 'bottom'">
     <Settings v-if="lg" my6 />
     <SettingsMobile v-else :key="localeId" my6 />
   </Modal>
-  <Modal v-model="showHint" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showHint" :direction="lg ? 'bottom' : 'bottom'">
     <Hint />
   </Modal>
-  <Modal v-model="showFailed" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showFailed" :direction="lg ? 'right' : 'bottom'">
     <FailedPage />
   </Modal>
-  <Modal v-model="showDashboard" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showDashboard" :direction="lg ? 'right' : 'bottom'">
     <Dashboard />
   </Modal>
-  <Modal v-model="showTogetherShare" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showTogetherShare" :direction="lg ? 'right' : 'bottom'">
     <InviteDialog />
   </Modal>
-  <Modal v-model="showShareDialog" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showShareDialog" :direction="lg ? 'right' : 'bottom'">
     <ShareDialog />
   </Modal>
-  <Modal ref="welcomeRef" v-model="showHelp" :direction="lg ? 'top' : 'bottom'">
+  <Modal ref="welcomeRef" v-model="showHelp" :direction="lg ? 'bottom' : 'bottom'">
     <WelcomePage />
   </Modal>
-  <Modal v-model="showVariants" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showVariants" :direction="lg ? 'right' : 'bottom'">
     <VariantLinks />
   </Modal>
-  <Modal v-model="showPrivacyNotes" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showPrivacyNotes" :direction="lg ? 'right' : 'bottom'">
     <PrivacyNotes />
   </Modal>
 </template>

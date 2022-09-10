@@ -33,41 +33,41 @@ watch((locale), () => {
     <CheatSheet :if-sole="false" />
   </Modal>
   <!-- //TODO://change backe -->
-  <Modal v-model="showMetaDetail" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showMetaDetail" :direction="lg ? 'right' : 'bottom'">
     <!-- <MetaDetailCard /> -->
   </Modal>
-  <Modal v-model="showHintLevelTip" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showHintLevelTip" :direction="lg ? 'right' : 'bottom'">
     <HintLevelTip />
   </Modal>
-  <Modal v-model="showDoubleCheckExit" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showDoubleCheckExit" :direction="lg ? 'bottom' : 'bottom'">
     <DoubleCheckChangeMode />
   </Modal>
-  <Modal v-model="showSettings" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showSettings" :direction="lg ? 'right' : 'bottom'">
     <Settings v-if="lg" my6 />
     <SettingsMobile v-else :key="localeId" my6 />
   </Modal>
-  <Modal v-model="showHint" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showHint" :direction="lg ? 'bottom' : 'bottom'">
     <HintInRoom />
   </Modal>
-  <Modal v-model="showFailed" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showFailed" :direction="lg ? 'right' : 'bottom'">
     <FailedPage />
   </Modal>
-  <Modal v-model="showDashboard" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showDashboard" :direction="lg ? 'right' : 'bottom'">
     <Dashboard />
   </Modal>
-  <Modal v-model="showTogetherShare" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showTogetherShare" :direction="lg ? 'right' : 'bottom'">
     <InviteDialog />
   </Modal>
-  <Modal v-model="showShareDialog" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showShareDialog" :direction="lg ? 'right' : 'bottom'">
     <ShareDialog />
   </Modal>
-  <Modal v-model="showHelp" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showHelp" :direction="lg ? 'bottom' : 'bottom'">
     <WelcomePage :if-solo="false" />
   </Modal>
-  <Modal v-model="showVariants" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showVariants" :direction="lg ? 'right' : 'bottom'">
     <VariantLinks />
   </Modal>
-  <Modal v-model="showPrivacyNotes" :direction="lg ? 'top' : 'bottom'">
+  <Modal v-model="showPrivacyNotes" :direction="lg ? 'right' : 'bottom'">
     <PrivacyNotes />
   </Modal>
 </template>

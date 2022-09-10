@@ -44,9 +44,9 @@ const hintText = computed(() => {
       {{ dayNoHanzi }} · {{ nowTopicTitleShort }} ·
     </template>
     {{ hintText }} ·
-    <template v-if="currentMeta.strict">
+    <!-- <template v-if="currentMeta.strict">
       {{ t('strict-mode') }} ·
-    </template>
+    </template> -->
     {{ formatDuration(currentMeta.duration || 0) }}
   </div>
   <div v-if="demoVersion === 1" mt-2 text-md ws-nowrap text-left ml-1px>

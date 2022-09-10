@@ -81,7 +81,7 @@ defineExpose({
       :class="modelValue ? 'opacity-50' : 'opacity-0'" @click="$emit('update:modelValue', false)"
     />
     <div
-      class="bg-base border-base absolute transition-all duration-200 ease-out max-w-screen max-h-screen overflow-auto scrolls"
+      class="bg-base border-base absolute transition-all duration-200 ease-out max-w-screen max-h-screen min-w-370px overflow-auto scrolls"
       :class="[positionClass]" :style="modelValue ? {} : { transform }"
     >
       <n-scrollbar

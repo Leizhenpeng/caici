@@ -2,7 +2,7 @@
 import { toPng } from 'html-to-image'
 import { saveAs } from 'file-saver'
 import { useQRCode } from '@vueuse/integrations/useQRCode'
-import { dayNoHanzi, isDark, isIOS, isMobile, useMask } from '~/state'
+import { dayNoHanzi, isDark, isIOS, isMobile, nowTopic, useMask } from '~/state'
 import { tries } from '~/storage'
 import { t } from '~/i18n'
 // import { WHOLE_URL } from '~/logic'
