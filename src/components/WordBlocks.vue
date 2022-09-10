@@ -68,7 +68,7 @@ function openHintLevlTip() {
 }
 
 function addDisappear(el: HTMLElement) {
-  el?.classList.add('holeOut', 'op-30')
+  el?.classList.add('fade-out', 'op-20')
 }
 function addAppear(el: HTMLElement) {
   el?.classList.add('boingInUp')
@@ -108,7 +108,8 @@ onMounted(() => {
       </div>
     </div>
     <div
-      v-for="c, i in parseWord(word.padEnd(wordLengthUse, ' '), answer || todayAnswer.word)" :key="i" w-20 h-20 m1 class="tile" :class="[
+      v-for="c, i in parseWord(word.padEnd(wordLengthUse, ' '), answer || todayAnswer.word)"
+      :key="i" w-20 h-20 m1 class="tile" :class="[
         flip ? 'revealed' : '',
         ifMinFont5 ? '!w-16 !h-18' : '',
         ifMinFont7 ? '!w-11 !h-13' : '',
@@ -196,6 +197,31 @@ onMounted(() => {
     -webkit-transform: scale(0.8);
     -ms-transform: scale(0.8);
     transform: scale(0.8);
+  }
+}
+
+.fade-out {
+  -webkit-animation: fade-out 0.4s ease-out both;
+  animation: fade-out 0.4s ease-out both
+}
+
+@-webkit-keyframes fade-out {
+  0% {
+    opacity: 1
+  }
+
+  100% {
+    opacity: 0
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1
+  }
+
+  100% {
+    opacity: 0
   }
 }
 </style>

@@ -92,7 +92,7 @@ async function download() {
         </div>
         <img rounded-sm w-26 h-26 :src="qrcode" alt="QR Code" mr-1>
       </div>
-      <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" :animate="false" />
+      <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" :animate="false" :word-length="w.length" />
       <div text-xs mt3 op50 mb2 ws-nowrap>
         caici.forkway.cn
       </div>
