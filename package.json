@@ -27,6 +27,7 @@
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "lru-cache": "^7.12.0",
+    "magic.css": "^1.4.8",
     "mark.js": "^8.11.1",
     "naive-ui": "^2.32.1",
     "nanoid": "^3.3.3",

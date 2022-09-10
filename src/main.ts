@@ -9,6 +9,7 @@ import 'uno.css'
 import { customMotion } from './motion'
 import SocketIO from './plugins/io'
 import { setupRouter } from './router'
+import 'magic.css/dist/magic.css'
 
 const app = createApp(App)
 

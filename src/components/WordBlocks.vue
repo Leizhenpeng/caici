@@ -44,14 +44,6 @@ const result = computed(() => {
 
 const flip = ref(false)
 
-watchEffect(() => {
-  if (props.revealed) {
-    setTimeout(() => {
-      flip.value = true
-    }, Math.random() * 300)
-  }
-})
-
 const ifMinFont5 = computed(() => {
   if (!props.forceFour)
     return ifMinFont5_.value
@@ -74,11 +66,40 @@ const transHintToColor = computed(() => {
 function openHintLevlTip() {
   showHintLevelTip.value = true
 }
+
+function addDisappear(el: HTMLElement) {
+  el?.classList.add('holeOut', 'op-30')
+}
+function addAppear(el: HTMLElement) {
+  el?.classList.add('boingInUp')
+}
+const wb = ref()
+async function addFlip() {
+  for (let i = 0; i <= wb.value.children.length; i++) {
+    const element = wb.value.children[i]
+    await new Promise(resolve => setTimeout(resolve, Math.random() * 60 + 40))
+    addDisappear(element.querySelector('.front'))
+    addAppear(element.querySelector('.back'))
+  }
+}
+onMounted(() => {
+  watchEffect(() => {
+    if (props.revealed) {
+      setTimeout(() => {
+        flip.value = true
+        addFlip()
+      }, Math.random() * 100)
+    }
+  })
+})
 </script>
 
 <template>
-  <div flex>
-    <div v-if="showPlayer" op70 mt1 m1 max-w-3 text-sm scale-90 leading-4 font-serif flex="~ col center" cursor-pointer @click.stop="openHintLevlTip">
+  <div ref="wb" flex>
+    <div
+      v-if="showPlayer" op70 mt1 m1 max-w-3 text-sm scale-90 leading-4 font-serif flex="~ col center" cursor-pointer
+      @click.stop="openHintLevlTip"
+    >
       <div v-for="item, index in playerNick" :key="index">
         {{ item }}
       </div>
@@ -94,16 +115,8 @@ function openHintLevlTip() {
       ]"
     >
       <template v-if="animate">
-        <CharBlock
-          class="front" :char="c" :active="active" :style="{ transitionDelay: `${i * (300 + Math.random() * 50)}ms` }"
-          :force-four="forceFour"
-        />
-        <CharBlock
-          class="back" :char="c" :answer="result[i]" :force-four="forceFour" :style="{
-            transitionDelay: `${i * (300 + Math.random() * 50)}ms`,
-            animationDelay: `${i * (100 + Math.random() * 50)}ms`,
-          }"
-        />
+        <CharBlock class="front magictime" :char="c" :active="active" :force-four="forceFour" />
+        <CharBlock class="back magictime" :char="c" :answer="result[i]" :force-four="forceFour" />
       </template>
       <template v-else>
         <CharBlock :char="c" :answer="result[i]" :active="active" :force-four="forceFour" />
@@ -118,26 +131,15 @@ function openHintLevlTip() {
   position: relative;
 }
 
+/* //not show */
+.not-show {
+  display: none;
+}
 .tile .front,
 .tile .back {
   position: absolute;
   top: 0;
   left: 0;
-  transition: transform 0.8s;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-.tile .back {
-  transform: rotateY(180deg);
-}
-
-.tile.revealed .front {
-  transform: rotateY(180deg);
-}
-
-.tile.revealed .back {
-  transform: rotateY(0deg);
 }
 
 #breathing-button {
@@ -147,29 +149,29 @@ function openHintLevlTip() {
 
 @-webkit-keyframes breathing {
   0% {
-      -webkit-transform: scale(0.8);
-      -ms-transform: scale(0.8);
-      transform: scale(0.8);
-    }
-
-    25% {
-      -webkit-transform: scale(1);
-      -ms-transform: scale(1);
-      transform: scale(1);
-    }
-
-    70% {
-      -webkit-transform: scale(0.8);
-      -ms-transform: scale(0.8);
-      transform: scale(0.8);
-    }
-
-    100% {
-      -webkit-transform: scale(0.8);
-      -ms-transform: scale(0.8);
-      transform: scale(0.8);
-    }
+    -webkit-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
   }
+
+  25% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+
+  70% {
+    -webkit-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+
+  100% {
+    -webkit-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+}
 
 @keyframes breathing {
   0% {

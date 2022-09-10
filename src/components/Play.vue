@@ -149,7 +149,11 @@ watch(isPassed, () => {
         </div>
       </template>
 
-      <WordBlocks v-if="!isFinished" :word-length="wordLengthNow" :class="{ shake }" :word="input" :active="true" @click="focus()" />
+      <WordBlocks
+        v-if="!isFinished"
+        :word-length="wordLengthNow" :class="{ shake }" :word="input" :active="true"
+        @click="focus()"
+      />
 
       <div mt-1 />
 
