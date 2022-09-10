@@ -4,11 +4,13 @@ import { modelMaxHeight } from '~/state'
 const props = withDefaults(defineProps<{
   modelValue?: boolean
   direction?: 'top' | 'right' | 'bottom' | 'left'
+  zIndex?: number
   mask?: boolean
 }>(), {
   modelValue: false,
   direction: 'top',
   mask: true,
+  zIndex: 40,
 })
 
 defineEmits<{
@@ -75,7 +77,7 @@ defineExpose({
 </script>
 
 <template>
-  <div fixed z-40 :class="[containerPositionClass, modelValue ? '' : 'pointer-events-none']">
+  <div fixed :class="[containerPositionClass, modelValue ? '' : 'pointer-events-none', `z-${zIndex}`]">
     <div
       v-if="mask" class="bg-base left-0 right-0 top-0 bottom-0 absolute transition-opacity duration-500 ease-out"
       :class="modelValue ? 'opacity-50' : 'opacity-0'" @click="$emit('update:modelValue', false)"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { LINK_GITHUB } from '../logic/constants'
-import { isDark, nowTopic, nowTopicExample, nowTopicTitleShort, showHelp, showPrivacyNotes, showVariants, useMask } from '~/state'
+import { isDark, nowTopic, nowTopicExample, nowTopicTitleShort, showBrandShareDialog, showHelp, showPrivacyNotes, showVariants, useMask } from '~/state'
 import { initialized, topicNow, wordLengthNow } from '~/storage'
 import { t } from '~/i18n'
 
@@ -116,16 +116,17 @@ const nowTopicExampleS4 = computed(
       return t('example.chengyu4.s1')
   },
 )
+function share() {
+  showHelp.value = false
+  showBrandShareDialog.value = true
+}
 </script>
 
 <template>
   <div p="x5 y10" flex="~ col gap-2 y-center" relative>
     <div absolute top-4 right-4 flex="~ gap-3">
-      <button v-if="!initialized" icon-btn @click="isDark = !isDark">
-        <div i-carbon-sun dark:i-carbon-moon />
-      </button>
-      <button v-else icon-btn @click="start()">
-        <div i-carbon-close />
+      <button icon-btn @click="share">
+        <div i-carbon-share />
       </button>
     </div>
 
@@ -169,7 +170,8 @@ const nowTopicExampleS4 = computed(
     <div h-1px w-10 border="b base" m4 />
 
     <button btn p="x4 y2" @click="start()">
-      <span tracking-1 pl1>{{ t('start') }}</span>
+      <span v-if="!initialized" tracking-1 pl1>{{ t('start') }}</span>
+      <span v-else tracking-1 pl1>{{ t('backGame') }}</span>
     </button>
     <div op50>
       {{ t('update-tip') }}

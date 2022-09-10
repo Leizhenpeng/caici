@@ -5,6 +5,7 @@ import { locale } from '~/i18n'
 import {
   breakpoints,
   nowWorkDetail,
+  showBrandShareDialog,
   showCheatSheet,
   showDashboard,
   showFailed,
@@ -58,6 +59,9 @@ watch(showHelp, (newValue) => {
   </Modal>
   <Modal v-model="showShareDialog" :direction="lg ? 'right' : 'bottom'">
     <ShareDialog />
+  </Modal>
+  <Modal v-model="showBrandShareDialog" :direction="lg ? 'right' : 'bottom'" :z-index="100">
+    <ShareDialog :if-share-on-brand="true" />
   </Modal>
   <Modal ref="welcomeRef" v-model="showHelp" :direction="lg ? 'bottom' : 'bottom'">
     <WelcomePage />

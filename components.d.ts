@@ -56,6 +56,7 @@ declare module '@vue/runtime-core' {
     SettingMetaCheck: typeof import('./src/components/SettingMetaCheck.vue')['default']
     Settings: typeof import('./src/components/Settings.vue')['default']
     SettingsMobile: typeof import('./src/components/SettingsMobile.vue')['default']
+    ShareBrand: typeof import('./src/components/ShareBrand.vue')['default']
     ShareButton: typeof import('./src/components/ShareButton.vue')['default']
     ShareDialog: typeof import('./src/components/ShareDialog.vue')['default']
     ShareImage: typeof import('./src/components/ShareImage.vue')['default']

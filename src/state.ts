@@ -36,6 +36,7 @@ export const showVariants = ref(false)
 export const showCheatSheet = ref(false)
 export const showPrivacyNotes = ref(false)
 export const showShareDialog = ref(false)
+export const showBrandShareDialog = ref(false)
 
 export const showHintLevelTip = ref(false)
 export const useMask = ref(false)

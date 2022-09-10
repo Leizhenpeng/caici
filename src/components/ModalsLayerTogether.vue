@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid'
 import { locale } from '~/i18n'
 import {
   breakpoints,
+  showBrandShareDialog,
   showCheatSheet,
   showDashboard,
   showDoubleCheckExit,
@@ -60,6 +61,9 @@ watch((locale), () => {
   </Modal>
   <Modal v-model="showShareDialog" :direction="lg ? 'right' : 'bottom'">
     <ShareDialog />
+  </Modal>
+  <Modal v-model="showBrandShareDialog" :direction="lg ? 'right' : 'bottom'" :z-index="100">
+    <ShareDialog :if-share-on-brand="true" />
   </Modal>
   <Modal v-model="showHelp" :direction="lg ? 'bottom' : 'bottom'">
     <WelcomePage :if-solo="false" />
